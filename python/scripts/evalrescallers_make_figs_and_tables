@@ -1,20 +1,40 @@
 #!/usr/bin/env python3
 
 import argparse
+import json
+import os
 
 import evalrescallers_paper
 
 
 parser = argparse.ArgumentParser(
     description = 'Makes figures and tables for paper',
-    usage='%(prog)s <out_prefix>',
+    usage='%(prog)s <summary.json> <stats.tsv> <out_directory>',
 )
-parser.add_argument('summary_json', help='Summary json file made by tb-amr-benchmarking pipeline',
-parser.add_argument('stats_tsv', help='Summary accuracy stats file made by tb-amr-benchmarking pipeline',
-parser.add_argument('out_prefix', help='Prefix of names of output files')
+parser.add_argument('summary_json', help='Summary json file made by tb-amr-benchmarking pipeline')
+parser.add_argument('stats_tsv', help='Summary accuracy stats file made by tb-amr-benchmarking pipeline')
+parser.add_argument('outdir', help='Directory name for output files (must not already exist)')
 parser.add_argument('--debug', action='store_true', help='Do not delete temp files')
 options = parser.parse_args()
 
+options.summary_json = os.path.abspath(options.summary_json)
+options.stats_tsv = os.path.abspath(options.stats_tsv)
 
-evalrescallers_paper.maps.make_maps(options.out_prefix, debug=options.debug)
+try:
+    os.mkdir(options.outdir)
+except:
+    raise Exception(f'Error making output directory "{options.outdir}". Cannot continue')
+
+os.chdir(options.outdir)
+
+map_files_prefix = 'figure.map'
+run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
+run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
+
+
+evalrescallers_paper.maps.make_maps(map_files_prefix, debug=options.debug)
+with open(options.summary_json) as f:
+    json_data = json.load(f)
+evalrescallers_paper.run_time_and_memory.json_to_tsv(json_data, run_time_and_memory_tsv)
+evalrescallers_paper.run_time_and_memory.tsv_to_plot(run_time_and_memory_tsv, run_time_and_memory_plot_prefix)
 
