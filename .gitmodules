@@ -1,0 +1,3 @@
+[submodule "tb-amr-benchmarking"]
+	path = tb-amr-benchmarking
+	url = https://github.com/iqbal-lab-org/tb-amr-benchmarking.git
