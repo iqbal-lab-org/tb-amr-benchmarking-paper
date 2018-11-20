@@ -1,4 +1,5 @@
 __all__ = [
+    'bar_charts',
     'maps',
 ]
 
