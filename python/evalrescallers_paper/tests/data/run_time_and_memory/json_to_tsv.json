@@ -1,0 +1,46 @@
+{
+    "sample1": {
+        "Tool1": {
+            "Success": true,
+            "resistance_calls": {},
+            "time_and_memory": {
+                "ram": 35508.0,
+                "system_time": 0.32,
+                "user_time": 1191.9,
+                "wall_clock_time": 1192.49
+            }
+        },
+        "Tool2": {
+            "Success": true,
+            "resistance_calls": {},
+            "time_and_memory": {
+                "ram": 10001.0,
+                "system_time": 228.32,
+                "user_time": 3123.77,
+                "wall_clock_time": 2912.32
+            }
+        }
+    },
+    "sample2": {
+        "Tool1": {
+            "Success": true,
+            "resistance_calls": {},
+            "time_and_memory": {
+                "ram": 30432.0,
+                "system_time": 0.32,
+                "user_time": 1191.9,
+                "wall_clock_time": 1043.22
+            }
+        },
+        "Tool2": {
+            "Success": true,
+            "resistance_calls": {},
+            "time_and_memory": {
+                "ram": 14006.0,
+                "system_time": 228.32,
+                "user_time": 3123.77,
+                "wall_clock_time": 4242.42
+            }
+        }
+    }
+}
