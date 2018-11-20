@@ -47,4 +47,8 @@ def tsv_to_plot(tsv_file, outprefix):
         print(textwrap.dedent(r_string), file=f)
     subprocess.check_output(f'R CMD BATCH {r_script}', shell=True)
     os.unlink(f'{r_script}out')
+    try:
+        os.unlink('.RData')
+    except:
+        pass
 
