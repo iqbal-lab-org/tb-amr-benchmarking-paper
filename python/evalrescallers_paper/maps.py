@@ -11,6 +11,8 @@ import textwrap
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 
+from evalrescallers import ten_k_validation_data
+
 
 mykrobe_colour = '#7fc97f'
 validate_colour = '#beaed4'
@@ -54,26 +56,19 @@ def donut_plot(values, outfile, country):
 
 
 def make_counts():
-    counts = {
-        'Australia': {'test': 0, 'train': 0, 'validate': 42},
-        'Belgium': {'test': 0, 'train': 0, 'validate': 234},
-        'Canada': {'test': 0, 'train': 0, 'validate': 1341},
-        'China': {'test': 0, 'train': 0, 'validate': 280},
-        'Germany': {'test': 273, 'train': 841, 'validate': 0},
-        'Italy': {'test': 95, 'train': 0, 'validate': 131},
-        'Netherlands': {'test': 528, 'train': 0, 'validate': 139},
-        'Pakistan': {'test': 0, 'train': 0, 'validate': 415},
-        'Peru': {'test': 0, 'train': 0, 'validate': 315},
-        'Russia': {'test': 0, 'train': 0, 'validate': 842},
-        'Serbia': {'test': 0, 'train': 0, 'validate': 105},
-        'Sierra Leone': {'test': 0, 'train': 79, 'validate': 0},
-        'South Africa': {'test': 0, 'train': 504, 'validate': 991},
-        'Spain': {'test': 0, 'train': 0, 'validate': 64},
-        'Swaziland': {'test': 0, 'train': 0, 'validate': 273},
-        'Thailand': {'test': 0, 'train': 0, 'validate': 252},
-        'UK': {'test': 3466, 'train': 1966, 'validate': 421},
-        'Uzbekistan': {'test': 0, 'train': 261, 'validate': 0},
-    }
+    counts = ten_k_validation_data.sources_file_to_country_counts(ten_k_validation_data.sources_file)
+
+    # Add in counts of mykrobe paper data. These numbers
+    # are from Walker 2015 supplementary table S2 in supplementary
+    # PDF file
+    counts['UK']['train'] = 1122 + 412 + 94 + 338
+    counts['South Africa']['train'] = 54 + 450
+    counts['Sierra Leone'] = {'validate': 0, 'test': 0, 'train': 79}
+    counts['Germany']['train'] = 841
+    counts['Uzbekistan'] = {'validate': 0, 'test': 0, 'train': 261}
+    for d in counts.values():
+        if 'train' not in d:
+            d['train'] = 0
 
     europe_countries = {
         'Belgium',
