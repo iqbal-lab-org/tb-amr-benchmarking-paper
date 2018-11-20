@@ -21,3 +21,15 @@ class TestRunTimeAndMemory(unittest.TestCase):
         self.assertTrue(filecmp.cmp(expected, tsv_out, shallow=False))
         os.unlink(tsv_out)
 
+
+    def test_tsv_to_plot(self):
+        '''test tsv_to_plot'''
+        tsv_in = os.path.join(data_dir, 'tsv_to_plot.tsv')
+        outprefix = 'tmp.run_time_and_memory.tsv_to_plot'
+        run_time_and_memory.tsv_to_plot(tsv_in, outprefix)
+        self.assertTrue(os.path.exists(f'{outprefix}.time.pdf'))
+        os.unlink(f'{outprefix}.time.pdf')
+        self.assertTrue(os.path.exists(f'{outprefix}.memory.pdf'))
+        os.unlink(f'{outprefix}.memory.pdf')
+        os.unlink(f'{outprefix}.R')
+
