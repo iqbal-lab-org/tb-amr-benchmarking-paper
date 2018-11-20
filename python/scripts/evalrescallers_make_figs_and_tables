@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+
+import argparse
+
+import evalrescallers_paper
+
+
+parser = argparse.ArgumentParser(
+    description = 'Makes map figure panels',
+    usage='%(prog)s <out_prefix>',
+)
+parser.add_argument('out_prefix', help='Prefix of names of output files')
+parser.add_argument('--debug', action='store_true', help='Do not delete temp files')
+options = parser.parse_args()
+
+
+evalrescallers_paper.maps.make_maps(options.out_prefix, debug=options.debug)
+
