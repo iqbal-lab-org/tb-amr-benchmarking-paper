@@ -25,14 +25,17 @@ except:
 
 os.chdir(options.outdir)
 
+with open(options.summary_json) as f:
+    json_data = json.load(f)
+
 r_is_res_prefix = 'r_is_resistant'
 summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
-    options.summary_json, 'tb', r_means_resistant=True)
+    json_data, 'tb', r_means_resistant=True)
 summary_data_handler.run(r_is_res_prefix)
 
 r_is_susc_prefix = 'r_is_susceptible'
 summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
-    options.summary_json, 'tb', r_means_resistant=False)
+    json_data, 'tb', r_means_resistant=False)
 summary_data_handler.run(r_is_susc_prefix)
 
 

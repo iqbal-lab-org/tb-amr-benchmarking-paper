@@ -20,6 +20,8 @@ class TestSummaryDataHandler(unittest.TestCase):
         }
 
         json_file = os.path.join(data_dir, 'summary_json_to_metrics_and_var_call_counts.json')
+        with open(json_file) as f:
+            json_data = json.load(f)
 
         truth_pheno = {
             'sample1': {
@@ -44,7 +46,7 @@ class TestSummaryDataHandler(unittest.TestCase):
             },
         }
 
-        got_tool_counts, got_variant_counts, got_conf_and_depths, got_regimen_counts = summary_data_handler.SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(json_file, truth_pheno, drugs, 'tb')
+        got_tool_counts, got_variant_counts, got_conf_and_depths, got_regimen_counts = summary_data_handler.SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(json_data, truth_pheno, drugs, 'tb')
 
         expect_tool_counts = {
             'mykrobe': {
@@ -128,7 +130,7 @@ class TestSummaryDataHandler(unittest.TestCase):
 
 
         # One call is "r" in the input json. Test the option lower_case_r_means_resistant=False)
-        got_tool_counts, got_variant_counts, got_conf_and_depths, got_regimen_counts = summary_data_handler.SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(json_file, truth_pheno, drugs, 'tb', lower_case_r_means_resistant=False)
+        got_tool_counts, got_variant_counts, got_conf_and_depths, got_regimen_counts = summary_data_handler.SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(json_data, truth_pheno, drugs, 'tb', lower_case_r_means_resistant=False)
         expect_tool_counts['mykrobe']['Isoniazid']['tool1']['TP'] -= 1
         expect_tool_counts['mykrobe']['Isoniazid']['tool1']['FN'] += 1
         del expect_variant_counts['mykrobe']['Isoniazid']['tool1']['gene1.X42Y']
@@ -375,7 +377,9 @@ class TestSummaryDataHandler(unittest.TestCase):
         '''test run on tb data'''
         infile = os.path.join(data_dir, 'run.tb.in.json')
         outprefix = 'tmp.summary_data_handler.tb.run'
-        p = summary_data_handler.SummaryDataHandler(infile, 'tb')
+        with open(infile) as f:
+            json_data = json.load(f)
+        p = summary_data_handler.SummaryDataHandler(json_data, 'tb')
         p.run(outprefix)
         expected_file = os.path.join(data_dir, 'run.tb.out.accuracy_stats.tsv')
         self.assertTrue(filecmp.cmp(expected_file, outprefix + '.accuracy_stats.tsv'))
@@ -398,7 +402,9 @@ class TestSummaryDataHandler(unittest.TestCase):
         '''test run on staph data'''
         infile = os.path.join(data_dir, 'run.staph.in.json')
         outprefix = 'tmp.summary_data_handler.staph.run'
-        p = summary_data_handler.SummaryDataHandler(infile, 'staph')
+        with open(infile) as f:
+            json_data = json.load(f)
+        p = summary_data_handler.SummaryDataHandler(json_data, 'staph')
         p.run(outprefix)
         expected_file = os.path.join(data_dir, 'run.staph.out.accuracy_stats.tsv')
         self.assertTrue(filecmp.cmp(expected_file, outprefix + '.accuracy_stats.tsv'))

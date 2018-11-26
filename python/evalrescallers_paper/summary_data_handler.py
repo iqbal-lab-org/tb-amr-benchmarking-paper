@@ -7,8 +7,8 @@ from evalrescallers import mykrobe_pub_data, ten_k_validation_data, who_treatmen
 from evalrescallers_paper import stats
 
 class SummaryDataHandler:
-    def __init__(self, summary_json_file, species, r_means_resistant=True):
-        self.summary_json_file = summary_json_file
+    def __init__(self, summary_json_data, species, r_means_resistant=True):
+        self.summary_json_data = summary_json_data
         assert species in ('tb', 'staph')
         self.species = species
         self.r_means_resistant = r_means_resistant
@@ -34,12 +34,9 @@ class SummaryDataHandler:
 
 
     @classmethod
-    def summary_json_to_metrics_and_var_call_counts(cls, json_file, truth_pheno, drugs, species, lower_case_r_means_resistant=True, ten_k_predict=None):
+    def summary_json_to_metrics_and_var_call_counts(cls, json_data, truth_pheno, drugs, species, lower_case_r_means_resistant=True, ten_k_predict=None):
         if ten_k_predict is None:
             ten_k_predict = {}
-
-        with open(json_file) as f:
-            json_data = json.load(f)
 
         tools_counts = {}
         variant_counts = {}
@@ -311,7 +308,7 @@ class SummaryDataHandler:
 
 
     def run(self, outprefix):
-        tools_counts, variant_counts, conf_counts, regimen_counts = SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(self.summary_json_file, self.truth_pheno, self.drugs, self.species, ten_k_predict=self.ten_k_predict, lower_case_r_means_resistant=self.r_means_resistant)
+        tools_counts, variant_counts, conf_counts, regimen_counts = SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(self.summary_json_data, self.truth_pheno, self.drugs, self.species, ten_k_predict=self.ten_k_predict, lower_case_r_means_resistant=self.r_means_resistant)
         # For TB we have the mykrobe paper data set, plus the 10k set.
         # This means we need to do the calculations of summing the
         # two data sets. But not relevant for staph, where there is only
