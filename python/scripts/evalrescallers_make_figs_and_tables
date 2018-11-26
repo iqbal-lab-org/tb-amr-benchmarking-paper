@@ -17,6 +17,13 @@ parser.add_argument('--debug', action='store_true', help='Do not delete temp fil
 options = parser.parse_args()
 
 options.summary_json = os.path.abspath(options.summary_json)
+r_is_res_prefix = 'r_is_resistant'
+r_is_susc_prefix = 'r_is_susceptible'
+samples_suppl_tsv = 'supplementary.table.samples.tsv'
+map_files_prefix = 'figure.map'
+run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
+run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
+
 
 try:
     os.mkdir(options.outdir)
@@ -28,25 +35,17 @@ os.chdir(options.outdir)
 with open(options.summary_json) as f:
     json_data = json.load(f)
 
-r_is_res_prefix = 'r_is_resistant'
 summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
     json_data, 'tb', r_means_resistant=True)
 summary_data_handler.run(r_is_res_prefix)
 
-r_is_susc_prefix = 'r_is_susceptible'
 summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
     json_data, 'tb', r_means_resistant=False)
 summary_data_handler.run(r_is_susc_prefix)
 
+countries_dict = evalrescallers_paper.samples_table.make_samples_tsv(json_data, samples_suppl_tsv)
+evalrescallers_paper.maps.make_maps(map_files_prefix, countries_dict, debug=options.debug)
 
-map_files_prefix = 'figure.map'
-run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
-run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
-
-
-evalrescallers_paper.maps.make_maps(map_files_prefix, debug=options.debug)
-with open(options.summary_json) as f:
-    json_data = json.load(f)
 evalrescallers_paper.run_time_and_memory.json_to_tsv(json_data, run_time_and_memory_tsv)
 evalrescallers_paper.run_time_and_memory.tsv_to_plot(run_time_and_memory_tsv, run_time_and_memory_plot_prefix)
 
