@@ -9,16 +9,14 @@ import evalrescallers_paper
 
 parser = argparse.ArgumentParser(
     description = 'Makes figures and tables for paper',
-    usage='%(prog)s <summary.json> <stats.tsv> <out_directory>',
+    usage='%(prog)s <summary.json> <out_directory>',
 )
 parser.add_argument('summary_json', help='Summary json file made by tb-amr-benchmarking pipeline')
-parser.add_argument('stats_tsv', help='Summary accuracy stats file made by tb-amr-benchmarking pipeline')
 parser.add_argument('outdir', help='Directory name for output files (must not already exist)')
 parser.add_argument('--debug', action='store_true', help='Do not delete temp files')
 options = parser.parse_args()
 
 options.summary_json = os.path.abspath(options.summary_json)
-options.stats_tsv = os.path.abspath(options.stats_tsv)
 
 try:
     os.mkdir(options.outdir)
@@ -26,6 +24,17 @@ except:
     raise Exception(f'Error making output directory "{options.outdir}". Cannot continue')
 
 os.chdir(options.outdir)
+
+r_is_res_prefix = 'r_is_resistant'
+summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
+    options.summary_json, 'tb', r_means_resistant=True)
+summary_data_handler.run(r_is_res_prefix)
+
+r_is_susc_prefix = 'r_is_susceptible'
+summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
+    options.summary_json, 'tb', r_means_resistant=False)
+summary_data_handler.run(r_is_susc_prefix)
+
 
 map_files_prefix = 'figure.map'
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
