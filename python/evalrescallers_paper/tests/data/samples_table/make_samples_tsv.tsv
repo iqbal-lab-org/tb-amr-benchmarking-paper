@@ -1,7 +1,7 @@
 ENA_id	Dataset	Country	Amikacin	Amoxicillin	Capreomycin	Ciprofloxacin	Cycloserine	Ethambutol	Ethionamide	Isoniazid	Kanamycin	Linezolid	Moxifloxacin	Ofloxacin	PAS	Pyrazinamide	Rifabutin	Rifampicin	Streptomycin
-ERR038266	training	UK	S	U	U	S	U	S	U	S	U	U	U	U	U	U	U	S	S
-ERR553349	training	Germany	U	U	U	U	U	S	U	R	U	U	U	U	U	U	U	S	R
-ERS457325	training	Sierra Leone	U	U	U	U	U	R	U	R	U	U	U	U	U	U	U	R	R
-SRR2100931	training	UK	U	U	U	U	U	S	U	S	U	U	U	U	U	U	U	S	U
-ERR067620	validation	Russia	U	U	U	U	U	R	U	R	U	U	U	U	U	S	U	R	U
+ERR038266	train	UK	S	U	U	S	U	S	U	S	U	U	U	U	U	U	U	S	S
+ERR553349	train	Germany	U	U	U	U	U	S	U	R	U	U	U	U	U	U	U	S	R
+ERS457325	train	Sierra Leone	U	U	U	U	U	R	U	R	U	U	U	U	U	U	U	R	R
+SRR2100931	train	UK	U	U	U	U	U	S	U	S	U	U	U	U	U	U	U	S	U
+ERR067620	validate	Russia	U	U	U	U	U	R	U	R	U	U	U	U	U	S	U	R	U
 ERR2514066	test	UK	U	U	U	U	U	S	U	S	U	U	U	U	U	S	U	S	U

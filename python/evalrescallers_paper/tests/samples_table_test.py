@@ -25,10 +25,10 @@ class TestSamplesTable(unittest.TestCase):
         outfile = 'tmp.samples_table.make_samples_tsv.tsv'
         got_country_counts = samples_table.make_samples_tsv(json_data, outfile)
         expect_country_counts = {
-            'Germany': {'test': 0, 'training': 1, 'validation': 0},
-             'Russia': {'test': 0, 'training': 0, 'validation': 1},
-             'Sierra Leone': {'test': 0, 'training': 1, 'validation': 0},
-             'UK': {'test': 1, 'training': 2, 'validation': 0},
+            'Germany': {'test': 0, 'train': 1, 'validate': 0},
+             'Russia': {'test': 0, 'train': 0, 'validate': 1},
+             'Sierra Leone': {'test': 0, 'train': 1, 'validate': 0},
+             'UK': {'test': 1, 'train': 2, 'validate': 0},
         }
         expected_file = os.path.join(data_dir, 'make_samples_tsv.tsv')
         self.assertTrue(filecmp.cmp(expected_file, outfile, shallow=False))

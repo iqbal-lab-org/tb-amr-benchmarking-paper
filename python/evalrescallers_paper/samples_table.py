@@ -16,8 +16,8 @@ def make_samples_tsv(json_dict, outfile):
 
     all_drugs = sorted(list(ten_k_drugs.union(myk_all_drugs)))
     dictionaries = [
-        ('training', myk_sample_to_res, myk_sample_to_country),
-        ('validation', ten_k_pheno_data_validation, ten_k_countries),
+        ('train', myk_sample_to_res, myk_sample_to_country),
+        ('validate', ten_k_pheno_data_validation, ten_k_countries),
         ('test', ten_k_pheno_data_test, ten_k_countries),
     ]
     country_counts = {}
@@ -42,7 +42,7 @@ def make_samples_tsv(json_dict, outfile):
                 print(sample, dataset_name, country, *phenotypes, sep='\t', file=f)
 
                 if country not in country_counts:
-                    country_counts[country] = {'training': 0, 'validation': 0, 'test': 0}
+                    country_counts[country] = {'train': 0, 'validate': 0, 'test': 0}
                 country_counts[country][dataset_name] += 1
 
     return country_counts
