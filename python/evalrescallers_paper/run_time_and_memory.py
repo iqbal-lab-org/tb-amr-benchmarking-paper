@@ -1,6 +1,7 @@
 import json
 import os
 import subprocess
+import sys
 import textwrap
 
 
@@ -12,10 +13,13 @@ def json_to_tsv(json_dict, tsv_out):
 
         for sample in sorted(json_dict):
             for tool, tool_dict in sorted(json_dict[sample].items()):
-                if tool_dict['Success']:
-                    ram_in_mb = round(tool_dict['time_and_memory']['ram'] / 1000, 2)
-                    time_in_seconds = round(tool_dict['time_and_memory']['wall_clock_time'], 2)
-                    print(sample, tool, ram_in_mb, time_in_seconds, sep='\t', file=f)
+                if tool != '10k_predict' and tool_dict['Success']:
+                    if 'time_and_memory' in tool_dict:
+                        ram_in_mb = round(tool_dict['time_and_memory']['ram'] / 1000, 2)
+                        time_in_seconds = round(tool_dict['time_and_memory']['wall_clock_time'], 2)
+                        print(sample, tool, ram_in_mb, time_in_seconds, sep='\t', file=f)
+                    else:
+                        print(f'No time_and_memory found for sample {sample} and tool {tool}', file=sys.stderr)
 
 
 def tsv_to_plot(tsv_file, outprefix):
