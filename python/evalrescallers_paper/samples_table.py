@@ -20,6 +20,7 @@ def make_samples_tsv(json_dict, outfile):
         ('validation', ten_k_pheno_data_validation, ten_k_countries),
         ('test', ten_k_pheno_data_test, ten_k_countries),
     ]
+    country_counts = {}
 
     with open(outfile, 'w') as f:
         print('ENA_id', 'Dataset', 'Country', *all_drugs, sep='\t', file=f)
@@ -39,4 +40,10 @@ def make_samples_tsv(json_dict, outfile):
                     phenotypes.append(phenotype)
 
                 print(sample, dataset_name, country, *phenotypes, sep='\t', file=f)
+
+                if country not in country_counts:
+                    country_counts[country] = {'training': 0, 'validation': 0, 'test': 0}
+                country_counts[country][dataset_name] += 1
+
+    return country_counts
 
