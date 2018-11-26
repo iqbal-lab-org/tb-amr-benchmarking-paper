@@ -3,6 +3,7 @@ __all__ = [
     'maps',
     'run_time_and_memory',
     'samples_table',
+    'stats',
     'summary_data_handler',
 ]
 

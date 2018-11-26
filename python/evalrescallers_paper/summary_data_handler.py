@@ -2,7 +2,9 @@ import copy
 import json
 import logging
 
-from evalrescallers import mykrobe_pub_data, stats, ten_k_validation_data, who_treatment
+from evalrescallers import mykrobe_pub_data, ten_k_validation_data, who_treatment
+
+from evalrescallers_paper import stats
 
 class SummaryDataHandler:
     def __init__(self, summary_json_file, species, r_means_resistant=True):
