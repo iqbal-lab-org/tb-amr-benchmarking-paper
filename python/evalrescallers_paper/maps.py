@@ -55,21 +55,8 @@ def donut_plot(values, outfile, country):
     plt.close()
 
 
-def make_counts():
-    counts = ten_k_validation_data.sources_file_to_country_counts(ten_k_validation_data.sources_file)
-
-    # Add in counts of mykrobe paper data. These numbers
-    # are from Walker 2015 supplementary table S2 in supplementary
-    # PDF file
-    counts['UK']['train'] = 1122 + 412 + 94 + 338
-    counts['South Africa']['train'] = 54 + 450
-    counts['Sierra Leone'] = {'validate': 0, 'test': 0, 'train': 79}
-    counts['Germany']['train'] = 841
-    counts['Uzbekistan'] = {'validate': 0, 'test': 0, 'train': 261}
-    for d in counts.values():
-        if 'train' not in d:
-            d['train'] = 0
-
+def make_counts(all_counts):
+    '''all_counts should be counts dictionary made by samples_table.make_samples_tsv()'''
     europe_countries = {
         'Belgium',
         'Germany',
@@ -80,8 +67,8 @@ def make_counts():
         'UK',
     }
 
-    europe_counts = {x: counts[x] for x in europe_countries}
-    world_counts = {x: counts[x] for x in counts if x not in europe_countries}
+    europe_counts = {x: all_counts[x] for x in europe_countries}
+    world_counts = {x: all_counts[x] for x in all_counts if x not in europe_countries}
     world_counts['Europe'] = {'test': 0, 'train': 0, 'validate': 0}
     for x in europe_counts:
         for k in world_counts['Europe']:
@@ -178,11 +165,11 @@ def make_legend(outprefix, debug=False):
         os.unlink(svg_file)
 
 
-def make_maps(outprefix, debug=False):
+def make_maps(outprefix, country_counts, debug=False):
     world_outprefix = f'{outprefix}.world'
     europe_outprefix = f'{outprefix}.europe'
     make_legend(f'{outprefix}.legend', debug=debug)
-    world_counts, europe_counts = make_counts()
+    world_counts, europe_counts = make_counts(country_counts)
     make_map_with_donuts(world_counts, world_outprefix, europe=False, debug=debug)
     make_map_with_donuts(europe_counts, europe_outprefix, europe=True, debug=debug)
 
