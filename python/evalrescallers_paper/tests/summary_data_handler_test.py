@@ -51,22 +51,22 @@ class TestSummaryDataHandler(unittest.TestCase):
         expect_tool_counts = {
             'mykrobe': {
                 'Isoniazid': {
-                    'tool1': {'TP': 2, 'FP': 0, 'TN': 0, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 0},
-                    'tool2': {'TP': 1, 'FP': 0, 'TN': 0, 'FN': 0, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 0},
+                    'tool1': {'TP': 2, 'FP': 0, 'TN': 0, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                    'tool2': {'TP': 1, 'FP': 0, 'TN': 0, 'FN': 0, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
                 },
                 'Rifampicin': {
-                    'tool1': {'TP': 1, 'FP': 0, 'TN': 1, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 0},
-                    'tool2': {'TP': 0, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 1, 'UNK': 0},
+                    'tool1': {'TP': 1, 'FP': 0, 'TN': 1, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                    'tool2': {'TP': 0, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 1, 'UNK_S': 0, 'UNK_R': 0},
                 },
             },
             '10k': {
                 'Rifampicin': {
-                    'tool1': {'TP': 0, 'FP': 0, 'TN': 2, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 0},
-                    'tool2': {'TP': 0, 'FP': 1, 'TN': 0, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 1},
+                    'tool1': {'TP': 0, 'FP': 0, 'TN': 2, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                    'tool2': {'TP': 0, 'FP': 1, 'TN': 0, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 1, 'UNK_R': 0},
                 },
                 'Pyrazinamide': {
-                    'tool1': {'TP': 1, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 0},
-                    'tool2': {'TP': 1, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 0},
+                    'tool1': {'TP': 1, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                    'tool2': {'TP': 1, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
                 },
             },
         }
@@ -147,38 +147,38 @@ class TestSummaryDataHandler(unittest.TestCase):
         tools_counts = {
             'mykrobe': {
                 'drug1': {
-                    'tool1': {'TP': 2, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 2},
-                    'tool2': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 0, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 3},
+                    'tool1': {'TP': 2, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 2},
+                    'tool2': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 0, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 3},
                 },
                 'drug2': {
-                    'tool1': {'TP': 1, 'FP': 1, 'TN': 2, 'FN': 3, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 0},
-                    'tool2': {'TP': 1, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 0},
+                    'tool1': {'TP': 1, 'FP': 1, 'TN': 2, 'FN': 3, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                    'tool2': {'TP': 1, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
                 },
             },
             '10k': {
                 'drug2': {
-                    'tool1': {'TP': 2, 'FP': 1, 'TN': 4, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 0},
-                    'tool2': {'TP': 0, 'FP': 1, 'TN': 0, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 1},
+                    'tool1': {'TP': 2, 'FP': 1, 'TN': 4, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                    'tool2': {'TP': 0, 'FP': 1, 'TN': 0, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 1},
                 },
                 'drug3': {
-                    'tool1': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 0},
-                    'tool2': {'TP': 1, 'FP': 0, 'TN': 1, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 1},
+                    'tool1': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                    'tool2': {'TP': 1, 'FP': 0, 'TN': 1, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 1},
                 },
             },
         }
 
         expect_all = {
             'drug1': {
-                'tool1': {'TP': 2, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 2},
-                'tool2': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 0, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 3},
+                'tool1': {'TP': 2, 'FP': 0, 'TN': 0, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 2},
+                'tool2': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 0, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 3},
             },
             'drug2': {
-                'tool1': {'TP': 3, 'FP': 2, 'TN': 6, 'FN': 4, 'FAIL_R': 2, 'FAIL_S': 0, 'UNK': 0},
-                'tool2': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 1},
+                'tool1': {'TP': 3, 'FP': 2, 'TN': 6, 'FN': 4, 'FAIL_R': 2, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                'tool2': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 1},
             },
             'drug3': {
-                'tool1': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 0},
-                'tool2': {'TP': 1, 'FP': 0, 'TN': 1, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 1},
+                'tool1': {'TP': 1, 'FP': 1, 'TN': 0, 'FN': 1, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
+                'tool2': {'TP': 1, 'FP': 0, 'TN': 1, 'FN': 0, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 1},
             },
         }
         expect_tools_counts = copy.copy(tools_counts)
@@ -238,15 +238,15 @@ class TestSummaryDataHandler(unittest.TestCase):
         tool_counts = {
             'mykrobe': {
                 'drug1': {
-                    'tool1': {'TP': 9, 'FP': 1, 'TN': 10, 'FN': 2, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 1},
+                    'tool1': {'TP': 9, 'FP': 1, 'TN': 10, 'FN': 2, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 1},
                 },
                 'drug2': {
-                    'tool2': {'TP': 10, 'FP': 0, 'TN': 3, 'FN': 0, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK': 0},
+                    'tool2': {'TP': 10, 'FP': 0, 'TN': 3, 'FN': 0, 'FAIL_R': 1, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 0},
                 },
             },
             '10k': {
                 'drug3': {
-                    'tool1': {'TP': 3, 'FP': 3, 'TN': 1, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK': 1},
+                    'tool1': {'TP': 3, 'FP': 3, 'TN': 1, 'FN': 1, 'FAIL_R': 0, 'FAIL_S': 0, 'UNK_S': 0, 'UNK_R': 1},
                 },
             },
         }

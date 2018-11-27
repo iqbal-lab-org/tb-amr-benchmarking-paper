@@ -78,7 +78,7 @@ class SummaryDataHandler:
                         continue
 
                     if tool not in tools_counts[dataset][drug]:
-                        tools_counts[dataset][drug][tool] = {x: 0 for x in ['TP', 'FP', 'TN', 'FN', 'UNK', 'FAIL_R', 'FAIL_S']}
+                        tools_counts[dataset][drug][tool] = {x: 0 for x in ['TP', 'FP', 'TN', 'FN', 'UNK_R', 'UNK_S', 'FAIL_R', 'FAIL_S']}
                         variant_counts[dataset][drug][tool] = {}
                         conf_and_depths[dataset][drug][tool] = {x: [] for x in ['TP', 'FP', 'TN', 'FN']}
 
@@ -117,7 +117,7 @@ class SummaryDataHandler:
                         elif call == 'S':
                             call = 'TN' if pheno == 'S' else 'FN'
                         else:
-                            call = 'UNK'
+                            call = f'UNK_{pheno}'
 
                         for t in conf_depths_tuples:
                             conf_and_depths[dataset][drug][tool][call].append(t)
@@ -193,7 +193,7 @@ class SummaryDataHandler:
         all_counts = {}
 
         with open(outfile, 'w') as f:
-            print('Dataset', 'Drug', 'Tool', 'TP', 'TN', 'FP', 'FN', 'FAIL_R', 'FAIL_S', 'UNK',
+            print('Dataset', 'Drug', 'Tool', 'TP', 'TN', 'FP', 'FN', 'FAIL_R', 'FAIL_S', 'UNK_R', 'UNK_S',
                 'Sensitivity', 'Sensitivity_conf_low', 'Sensitivity_conf_high',
                 'Specificity', 'Specificity_conf_low', 'Specificity_conf_high',
                 'PPV', 'PPV_conf_low', 'PPV_conf_high',
@@ -241,7 +241,7 @@ class SummaryDataHandler:
                         fpr_conf_low, fpr_conf_high = stats.binconf(d['FP'], d['TN'])
 
 
-                        print(dataset, drug, tool, d['TP'], d['TN'], d['FP'], d['FN'], d['FAIL_R'], d['FAIL_S'], d['UNK'],
+                        print(dataset, drug, tool, d['TP'], d['TN'], d['FP'], d['FN'], d['FAIL_R'], d['FAIL_S'], d['UNK_R'], d['UNK_S'],
                             sensitivity, sensitivity_conf_low, sensitivity_conf_high,
                             specificity, specificity_conf_low, specificity_conf_high,
                             ppv, ppv_conf_low, ppv_conf_high,
