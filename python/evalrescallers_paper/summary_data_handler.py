@@ -308,16 +308,16 @@ class SummaryDataHandler:
 
 
     def run(self, outprefix):
-        tools_counts, variant_counts, conf_counts, regimen_counts = SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(self.summary_json_data, self.truth_pheno, self.drugs, self.species, ten_k_predict=self.ten_k_predict, lower_case_r_means_resistant=self.r_means_resistant)
+        self.tools_counts, self.variant_counts, self.conf_counts, self.regimen_counts = SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(self.summary_json_data, self.truth_pheno, self.drugs, self.species, ten_k_predict=self.ten_k_predict, lower_case_r_means_resistant=self.r_means_resistant)
         # For TB we have the mykrobe paper data set, plus the 10k set.
         # This means we need to do the calculations of summing the
         # two data sets. But not relevant for staph, where there is only
         # the mykrobe data set.
         if self.species == 'tb':
-            SummaryDataHandler.add_all_counts_to_tools_counts(tools_counts)
-            SummaryDataHandler.add_all_variants_to_variant_counts(variant_counts)
-            SummaryDataHandler.write_regimen_counts_file(regimen_counts, outprefix + '.regimen_counts.tsv')
-        SummaryDataHandler.write_accuracy_stats_file(tools_counts, outprefix + '.accuracy_stats.tsv')
-        SummaryDataHandler.write_all_variant_counts_files(variant_counts, outprefix + '.variant_counts')
-        SummaryDataHandler.write_conf_file(conf_counts, outprefix + '.conf.tsv')
+            SummaryDataHandler.add_all_counts_to_tools_counts(self.tools_counts)
+            SummaryDataHandler.add_all_variants_to_variant_counts(self.variant_counts)
+            SummaryDataHandler.write_regimen_counts_file(self.regimen_counts, outprefix + '.regimen_counts.tsv')
+        SummaryDataHandler.write_accuracy_stats_file(self.tools_counts, outprefix + '.accuracy_stats.tsv')
+        SummaryDataHandler.write_all_variant_counts_files(self.variant_counts, outprefix + '.variant_counts')
+        SummaryDataHandler.write_conf_file(self.conf_counts, outprefix + '.conf.tsv')
 
