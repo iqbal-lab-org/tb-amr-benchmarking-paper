@@ -13,6 +13,7 @@ def make_samples_tsv(json_dict, outfile):
     # don't include Quinolones. It's inferred from the other drugs, and not
     # actually in the original data. The phenos are there as the separate drugs.
     myk_all_drugs.remove('Quinolones')
+    ten_k_drugs.remove('Quinolones')
 
     all_drugs = sorted(list(ten_k_drugs.union(myk_all_drugs)))
     dictionaries = [
