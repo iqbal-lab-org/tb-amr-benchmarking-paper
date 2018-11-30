@@ -1,5 +1,6 @@
 __all__ = [
     'bar_charts',
+    'common_data',
     'maps',
     'run_time_and_memory',
     'samples_table',
