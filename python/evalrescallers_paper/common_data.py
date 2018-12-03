@@ -19,6 +19,9 @@ drug_abbreviations = {
 }
 
 
+first_line_drugs = {'Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin'}
+
+
 tool_colours = {
     'ARIBA': '#1b9e77',
     'KvarQ': '#d95f02',
