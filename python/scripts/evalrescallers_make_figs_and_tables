@@ -21,7 +21,7 @@ options.summary_json = os.path.abspath(options.summary_json)
 r_is_res_prefix = 'r_is_resistant'
 r_is_susc_prefix = 'r_is_susceptible'
 samples_suppl_tsv = 'supplementary.table.samples.tsv'
-map_files_prefix = 'figure.map'
+map_files_prefix = 'figure.1.map'
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
 
@@ -37,12 +37,12 @@ with open(options.summary_json) as f:
     json_data = json.load(f)
 
 summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
-    json_data, 'tb', r_means_resistant=True)
-summary_data_handler.run(r_is_res_prefix)
-
-summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
     json_data, 'tb', r_means_resistant=False)
 summary_data_handler.run(r_is_susc_prefix)
+
+summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
+    json_data, 'tb', r_means_resistant=True)
+summary_data_handler.run(r_is_res_prefix)
 
 countries_dict = evalrescallers_paper.samples_table.make_samples_tsv(json_data, samples_suppl_tsv)
 evalrescallers_paper.maps.make_maps(map_files_prefix, countries_dict, debug=options.debug)
@@ -50,23 +50,61 @@ evalrescallers_paper.maps.make_maps(map_files_prefix, countries_dict, debug=opti
 evalrescallers_paper.run_time_and_memory.json_to_tsv(json_data, run_time_and_memory_tsv)
 evalrescallers_paper.run_time_and_memory.tsv_to_plot(run_time_and_memory_tsv, run_time_and_memory_plot_prefix)
 
-accuracy_tsv = f'{r_is_res_prefix}.accuracy_stats.tsv'
-tools = OrderedDict([
-    ('ARIBA', 'ARIBA'),
-    ('KvarQ', 'KvarQ'),
-    ('MTBseq', 'MTBseq'),
-    ('TB-Profiler', 'TB-Profiler'),
-    ('Mykrobe.Walker-2015', 'Mykrobe-2015'),
-    ('Mykrobe.201811', 'Mykrobe-2018'),
-    ('10k_predict', '10k_predict'),
-])
-drugs = OrderedDict([
-    ('Ethambutol', 'ETH'),
-    ('Isoniazid', 'ISO'),
-    ('Pyrazinamide', 'PZA'),
-    ('Rifampicin', 'RIF'),
-    ('Streptomycin', 'STREP'),
-])
 
-evalrescallers_paper.bar_charts.make_res_susc_bar_charts(accuracy_tsv, ['10k_test', '10k_validate', 'mykrobe'], tools, drugs, 'figure.bar_plot')
+evalrescallers_paper.horizontal_bar_chart.make_plot(
+    summary_data_handler.tools_counts['10k_validate'],
+    ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.CP2'],
+    ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin',
+        'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
+    'figure.2.svg',
+    how_to_scale='not at all',
+)
 
+evalrescallers_paper.horizontal_bar_chart.make_plot(
+    summary_data_handler.tools_counts['10k_test'],
+    ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811'],
+    sorted(list(evalrescallers_paper.common_data.first_line_drugs)),
+    'figure.3a.svg',
+    how_to_scale='not at all',
+    susc_gap=[800,3800],
+    susc_xticks=[0,250,500,750,4000],
+    res_xticks=[0,250],
+    plot_gap_size=20
+)
+
+evalrescallers_paper.horizontal_bar_chart.make_plot(
+    summary_data_handler.tools_counts['10k_test'],
+    ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811'],
+    ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
+    'figure.3b.svg',
+    how_to_scale='not at all',
+    susc_gap=[220,680],
+    susc_xticks=[0,50,100,150,200,700],
+    res_xticks=[0,50],
+    plot_gap_size=4
+)
+
+
+evalrescallers_paper.horizontal_bar_chart.make_plot(
+    summary_data_handler.tools_counts['10k_test'],
+    ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201811', 'TB-Profiler'],
+    sorted(list(evalrescallers_paper.common_data.first_line_drugs)),
+    'figure.4a.svg',
+    how_to_scale='not at all',
+    susc_gap=[300,3850],
+    susc_xticks=[0,100,200,3900,4000,4100,4200,4300],
+    res_xticks=[0,100,200,300],
+    plot_gap_size=15
+)
+
+evalrescallers_paper.horizontal_bar_chart.make_plot(
+    summary_data_handler.tools_counts['10k_test'],
+    ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201811', 'TB-Profiler'],
+    ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
+    'figure.4b.svg',
+    how_to_scale='not at all',
+    susc_gap=[230,660],
+    susc_xticks=[0,50,100,150,200,700],
+    res_xticks=[0,50],
+    plot_gap_size=6
+)
