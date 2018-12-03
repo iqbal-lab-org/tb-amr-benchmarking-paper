@@ -51,18 +51,21 @@ evalrescallers_paper.run_time_and_memory.json_to_tsv(json_data, run_time_and_mem
 evalrescallers_paper.run_time_and_memory.tsv_to_plot(run_time_and_memory_tsv, run_time_and_memory_plot_prefix)
 
 
+plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.CP2']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_validate'],
-    ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.CP2'],
+    plot_tools,
     ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin',
         'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
     'figure.2.svg',
     how_to_scale='not at all',
 )
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, 'figure.2.legend.svg')
 
+plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
-    ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811'],
+    plot_tools,
     sorted(list(evalrescallers_paper.common_data.first_line_drugs)),
     'figure.3a.svg',
     how_to_scale='not at all',
@@ -74,7 +77,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
-    ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811'],
+    plot_tools,
     ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
     'figure.3b.svg',
     how_to_scale='not at all',
@@ -84,10 +87,13 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     plot_gap_size=4
 )
 
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, 'figure.3.legend.svg')
 
+
+plot_tools = ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201811', 'TB-Profiler']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
-    ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201811', 'TB-Profiler'],
+    plot_tools,
     sorted(list(evalrescallers_paper.common_data.first_line_drugs)),
     'figure.4a.svg',
     how_to_scale='not at all',
@@ -99,7 +105,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
-    ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201811', 'TB-Profiler'],
+    plot_tools,
     ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
     'figure.4b.svg',
     how_to_scale='not at all',
@@ -108,3 +114,5 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     res_xticks=[0,50],
     plot_gap_size=6
 )
+
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, 'figure.4.legend.svg')
