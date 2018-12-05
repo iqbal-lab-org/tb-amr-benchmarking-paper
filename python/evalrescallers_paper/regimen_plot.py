@@ -123,7 +123,7 @@ def plot_one_tool(data, outfile, ignore=None):
 
     for drug in drugs:
         drug_to_x_centre[drug] = x + 0.5 * drug_col_width
-        svg_lines.append(svg.svg_text(x + 0.5 * drug_col_width, 8, drug, 12))
+        svg_lines.append(svg.svg_text(x + 0.5 * drug_col_width, 8, drug, 12, vertical_align='middle'))
         x += drug_col_width
 
     x += 80
@@ -160,14 +160,14 @@ def plot_one_tool(data, outfile, ignore=None):
         svg_node_lines.append(svg.svg_rectangle(left_node_x, y, left_node_x + node_width, node_y_bottom,
             colours[int(node)], colours[int(node)], border_width=1))
         svg_lines.append(svg.svg_text(left_node_x - 110, 0.5 * (y + node_y_bottom),
-            who_treatment.regimens[node+1].definition, 11, position='start', font_family='arial'))
+            who_treatment.regimens[node+1].definition, 11, position='start', font_family='arial', vertical_align='middle'))
         svg_lines.append(svg.svg_text(left_node_x - 5, 0.5 * (y + node_y_bottom),
-            str(total_samples), 11, position='end', font_family='arial'))
+            str(total_samples), 11, position='end', font_family='arial', vertical_align='middle'))
 
         if node in to_ignore:
             total_ignored = sum(to_ignore[node].values())
             svg_lines.append(svg.svg_text(left_node_x - 5, 0.5 * (y + node_y_bottom) + 12,
-                f'(+{total_ignored})', 11, position='end', font_family='arial'))
+                f'(+{total_ignored})', 11, position='end', font_family='arial', vertical_align='middle'))
 
         y = node_y_bottom + node_y_gap
 
@@ -181,11 +181,11 @@ def plot_one_tool(data, outfile, ignore=None):
         svg_node_lines.append(svg.svg_rectangle(right_node_x, y, right_node_x + node_width, node_y_bottom,
             colours[int(node)], colours[int(node)], border_width=1))
         svg_lines.append(svg.svg_text(right_node_x + node_width + 3, 0.5 * (y + node_y_bottom),
-            str(total_samples), 11, position='start', font_family='arial'))
+            str(total_samples), 11, position='start', font_family='arial', vertical_align='middle'))
         if node in to_ignore:
             total_ignored = sum(to_ignore[node].values())
             svg_lines.append(svg.svg_text(right_node_x + node_width + 3, 0.5 * (y + node_y_bottom) + 12,
-                f'(+{total_ignored})', 11, position='start', font_family='arial'))
+                f'(+{total_ignored})', 11, position='start', font_family='arial', vertical_align='middle'))
 
         y = node_y_bottom + node_y_gap
 
