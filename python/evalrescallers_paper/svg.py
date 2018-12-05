@@ -38,7 +38,7 @@ def svg_rectangle(x1, y1, x2, y2, fill_colour, border_colour, border_width=1, op
     return svg_polygon(coords, fill_colour, border_colour, border_width=border_width, opacity=opacity)
 
 
-def svg_text(x, y, text, fontsize, position='middle', writing_mode='lr', vertical=False, font_family='arial'):
+def svg_text(x, y, text, fontsize, position='middle', writing_mode='lr', vertical=False, font_family='arial', vertical_align='bottom'):
     if vertical:
         vert = 'transform="rotate(-90,' + str(x) + ',' + str(y) + ')" '
     else:
@@ -50,6 +50,7 @@ def svg_text(x, y, text, fontsize, position='middle', writing_mode='lr', vertica
         'text-anchor="' + position + '" ',
         'font-size="' + str(fontsize) + '" ',
         'font-family="' + font_family + '" ',
+        f'dominant-baseline="{vertical_align}" ',
         'writing-mode="' + writing_mode + '" ',
         'x="' + str(x) + '" ',
         'y="' + str(y) + '">',
