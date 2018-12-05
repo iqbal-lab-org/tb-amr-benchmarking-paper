@@ -3,6 +3,7 @@ __all__ = [
     'common_data',
     'horizontal_bar_chart',
     'maps',
+    'regimen_plot',
     'run_time_and_memory',
     'samples_table',
     'stats',
