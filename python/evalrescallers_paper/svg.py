@@ -56,3 +56,13 @@ def svg_text(x, y, text, fontsize, position='middle', writing_mode='lr', vertica
         text,
         '</text>'])
 
+
+def svg_circle(x, y, r, fill, stroke, stroke_width=1):
+        return '<circle fill="' + fill + '" ' \
+                + 'stroke="' + stroke + '" ' \
+                + 'stroke-width="' + str(stroke_width) + '" ' \
+                + 'cx="' + str(x) + '" ' \
+                + 'cy="' + str(y) + '" ' \
+                + 'r="' + str(r) + '" ' \
+                + '/>'
+
