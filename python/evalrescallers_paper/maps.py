@@ -13,13 +13,12 @@ import matplotlib.pyplot as plt
 
 from evalrescallers import ten_k_validation_data
 
+from evalrescallers_paper import svg
+
 
 mykrobe_colour = '#7fc97f'
 validate_colour = '#beaed4'
 test_colour = '#fdc086'
-
-def svg2pdf(infile, outfile):
-    subprocess.check_output(f'inkscape {infile} --export-pdf {outfile}', shell=True)
 
 
 def make_map_no_donuts(outfile, europe=False):
@@ -135,7 +134,7 @@ def make_map_with_donuts(counts, outprefix, europe=False, debug=False):
     with open(final_svg, 'w') as f:
         print(*svg_lines, sep='\n', file=f)
 
-    svg2pdf(final_svg, final_pdf)
+    svg.svg2pdf(final_svg, final_pdf)
 
     if not debug:
         os.unlink(no_donuts_svg)
@@ -160,7 +159,7 @@ def make_legend(outprefix, debug=False):
     with open(svg_file, 'w') as f:
         print(textwrap.dedent(s), file=f)
 
-    svg2pdf(svg_file, pdf_file)
+    svg.svg2pdf(svg_file, pdf_file)
     if not debug:
         os.unlink(svg_file)
 

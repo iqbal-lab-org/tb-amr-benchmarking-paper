@@ -7,6 +7,7 @@ __all__ = [
     'samples_table',
     'stats',
     'summary_data_handler',
+    'svg',
 ]
 
 from evalrescallers_paper import *
