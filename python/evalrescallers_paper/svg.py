@@ -66,3 +66,19 @@ def svg_circle(x, y, r, fill, stroke, stroke_width=1):
                 + 'r="' + str(r) + '" ' \
                 + '/>'
 
+
+def svg_ribbon(x1, y11, y12, x2, y21, y22, fill_colour, border_colour, border_width=1, opacity=-1):
+    # Need to draw two bezier curves, same x coords, different y coords
+    x_mid = 0.5 * (x1 + x2)
+    y_mid1 = 0.5 * (y11 + y21)
+    y_mid2 = 0.5 * (y12 + y22)
+    opacity_string = '' if opacity == -1 else f';fill-opacity:{opacity}'
+
+    return ''.join([
+        '<path ',
+        f'style="fill:{fill_colour};stroke:{border_colour}{opacity_string}" ',
+        f'd="M{x1},{y11} C{x_mid},{y11} {x_mid},{y21} {x2},{y21} ', # top curve
+        f'L{x2},{y22}', # right line
+        f'C{x_mid},{y22} {x_mid},{y12} {x1},{y12}' # bottom curve
+        ' Z" />',  # close the path
+    ])
