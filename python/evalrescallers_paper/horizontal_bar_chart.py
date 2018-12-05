@@ -139,10 +139,10 @@ def make_plot(stats_dict, tools, drugs, outfile, first_line=False, ten_k=False, 
 
             y += bar_height
 
-        svg_lines.append(svg.svg_text(x_centre, 0.5 * (y_drug_top + y) + 7, common_data.drug_abbreviations[drug], 15))
+        svg_lines.append(svg.svg_text(x_centre, 0.5 * (y_drug_top + y), common_data.drug_abbreviations[drug], 15, vertical_align='middle'))
         if how_to_scale == 'all to 100':
-            svg_lines.append(svg.svg_text(x_susc_bar_left - 3, 0.5 * (y_drug_top + y) + 7, str(sample_count[drug]['susc']), 15, position='end'))
-            svg_lines.append(svg.svg_text(x_res_bar_right + 3, 0.5 * (y_drug_top + y) + 7, str(sample_count[drug]['res']), 15, position='start'))
+            svg_lines.append(svg.svg_text(x_susc_bar_left - 3, 0.5 * (y_drug_top + y), str(sample_count[drug]['susc']), 15, position='end', vertical_align='middle'))
+            svg_lines.append(svg.svg_text(x_res_bar_right + 3, 0.5 * (y_drug_top + y), str(sample_count[drug]['res']), 15, position='start', vertical_align='middle'))
 
         y += drug_spacer
 
@@ -207,7 +207,7 @@ def make_legend(tools, outfile):
 
     for tool in tools:
         svg_lines.append(svg.svg_rectangle(square_left, y, square_right, y + square_len, common_data.tool_colours[tool], 'black'))
-        svg_lines.append(svg.svg_text(square_right + 5, y + square_len - 0.4 * font_size, tool, font_size, position='start'))
+        svg_lines.append(svg.svg_text(square_right + 5, y + 0.5  * square_len, tool, font_size, position='start', vertical_align='middle'))
         y += square_len + y_space
 
     f = open(outfile, 'w')
