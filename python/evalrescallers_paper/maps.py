@@ -5,6 +5,9 @@ import argparse
 import subprocess
 import textwrap
 
+import matplotlib
+matplotlib.use('Agg')
+
 # Note need this installed:
 # sudo apt-get install python3-mpltoolkits.basemap
 # for import Basemap to work
