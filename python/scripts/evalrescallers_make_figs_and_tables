@@ -8,6 +8,7 @@ import os
 import evalrescallers_paper
 
 
+
 parser = argparse.ArgumentParser(
     description = 'Makes figures and tables for paper',
     usage='%(prog)s <summary.json> <out_directory>',
@@ -23,6 +24,9 @@ r_is_res_accuracy_stats_tsv = f'{r_is_res_prefix}.accuracy_stats.tsv'
 r_is_susc_prefix = 'r_is_susceptible'
 samples_suppl_tsv = 'supplementary.table.samples.tsv'
 map_files_prefix = 'figure.1.map'
+map_world_pdf = f'{map_files_prefix}.world.pdf'
+map_europe_pdf = f'{map_files_prefix}.europe.pdf'
+map_legend_pdf = f'{map_files_prefix}.legend.pdf'
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
 
@@ -124,3 +128,41 @@ evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], 
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
 evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201811', first_line_sorted, '10k_test', 'table.1.tex')
+
+
+
+# Make a tex file that has the figues and table in. Can then copy+paste
+# this into final latex file
+f = open('latex.tex', 'w')
+print(r'''\documentclass{article}
+\usepackage{graphicx}
+\usepackage{grffile}
+\begin{document}
+
+
+\begin{figure}[h]
+  \begin{picture}(400,300)
+      \put(5,150){\includegraphics[width=14cm, trim=1.95cm 1.95cm 1.95cm 1.95cm,clip=true]{''' + map_world_pdf + r'''}}
+      \put(5,0){\includegraphics[width=10cm, trim=1.9cm 1.9cm 1.9cm 1.9cm,clip=true]{''' + map_europe_pdf + r'''}}
+      \put(330,55){\includegraphics[width=2.5cm]{''' + map_legend_pdf + r'''}}
+  \end{picture}
+  \caption{Caption for map figure}
+  \label{figure: maps}
+\end{figure}
+
+\begin{figure}[h]'
+  \begin{picture}(100,200)
+    \put(5,100){\includegraphics{''' + map_world_pdf + r'''}}
+    \put(5,0){\includegraphics{''' + map_europe_pdf + r'''}}
+    \put(70,0){\includegraphics{''' + map_legend_pdf + r'''}}
+  \end{picture}
+  \caption{Caption for map figure}
+  \label{figure: maps}
+\end{figure}
+
+
+\end{document}''', file=f)
+
+f.close()
+
+
