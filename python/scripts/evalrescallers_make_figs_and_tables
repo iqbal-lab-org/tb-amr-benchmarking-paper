@@ -36,14 +36,12 @@ figure_barplot_test_dataset_myk_compare_fig_a_pdf = f'{figure_barplot_test_datas
 figure_barplot_test_dataset_myk_compare_legend_pdf = f'{figure_barplot_test_dataset_myk_compare_prefix}.legend.pdf'
 figure_barplot_test_dataset_myk_compare_fig_b_prefix = f'{figure_barplot_test_dataset_myk_compare_prefix}.b'
 figure_barplot_test_dataset_myk_compare_fig_b_pdf = f'{figure_barplot_test_dataset_myk_compare_fig_b_prefix}.pdf'
-figure_barplot_test_dataset_myk_compare_fig_b_legend_pdf = f'{figure_barplot_test_dataset_myk_compare_fig_b_prefix}.legend.pdf'
 figure_barplot_test_dataset_tool_compare_prefix = 'figure.4'
 figure_barplot_test_dataset_tool_compare_fig_a_prefix = f'{figure_barplot_test_dataset_tool_compare_prefix}.a'
 figure_barplot_test_dataset_tool_compare_fig_a_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_a_prefix}.pdf'
 figure_barplot_test_dataset_tool_compare_legend_pdf = f'{figure_barplot_test_dataset_tool_compare_prefix}.legend.pdf'
 figure_barplot_test_dataset_tool_compare_fig_b_prefix = f'{figure_barplot_test_dataset_tool_compare_prefix}.b'
 figure_barplot_test_dataset_tool_compare_fig_b_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_b_prefix}.pdf'
-figure_barplot_test_dataset_tool_compare_fig_b_legend_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_b_prefix}.legend.pdf'
 figure_regimen_plot_prefix = f'figure.5'
 figure_regimen_plot_pdf = f'figure.5.pdf'
 
@@ -140,7 +138,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     plot_gap_size=6
 )
 
-evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_myk_compare_fig_b_prefix}.legend.svg')
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_tool_compare_prefix}.legend.svg')
 
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.tsv', '10k_test')
@@ -193,6 +191,20 @@ print(r'''\documentclass{article}
   \caption{Caption for validate dataset bar plots}
   \label{figure: barplot validate dataset}
 \end{figure}
+
+\newpage
+\begin{figure}[h]
+  \begin{picture}(400,500)
+    \put(20,360){\includegraphics[width=11cm]{''' + figure_barplot_test_dataset_tool_compare_fig_a_pdf  + r'''}}
+    \put(20,0){\includegraphics[width=11cm]{''' + figure_barplot_test_dataset_tool_compare_fig_b_pdf  + r'''}}
+    \put(350,290){\includegraphics[width=5cm]{''' + figure_barplot_test_dataset_tool_compare_legend_pdf  + r'''}}
+    \put(0,545){\bf (a)}
+    \put(0,335){\bf (b)}
+  \end{picture}
+  \caption{Caption for validate dataset bar plots}
+  \label{figure: barplot validate dataset}
+\end{figure}
+
 
 \end{document}''', file=f)
 
