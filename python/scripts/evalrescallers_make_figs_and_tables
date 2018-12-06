@@ -30,6 +30,23 @@ map_legend_pdf = f'{map_files_prefix}.legend.pdf'
 figure_barplot_validate_dataset_prefix = 'figure.2'
 figure_barplot_validate_dataset_fig_pdf = f'{figure_barplot_validate_dataset_prefix}.pdf'
 figure_barplot_validate_dataset_legend_pdf = f'{figure_barplot_validate_dataset_prefix}.legend.pdf'
+figure_barplot_test_dataset_myk_compare_prefix = 'figure.3'
+figure_barplot_test_dataset_myk_compare_fig_a_prefix = f'{figure_barplot_test_dataset_myk_compare_prefix}.a'
+figure_barplot_test_dataset_myk_compare_fig_a_pdf = f'{figure_barplot_test_dataset_myk_compare_fig_a_prefix}.pdf'
+figure_barplot_test_dataset_myk_compare_fig_a_legend_pdf = f'{figure_barplot_test_dataset_myk_compare_fig_a_prefix}.legend.pdf'
+figure_barplot_test_dataset_myk_compare_fig_b_prefix = f'{figure_barplot_test_dataset_myk_compare_prefix}.b'
+figure_barplot_test_dataset_myk_compare_fig_b_pdf = f'{figure_barplot_test_dataset_myk_compare_fig_b_prefix}.pdf'
+figure_barplot_test_dataset_myk_compare_fig_b_legend_pdf = f'{figure_barplot_test_dataset_myk_compare_fig_b_prefix}.legend.pdf'
+figure_barplot_test_dataset_tool_compare_prefix = 'figure.4'
+figure_barplot_test_dataset_tool_compare_fig_a_prefix = f'{figure_barplot_test_dataset_tool_compare_prefix}.a'
+figure_barplot_test_dataset_tool_compare_fig_a_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_a_prefix}.pdf'
+figure_barplot_test_dataset_tool_compare_fig_a_legend_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_a_prefix}.legend.pdf'
+figure_barplot_test_dataset_tool_compare_fig_b_prefix = f'{figure_barplot_test_dataset_tool_compare_prefix}.b'
+figure_barplot_test_dataset_tool_compare_fig_b_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_b_prefix}.pdf'
+figure_barplot_test_dataset_tool_compare_fig_b_legend_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_b_prefix}.legend.pdf'
+figure_regimen_plot_prefix = f'figure.5'
+figure_regimen_plot_pdf = f'figure.5.pdf'
+
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
 
@@ -75,7 +92,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
     sorted(list(evalrescallers_paper.common_data.first_line_drugs)),
-    'figure.3a.svg',
+    f'{figure_barplot_test_dataset_myk_compare_fig_a_prefix}.svg',
     how_to_scale='not at all',
     susc_gap=[800,3800],
     susc_xticks=[0,250,500,750,4000],
@@ -87,7 +104,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
     ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
-    'figure.3b.svg',
+    f'{figure_barplot_test_dataset_myk_compare_fig_b_prefix}.svg',
     how_to_scale='not at all',
     susc_gap=[220,680],
     susc_xticks=[0,50,100,150,200,700],
@@ -95,7 +112,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     plot_gap_size=4
 )
 
-evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, 'figure.3.legend.svg')
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_myk_compare_fig_a_prefix}.legend.svg')
 
 
 plot_tools = ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201811', 'TB-Profiler']
@@ -103,7 +120,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
     sorted(list(evalrescallers_paper.common_data.first_line_drugs)),
-    'figure.4a.svg',
+    f'{figure_barplot_test_dataset_tool_compare_fig_a_prefix}.svg',
     how_to_scale='not at all',
     susc_gap=[300,3850],
     susc_xticks=[0,100,200,3900,4000,4100,4200,4300],
@@ -115,7 +132,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
     ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
-    'figure.4b.svg',
+    f'{figure_barplot_test_dataset_tool_compare_fig_b_prefix}.svg',
     how_to_scale='not at all',
     susc_gap=[230,660],
     susc_xticks=[0,50,100,150,200,700],
@@ -123,11 +140,11 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     plot_gap_size=6
 )
 
-evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, 'figure.4.legend.svg')
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_myk_compare_fig_b_prefix}.legend.svg')
 
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.tsv', '10k_test')
-evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], 'figure.5.svg', ignore=[(0, 0)])
+evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], f'{figure_regimen_plot_prefix}.svg', ignore=[(0, 0)])
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
 evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201811', first_line_sorted, '10k_test', 'table.1.tex')
