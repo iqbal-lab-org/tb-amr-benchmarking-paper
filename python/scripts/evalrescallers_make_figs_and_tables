@@ -174,7 +174,7 @@ print(r'''\documentclass{article}
 \begin{figure}[h]
   \begin{picture}(400,300)
     \put(0,0){\includegraphics[width=11cm]{''' + figure_barplot_validate_dataset_fig_pdf  + r'''}}
-    \put(310,45){\includegraphics[width=5cm]{''' + figure_barplot_validate_dataset_legend_pdf  + r'''}}
+    \put(320,100){\includegraphics[width=5cm]{''' + figure_barplot_validate_dataset_legend_pdf  + r'''}}
   \end{picture}
   \caption{Caption for validate dataset bar plots}
   \label{figure: barplot validate dataset}
