@@ -68,7 +68,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     f'{figure_barplot_validate_dataset_prefix}.svg',
     how_to_scale='not at all',
 )
-evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_validate_dataset_prefix}.legend.svg')
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_validate_dataset_prefix}.legend.svg', 'Tool/panel')
 
 plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
