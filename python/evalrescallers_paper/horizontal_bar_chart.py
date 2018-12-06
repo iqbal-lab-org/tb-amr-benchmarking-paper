@@ -194,15 +194,19 @@ def make_plot(stats_dict, tools, drugs, outfile, first_line=False, ten_k=False, 
     svg.svg2pdf(outfile, outfile.replace('.svg', '.pdf'))
 
 
-def make_legend(tools, outfile):
+def make_legend(tools, outfile, header=None):
     font_size = 14
     square_len = 20
     y_space = 3
     svg_lines = []
-    y = 5
+    y = 10
     square_left = 5
     square_right = square_left + square_len
     total_width=200
+
+    if header is not None:
+        svg_lines.append(svg.svg_text(square_right, y, header, font_size + 1, position='start', vertical_align='middle'))
+        y += 15
 
 
     for tool in tools:
