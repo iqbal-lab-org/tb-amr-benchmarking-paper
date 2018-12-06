@@ -142,24 +142,13 @@ print(r'''\documentclass{article}
 
 \begin{figure}[h]
   \begin{picture}(400,300)
-      \put(5,150){\includegraphics[width=14cm, trim=1.95cm 1.95cm 1.95cm 1.95cm,clip=true]{''' + map_world_pdf + r'''}}
+      \put(5,160){\includegraphics[width=14cm, trim=1.95cm 1.95cm 1.95cm 1.95cm,clip=true]{''' + map_world_pdf + r'''}}
       \put(5,0){\includegraphics[width=10cm, trim=1.9cm 1.9cm 1.9cm 1.9cm,clip=true]{''' + map_europe_pdf + r'''}}
       \put(330,55){\includegraphics[width=2.5cm]{''' + map_legend_pdf + r'''}}
   \end{picture}
   \caption{Caption for map figure}
   \label{figure: maps}
 \end{figure}
-
-\begin{figure}[h]'
-  \begin{picture}(100,200)
-    \put(5,100){\includegraphics{''' + map_world_pdf + r'''}}
-    \put(5,0){\includegraphics{''' + map_europe_pdf + r'''}}
-    \put(70,0){\includegraphics{''' + map_legend_pdf + r'''}}
-  \end{picture}
-  \caption{Caption for map figure}
-  \label{figure: maps}
-\end{figure}
-
 
 \end{document}''', file=f)
 
