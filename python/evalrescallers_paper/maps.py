@@ -117,6 +117,7 @@ def make_map_with_donuts(counts, outprefix, europe=False, debug=False):
     final_pdf = final_svg.replace('.svg', '.pdf')
     donut_files = make_donuts(counts, outprefix)
     make_map_no_donuts(no_donuts_svg, europe=europe)
+    donut_size = 40 if europe else 32
 
     with open(no_donuts_svg) as f:
         svg_lines = [x.rstrip() for x in f]
@@ -130,7 +131,7 @@ def make_map_with_donuts(counts, outprefix, europe=False, debug=False):
     for country in donut_files:
         x, y = donut_coords[country]
         filename = os.path.abspath(donut_files[country])
-        svg_lines.append(f'<image x="{x}" y="{y}" width="32" height="32" xlink:href="file:{filename}"></image>')
+        svg_lines.append(f'<image x="{x}" y="{y}" width="{donut_size}" height="{donut_size}" xlink:href="file:{filename}"></image>')
 
 
     svg_lines.append(last_svg_line)
