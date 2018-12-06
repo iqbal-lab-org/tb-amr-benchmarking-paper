@@ -83,7 +83,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     f'{figure_barplot_validate_dataset_prefix}.svg',
     how_to_scale='not at all',
 )
-evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_validate_dataset_prefix}.legend.svg', 'Tool/panel')
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_validate_dataset_prefix}.legend.svg', header='Tool/variant panel')
 
 plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
@@ -110,7 +110,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     plot_gap_size=4
 )
 
-evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_myk_compare_prefix}.legend.svg')
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_myk_compare_prefix}.legend.svg', header='Tool/variant panel')
 
 
 plot_tools = ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201811', 'TB-Profiler']
@@ -138,7 +138,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     plot_gap_size=6
 )
 
-evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_tool_compare_prefix}.legend.svg')
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_tool_compare_prefix}.legend.svg', header='Tool')
 
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.tsv', '10k_test')
@@ -184,12 +184,12 @@ print(r'''\documentclass{article}
   \begin{picture}(400,300)
     \put(20,200){\includegraphics[width=11cm]{''' + figure_barplot_test_dataset_myk_compare_fig_a_pdf  + r'''}}
     \put(20,0){\includegraphics[width=11cm]{''' + figure_barplot_test_dataset_myk_compare_fig_b_pdf  + r'''}}
-    \put(350,160){\includegraphics[width=5cm]{''' + figure_barplot_test_dataset_myk_compare_legend_pdf  + r'''}}
+    \put(350,140){\includegraphics[width=5cm]{''' + figure_barplot_test_dataset_myk_compare_legend_pdf  + r'''}}
     \put(0,320){\bf (a)}
     \put(0,170){\bf (b)}
   \end{picture}
   \caption{Caption for validate dataset bar plots}
-  \label{figure: barplot validate dataset}
+  \label{figure: barplot test dataset mykrobe panels}
 \end{figure}
 
 \newpage
@@ -202,7 +202,7 @@ print(r'''\documentclass{article}
     \put(0,335){\bf (b)}
   \end{picture}
   \caption{Caption for validate dataset bar plots}
-  \label{figure: barplot validate dataset}
+  \label{figure: barplot test dataset compare tools}
 \end{figure}
 
 
