@@ -27,6 +27,9 @@ map_files_prefix = 'figure.1.map'
 map_world_pdf = f'{map_files_prefix}.world.pdf'
 map_europe_pdf = f'{map_files_prefix}.europe.pdf'
 map_legend_pdf = f'{map_files_prefix}.legend.pdf'
+figure_barplot_validate_dataset_prefix = 'figure.2'
+figure_barplot_validate_dataset_fig_pdf = f'{figure_barplot_validate_dataset_prefix}.pdf'
+figure_barplot_validate_dataset_legend_pdf = f'{figure_barplot_validate_dataset_prefix}.legend.pdf'
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
 
@@ -62,10 +65,10 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     plot_tools,
     ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin',
         'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
-    'figure.2.svg',
+    f'{figure_barplot_validate_dataset_prefix}.svg',
     how_to_scale='not at all',
 )
-evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, 'figure.2.legend.svg')
+evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_validate_dataset_prefix}.legend.svg')
 
 plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
@@ -149,6 +152,18 @@ print(r'''\documentclass{article}
   \caption{Caption for map figure}
   \label{figure: maps}
 \end{figure}
+
+
+\begin{figure}[h]
+  \begin{picture}(400,300)
+    \put(0,0){\includegraphics[width=11cm]{''' + figure_barplot_validate_dataset_fig_pdf  + r'''}}
+    \put(310,45){\includegraphics[width=5cm]{''' + figure_barplot_validate_dataset_legend_pdf  + r'''}}
+  \end{picture}
+  \caption{Caption for validate dataset bar plots}
+  \label{figure: barplot validate dataset}
+\end{figure}
+
+
 
 \end{document}''', file=f)
 
