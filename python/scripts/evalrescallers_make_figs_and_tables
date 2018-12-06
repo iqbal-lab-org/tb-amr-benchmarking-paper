@@ -44,6 +44,7 @@ figure_barplot_test_dataset_tool_compare_fig_b_prefix = f'{figure_barplot_test_d
 figure_barplot_test_dataset_tool_compare_fig_b_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_b_prefix}.pdf'
 figure_regimen_plot_prefix = f'figure.5'
 figure_regimen_plot_pdf = f'figure.5.pdf'
+table_mykrobe_accuracy_tex = f'table.1.tex'
 
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
@@ -145,7 +146,7 @@ regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is
 evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], f'{figure_regimen_plot_prefix}.svg', ignore=[(0, 0)])
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
-evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201811', first_line_sorted, '10k_test', 'table.1.tex')
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201811', first_line_sorted, '10k_test', table_mykrobe_accuracy_tex)
 
 
 
@@ -214,6 +215,14 @@ print(r'''\documentclass{article}
   \caption{Caption for regimen figure}
   \label{figure: regimen for mykrobe}
 \end{figure}
+
+\clearpage
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_tex + r'''}
+  \caption{Caption for mykrobe accuracy table}
+  \label{label: mykrobe accuracy}
+\end{table}
 
 \end{document}''', file=f)
 
