@@ -37,7 +37,7 @@ def normcdfi(p, mu=0.0, sigma2=1.0):
 
 
 
-# copied from https://github.com/iqbal-lab/Mykrobe-predictor/blob/master/scripts/compare.py
+# adapted  from https://github.com/iqbal-lab/Mykrobe-predictor/blob/master/scripts/compare.py
 def binconf(p, n, c=0.95):
     '''
     Calculate binomial confidence interval based on the number of positive and
@@ -71,5 +71,5 @@ def binconf(p, n, c=0.95):
     a2 = p + z * z / (2 * N)
     a3 = z * math.sqrt(p * (1 - p) / N + z * z / (4 * N * N))
 
-    return round(a1 * (a2 - a3), 2), round(a1 * (a2 + a3), 2)
+    return round(100 * a1 * (a2 - a3), 1), round(100 * a1 * (a2 + a3), 1)
 
