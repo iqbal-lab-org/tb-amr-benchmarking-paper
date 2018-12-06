@@ -19,6 +19,7 @@ options = parser.parse_args()
 
 options.summary_json = os.path.abspath(options.summary_json)
 r_is_res_prefix = 'r_is_resistant'
+r_is_res_accuracy_stats_tsv = f'{r_is_res_prefix}.accuracy_stats.tsv'
 r_is_susc_prefix = 'r_is_susceptible'
 samples_suppl_tsv = 'supplementary.table.samples.tsv'
 map_files_prefix = 'figure.1.map'
@@ -120,3 +121,6 @@ evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, 'figure.4.lege
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.tsv', '10k_test')
 evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], 'figure.5.svg', ignore=[(0, 0)])
+
+first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201811', first_line_sorted, '10k_test', 'table.1.tex')
