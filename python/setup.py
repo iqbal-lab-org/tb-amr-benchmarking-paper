@@ -7,6 +7,7 @@ setup(
     version='0.0.1',
     description='Evaluation of TB AMR callers -- make figues and tables',
     packages = find_packages(),
+    package_data={'evalrescallers_paper': ['data/*']},
     author='Martin Hunt',
     author_email='mhunt@ebi.ac.uk',
     url='https://github.com/iqbal-lab-org/tb-amr-benchmarking-paper',
