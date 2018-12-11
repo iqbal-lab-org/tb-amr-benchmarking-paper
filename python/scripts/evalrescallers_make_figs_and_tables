@@ -4,6 +4,7 @@ import argparse
 from collections import OrderedDict
 import json
 import os
+import shutil
 
 import evalrescallers_paper
 
@@ -19,10 +20,16 @@ parser.add_argument('--debug', action='store_true', help='Do not delete temp fil
 options = parser.parse_args()
 
 options.summary_json = os.path.abspath(options.summary_json)
+
+evalrescallers_dir = os.path.abspath(os.path.dirname(evalrescallers_paper.__file__))
+python_data_dir = os.path.join(evalrescallers_dir, 'data')
+
+
 r_is_res_prefix = 'r_is_resistant'
 r_is_res_accuracy_stats_tsv = f'{r_is_res_prefix}.accuracy_stats.tsv'
 r_is_susc_prefix = 'r_is_susceptible'
 samples_suppl_tsv = 'supplementary.table.samples.tsv'
+removed_variants_tsv = 'supplementary.table.removed_variants.tsv'
 map_files_prefix = 'figure.1.map'
 map_world_pdf = f'{map_files_prefix}.world.pdf'
 map_europe_pdf = f'{map_files_prefix}.europe.pdf'
@@ -229,3 +236,6 @@ print(r'''\documentclass{article}
 f.close()
 
 
+eval_dir = os.path.abspath(os.path.dirname(evalrescallers_paper.__file__))
+to_copy = os.path.join(eval_dir, 'data', 'removed_variants.tsv')
+shutil.copyfile(to_copy, removed_variants_tsv)
