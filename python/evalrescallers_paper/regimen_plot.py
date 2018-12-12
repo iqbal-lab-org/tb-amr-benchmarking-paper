@@ -13,10 +13,10 @@ def load_regimen_counts_tsv(infile, dataset):
         all_data = {}
         reader = csv.DictReader(f,delimiter='\t')
         for d in reader:
-            if d['Dataset'] == dataset and d['Truth_regimen'] != "None":
+            if d['Dataset'] == dataset and d['Truth_regimen'] != "NA":
                 if d['Tool'] not in all_data:
                     all_data[d['Tool']] = {}
-                if d['Called_regimen'] == "None":
+                if d['Called_regimen'] == "NA":
                     d['Called_regimen'] = 100
 
                 truth, called = int(d['Truth_regimen'])-1, int(d['Called_regimen'])-1
