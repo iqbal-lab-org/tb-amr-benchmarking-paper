@@ -149,7 +149,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_tool_compare_prefix}.legend.svg', header='Tool')
 
 
-regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.tsv', '10k_test')
+regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.summary.tsv', '10k_test')
 evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], f'{figure_regimen_plot_prefix}.svg', ignore=[(0, 0)])
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
