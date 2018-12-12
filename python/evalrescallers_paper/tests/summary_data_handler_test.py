@@ -117,14 +117,43 @@ class TestSummaryDataHandler(unittest.TestCase):
 
 
         expect_regimen_counts = {
-            'mykrobe': {
-                'tool1': {(10, 10): 1, (None, None): 1},
-                'tool2': {(None, None): 1, (10, None): 1},
+          '10k': {
+            'sample3': {
+              'phenos': {
+                'tool1': {'Pyrazinamide': 'S', 'Rifampicin': 'S'},
+                'tool2': {'Pyrazinamide': 'S', 'Rifampicin': 'R'},
+                'truth': {'Pyrazinamide': 'R', 'Rifampicin': 'S'},
+              },
+              'regimens': {'tool1': None, 'tool2': 10, 'truth': None}
             },
-            '10k': {
-                'tool1': {(None, None): 2},
-                'tool2': {(None, None): 1, (None, 10): 1},
+            'sample4': {
+              'phenos': {
+                'tool1': {'Pyrazinamide': 'R', 'Rifampicin': 'S'},
+                'tool2': {'Pyrazinamide': 'R', 'Rifampicin': None},
+                'truth': {'Pyrazinamide': 'R', 'Rifampicin': 'S'},
+              },
+             'regimens': {'tool1': None, 'tool2': None, 'truth': None}
+            }
+          },
+          'mykrobe': {
+            'sample1': {
+              'phenos': {
+                'tool1': {'Isoniazid': 'R', 'Rifampicin': 'S'},
+                'tool2': {},
+                'truth': {'Isoniazid': 'R', 'Rifampicin': 'S'},
+              },
+              'regimens': {
+                'tool1': None, 'tool2': None, 'truth': None}
             },
+            'sample2': {
+              'phenos': {
+                'tool1': {'Isoniazid': 'R', 'Rifampicin': 'R'},
+                'tool2': {'Isoniazid': 'R', 'Rifampicin': 'S'},
+                'truth': {'Isoniazid': 'R', 'Rifampicin': 'R'},
+              },
+              'regimens': {'tool1': 10, 'tool2': None, 'truth': 10}
+            }
+          }
         }
         self.assertEqual(expect_regimen_counts, got_regimen_counts)
 
@@ -353,24 +382,57 @@ class TestSummaryDataHandler(unittest.TestCase):
         os.unlink(tmp_file)
 
 
-    def test_write_regimen_counts_file(self):
-        '''test write_regimen_counts_file'''
+    def test_write_regimen_counts_files(self):
+        '''test write_regimen_counts_files'''
         regimen_counts = {
-            'mykrobe': {
-                'tool1': {(1, 1): 20, (2,3): 1, (None, 1): 1, (4, None): 10, (None, None): 6},
-                'tool2': {(None, None): 1, (10, None): 1},
+          '10k': {
+            'sample3': {
+              'phenos': {
+                'tool1': {'Pyrazinamide': 'S', 'Rifampicin': 'S'},
+                'tool2': {'Pyrazinamide': 'S', 'Rifampicin': 'R'},
+                'truth': {'Pyrazinamide': 'R', 'Rifampicin': 'S'},
+              },
+              'regimens': {'tool1': None, 'tool2': 10, 'truth': None}
             },
-            '10k': {
-                'tool1': {(3, 3): 2},
-                'tool2': {(2, 2): 1, (10, 10): 11},
+            'sample4': {
+              'phenos': {
+                'tool1': {'Pyrazinamide': 'R', 'Rifampicin': 'S'},
+                'tool2': {'Pyrazinamide': 'R', 'Rifampicin': None},
+                'truth': {'Pyrazinamide': 'R', 'Rifampicin': 'S'},
+              },
+             'regimens': {'tool1': None, 'tool2': None, 'truth': None}
+            }
+          },
+          'mykrobe': {
+            'sample1': {
+              'phenos': {
+                'tool1': {'Isoniazid': 'R', 'Rifampicin': 'S'},
+                'tool2': {},
+                'truth': {'Isoniazid': 'R', 'Rifampicin': 'S'},
+              },
+              'regimens': {
+                'tool1': None, 'tool2': None, 'truth': None}
             },
+            'sample2': {
+              'phenos': {
+                'tool1': {'Isoniazid': 'R', 'Rifampicin': 'R'},
+                'tool2': {'Isoniazid': 'R', 'Rifampicin': 'S'},
+                'truth': {'Isoniazid': 'R', 'Rifampicin': 'R'},
+              },
+              'regimens': {'tool1': 10, 'tool2': None, 'truth': 10}
+            }
+          }
         }
 
-        tmp_file = 'tmp.write_regimen_counts_file.tsv'
-        expected_file = os.path.join(data_dir, 'write_regimen_counts_file.tsv')
-        summary_data_handler.SummaryDataHandler.write_regimen_counts_file(regimen_counts, tmp_file)
-        self.assertTrue(filecmp.cmp(expected_file, tmp_file, shallow=False))
-        os.unlink(tmp_file)
+        tmp_prefix = 'tmp.write_regimen_counts_files'
+        summary_data_handler.SummaryDataHandler.write_regimen_counts_files(regimen_counts, tmp_prefix)
+        for x in 'tool1', 'tool2', 'summary':
+            got_file = f'{tmp_prefix}.{x}.tsv'
+            expected_file = os.path.join(data_dir, f'write_regimen_counts_files.{x}.tsv')
+            self.assertTrue(filecmp.cmp(expected_file, got_file, shallow=False))
+            os.unlink(got_file)
+        #expected_file = os.path.join(data_dir, 'write_regimen_counts_files.tsv')
+        #self.assertTrue(filecmp.cmp(expected_file, tmp_file, shallow=False))
 
 
     def test_run_tb(self):
@@ -387,9 +449,13 @@ class TestSummaryDataHandler(unittest.TestCase):
         expected_file = os.path.join(data_dir, 'run.tb.out.conf.tsv')
         self.assertTrue(filecmp.cmp(expected_file, outprefix + '.conf.tsv'))
         os.unlink(outprefix + '.conf.tsv')
-        expected_file = os.path.join(data_dir, 'run.tb.out.regimen_counts.tsv')
-        self.assertTrue(filecmp.cmp(expected_file, outprefix + '.regimen_counts.tsv'))
-        os.unlink(outprefix + '.regimen_counts.tsv')
+
+        for x in '10k_predict', 'tool1', 'tool2', 'summary':
+            got_file = f'{outprefix}.regimen_counts.{x}.tsv'
+            expected_file = os.path.join(data_dir, f'run.tb.out.regimen_counts.{x}.tsv')
+            self.assertTrue(filecmp.cmp(expected_file, got_file, shallow=False))
+            os.unlink(got_file)
+
         for tool in 'tool1', 'tool2':
             got_file = f'{outprefix}.variant_counts.{tool}.tsv'
             self.assertTrue(os.path.exists(got_file))

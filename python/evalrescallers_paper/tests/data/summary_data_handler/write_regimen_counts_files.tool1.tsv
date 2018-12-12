@@ -1,0 +1,5 @@
+Dataset	Sample	Truth_pheno.H.R.Z.E.Km.Am.Cm.S.Mfx	Truth_regimen	Tool_pheno.H.R.Z.E.Km.Am.Cm.S.Mfx	Tool_regimen
+10k	sample3	-SR------	NA	-SS------	NA
+10k	sample4	-SR------	NA	-SR------	NA
+mykrobe	sample1	RS-------	NA	RS-------	NA
+mykrobe	sample2	RR-------	10	RR-------	10

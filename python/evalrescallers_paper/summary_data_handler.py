@@ -47,6 +47,7 @@ class SummaryDataHandler:
             tools_counts[dataset] = {x: {} for x in drugs[dataset]}
             variant_counts[dataset] = {x: {} for x in drugs[dataset]}
             conf_and_depths[dataset] = {x: {} for x in drugs[dataset]}
+            regimen_counts[dataset] = {}
 
         for sample in json_data:
             if sample not in truth_pheno:
@@ -57,7 +58,11 @@ class SummaryDataHandler:
             # There are "n/a"s as values for the known phenos. We want
             # to use None instead
             sample_truth_pheno = {k: v if v in {"R", "S"} else None for k, v in truth_pheno[sample]['pheno'].items()}
-            sample_dst = who_treatment.DstProfile(sample_truth_pheno)
+            if species == 'tb':
+                sample_dst = who_treatment.DstProfile(sample_truth_pheno)
+                regimen_counts[dataset][sample] = {'phenos': {'truth': sample_truth_pheno},
+                    'regimens': {'truth': sample_dst.regimen.number if sample_dst.regimen is not None else None}}
+
             if dataset.startswith('10k') and sample in ten_k_predict and sample in json_data:
                 json_data[sample]['10k_predict'] = {
                     'resistance_calls': {drug: [[ten_k_predict[sample][drug], "NA", "NA"]] for drug in ten_k_predict[sample]},
@@ -128,15 +133,9 @@ class SummaryDataHandler:
 
                 if species == 'tb':
                     tool_dst = who_treatment.DstProfile(tool_pheno)
-                    if dataset not in regimen_counts:
-                        regimen_counts[dataset] = {}
-                    if tool not in regimen_counts[dataset]:
-                        regimen_counts[dataset][tool] = {}
-
-                    key1 = sample_dst.regimen.number if sample_dst.regimen is not None else None
-                    key2 = tool_dst.regimen.number if tool_dst.regimen is not None else None
-                    key = key1, key2
-                    regimen_counts[dataset][tool][key] = regimen_counts[dataset][tool].get(key, 0) + 1
+                    tool_regimen = tool_dst.regimen.number if tool_dst.regimen is not None else None
+                    regimen_counts[dataset][sample]['phenos'][tool] = tool_pheno
+                    regimen_counts[dataset][sample]['regimens'][tool] = tool_regimen
 
 
         # we're only really conf from MYrkobe, so delete
@@ -298,13 +297,61 @@ class SummaryDataHandler:
 
 
     @classmethod
-    def write_regimen_counts_file(cls, regimen_counts, outfile):
-        with open(outfile, 'w') as f:
+    def write_regimen_counts_files(cls, regimen_counts, outprefix):
+        summary_counts = {}
+        filehandles = {}
+        drugs =  [
+            'Isoniazid',
+            'Rifampicin',
+            'Pyrazinamide',
+            'Ethambutol',
+            'Kanamycin',
+            'Amikacin',
+            'Capreomycin',
+            'Streptomycin',
+            'Moxifloxacin',
+        ]
+
+        short_drug_name_string = '.'.join([who_treatment.profile_drugs[d] for d in drugs])
+
+        for dataset in sorted(regimen_counts):
+            summary_counts[dataset] = {}
+
+            for sample in sorted(regimen_counts[dataset]):
+                truth_regimen = regimen_counts[dataset][sample]['regimens']['truth']
+                if truth_regimen is None:
+                    truth_regimen = 'NA'
+                truth_phenos = [str(regimen_counts[dataset][sample]['phenos']['truth'].get(d, '-')).replace('None', '-') for d in drugs]
+                for tool in sorted(regimen_counts[dataset][sample]['phenos']):
+                    if tool == 'truth':
+                        continue
+
+                    if tool not in filehandles:
+                        f = open(f'{outprefix}.{tool}.tsv', 'w')
+                        filehandles[tool] = f
+                        print('Dataset', 'Sample', f'Truth_pheno.{short_drug_name_string}', 'Truth_regimen', f'Tool_pheno.{short_drug_name_string}', 'Tool_regimen', sep='\t', file=filehandles[tool])
+
+                    if tool not in summary_counts[dataset]:
+                        summary_counts[dataset][tool] = {}
+
+                    tool_phenos = [str(regimen_counts[dataset][sample]['phenos'][tool].get(d, '-')).replace('None', '-') for d in drugs]
+                    tool_regimen = regimen_counts[dataset][sample]['regimens'][tool]
+                    if tool_regimen is None:
+                        tool_regimen = 'NA'
+                    print(dataset, sample, ''.join(truth_phenos), truth_regimen, ''.join(tool_phenos), tool_regimen, sep='\t', file=filehandles[tool])
+
+                    key = (truth_regimen, tool_regimen)
+                    summary_counts[dataset][tool][key] = summary_counts[dataset][tool].get(key, 0) + 1
+
+        for f in filehandles.values():
+            f.close()
+
+        with open(f'{outprefix}.summary.tsv', 'w') as f:
             print('Dataset', 'Tool', 'Truth_regimen', 'Called_regimen', 'Count', sep='\t', file=f)
-            for dataset in sorted(regimen_counts):
-                for tool in sorted(regimen_counts[dataset]):
-                    for key in sorted(regimen_counts[dataset][tool], key=lambda x: (-1 if x[0] is None else x[0], -1 if x[1] is None else x[1])):
-                        print(dataset, tool, *key, regimen_counts[dataset][tool][key], sep='\t', file=f)
+            for dataset in sorted(summary_counts):
+                for tool in sorted(summary_counts[dataset]):
+                    for key in sorted(summary_counts[dataset][tool], key=lambda x: (-1 if x[0] == 'NA' else x[0], -1 if x[1] is 'NA' else x[1])):
+                        print(dataset, tool, *key, summary_counts[dataset][tool][key], sep='\t', file=f)
 
 
     def run(self, outprefix):
@@ -316,7 +363,7 @@ class SummaryDataHandler:
         if self.species == 'tb':
             SummaryDataHandler.add_all_counts_to_tools_counts(self.tools_counts)
             SummaryDataHandler.add_all_variants_to_variant_counts(self.variant_counts)
-            SummaryDataHandler.write_regimen_counts_file(self.regimen_counts, outprefix + '.regimen_counts.tsv')
+            SummaryDataHandler.write_regimen_counts_files(self.regimen_counts, outprefix + '.regimen_counts')
         SummaryDataHandler.write_accuracy_stats_file(self.tools_counts, outprefix + '.accuracy_stats.tsv')
         SummaryDataHandler.write_all_variant_counts_files(self.variant_counts, outprefix + '.variant_counts')
         SummaryDataHandler.write_conf_file(self.conf_counts, outprefix + '.conf.tsv')
