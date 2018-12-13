@@ -1,0 +1,6 @@
+Dataset	Tool	Drug	foo	bar
+dataset1	tool1	drug1	1	2
+dataset1	tool1	drug2	3	4
+dataset1	tool2	drug1	7	8
+dataset1	tool2	drug2	3	10
+dataset2	tool1	drug1	13	14

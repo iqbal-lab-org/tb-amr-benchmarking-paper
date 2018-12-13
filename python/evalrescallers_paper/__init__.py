@@ -4,6 +4,7 @@ __all__ = [
     'horizontal_bar_chart',
     'latex',
     'maps',
+    'r_vs_R',
     'regimen_plot',
     'run_time_and_memory',
     'samples_table',
