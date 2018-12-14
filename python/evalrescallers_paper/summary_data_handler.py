@@ -74,19 +74,6 @@ class SummaryDataHandler:
                 tool_pheno = {}
 
                 for drug in drugs[dataset]:
-                    try:
-                        pheno = sample_truth_pheno[drug]
-                    except:
-                        continue
-
-                    if pheno not in {'R', 'S'}:
-                        continue
-
-                    if tool not in tools_counts[dataset][drug]:
-                        tools_counts[dataset][drug][tool] = {x: 0 for x in ['TP', 'FP', 'TN', 'FN', 'UNK_R', 'UNK_S', 'FAIL_R', 'FAIL_S']}
-                        variant_counts[dataset][drug][tool] = {}
-                        conf_and_depths[dataset][drug][tool] = {x: [] for x in ['TP', 'FP', 'TN', 'FN']}
-
                     if json_data[sample][tool]['Success']:
                         conf_depths_tuples = []
                         if drug in json_data[sample][tool]['resistance_calls']:
@@ -107,11 +94,23 @@ class SummaryDataHandler:
                             else:
                                 call = 'S'
 
-
                         tool_pheno[drug] = call if call in ['R', 'S'] else None
 
+                    try:
+                        pheno = sample_truth_pheno[drug]
+                    except:
+                        continue
+
+                    if pheno not in {'R', 'S'}:
+                        continue
+
+                    if tool not in tools_counts[dataset][drug]:
+                        tools_counts[dataset][drug][tool] = {x: 0 for x in ['TP', 'FP', 'TN', 'FN', 'UNK_R', 'UNK_S', 'FAIL_R', 'FAIL_S']}
+                        variant_counts[dataset][drug][tool] = {}
+                        conf_and_depths[dataset][drug][tool] = {x: [] for x in ['TP', 'FP', 'TN', 'FN']}
 
 
+                    if json_data[sample][tool]['Success']:
                         if call == 'R':
                             call = 'TP' if pheno == 'R' else 'FP'
                             variants.sort()
