@@ -27,3 +27,15 @@ class Test_r_vs_R(unittest.TestCase):
         }
         self.assertEqual(expect, got)
 
+
+    def test_get_data_for_differences_between_stats_files(self):
+        '''test get_data_for_differences_between_stats_files'''
+        # FIXME
+        pass
+
+
+    def test_report_diffs_between_stats_files(self):
+        '''test report_diffs_between_stats_files'''
+        # FIXME
+        pass
+
