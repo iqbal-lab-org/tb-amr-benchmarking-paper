@@ -38,7 +38,7 @@ def get_data_for_differences_between_stats_files(infile_r_res, infile_r_susc, da
 
 
 def report_diffs_between_stats_files(infile_r_res, infile_r_susc, dataset, tool):
-    diffs = get_differences_between_stats_files(infile_r_res, infile_r_susc, dataset, tool)
+    diffs = get_data_for_differences_between_stats_files(infile_r_res, infile_r_susc, dataset, tool)
     # FIXME:
     # 1. MAke plots
     # 2. Make TSV file of data
