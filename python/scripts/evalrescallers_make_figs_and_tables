@@ -28,6 +28,7 @@ python_data_dir = os.path.join(evalrescallers_dir, 'data')
 r_is_res_prefix = 'r_is_resistant'
 r_is_res_accuracy_stats_tsv = f'{r_is_res_prefix}.accuracy_stats.tsv'
 r_is_susc_prefix = 'r_is_susceptible'
+r_is_susc_accuracy_stats_tsv = f'{r_is_susc_prefix}.accuracy_stats.tsv'
 samples_suppl_tsv = 'supplementary.table.samples.tsv'
 removed_variants_tsv = 'supplementary.table.removed_variants.tsv'
 map_files_prefix = 'figure.1.map'
@@ -51,6 +52,7 @@ figure_barplot_test_dataset_tool_compare_fig_b_prefix = f'{figure_barplot_test_d
 figure_barplot_test_dataset_tool_compare_fig_b_pdf = f'{figure_barplot_test_dataset_tool_compare_fig_b_prefix}.pdf'
 figure_regimen_plot_prefix = f'figure.5'
 figure_regimen_plot_pdf = f'figure.5.pdf'
+table_r_vs_R_tex = f'table.2.tex'
 table_mykrobe_accuracy_tex = f'table.1.tex'
 
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
@@ -74,6 +76,8 @@ summary_data_handler.run(r_is_susc_prefix)
 summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHandler(
     json_data, 'tb', r_means_resistant=True)
 summary_data_handler.run(r_is_res_prefix)
+
+evalrescallers_paper.r_vs_R.table_of_diffs_between_stats_files(r_is_res_accuracy_stats_tsv, r_is_susc_accuracy_stats_tsv, '10k_validate', 'Mykrobe.201811', table_r_vs_R_tex)
 
 countries_dict = evalrescallers_paper.samples_table.make_samples_tsv(json_data, samples_suppl_tsv)
 evalrescallers_paper.maps.make_maps(map_files_prefix, countries_dict, debug=options.debug)
@@ -225,6 +229,13 @@ print(r'''\documentclass{article}
 
 \clearpage
 \begin{table}
+\small
+  \hspace{-10em}\input{''' + table_r_vs_R_tex + r'''}
+  \caption{Caption for r vs R table}
+  \label{label: table r vs R}
+\end{table}
+\begin{table}
+
 \small
   \hspace{-10em}\input{''' + table_mykrobe_accuracy_tex + r'''}
   \caption{Caption for mykrobe accuracy table}
