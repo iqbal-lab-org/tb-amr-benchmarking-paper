@@ -73,19 +73,21 @@ def table_of_diffs_between_stats_files(infile_r_res, infile_r_susc, dataset, too
             continue
 
         percent_fp = round(100 * r_fp_calls / r_all_calls, 2)
+        total_res_samples = data[drug]['R']['TP'] + data[drug]['R']['FN']
 
         table_data.append([
             drug,
             str(total_with_pheno),
+            str(total_res_samples),
             str(r_all_calls),
             str(percent_fp),
         ])
 
 
     with open(outfile, 'w') as f:
-        print(r'''\begin{tabular}{ccD{.}{.}{4.0}D{.}{.}{2.2}}''', file=f)
+        print(r'''\begin{tabular}{ccD{.}{.}{4.0}D{.}{.}{4.0}D{.}{.}{2.2}}''', file=f)
         print(r'''\hline''', file=f)
-        print(r'''Drug & Samples & \multicolumn{1}{c}{Minority variant calls} & \multicolumn{1}{c}{False-positive rate (\%)} \\ ''', file=f)
+        print(r'''Drug & Samples & \multicolumn{1}{c}{Resistant samples} & \multicolumn{1}{c}{Minority variant calls} & \multicolumn{1}{c}{False-positive rate (\%)} \\ ''', file=f)
         print(r'''\hline''', file=f)
         for fields in table_data:
             print(*fields, sep=' & ', end=' ', file=f)
