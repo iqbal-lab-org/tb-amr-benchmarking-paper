@@ -83,9 +83,9 @@ def table_of_diffs_between_stats_files(infile_r_res, infile_r_susc, dataset, too
 
 
     with open(outfile, 'w') as f:
-        print(r'''\begin{tabular}{cccc}''', file=f)
+        print(r'''\begin{tabular}{ccD{.}{.}{4.0}D{.}{.}{2.2}}''', file=f)
         print(r'''\hline''', file=f)
-        print(r'''Drug & Samples & Minority variant calls & False-positive rate \\ ''', file=f)
+        print(r'''Drug & Samples & \multicolumn{1}{c}{Minority variant calls} & \multicolumn{1}{c}{False-positive rate (\%)} \\ ''', file=f)
         print(r'''\hline''', file=f)
         for fields in table_data:
             print(*fields, sep=' & ', end=' ', file=f)

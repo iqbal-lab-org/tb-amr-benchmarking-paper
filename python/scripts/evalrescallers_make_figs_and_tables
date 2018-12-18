@@ -167,6 +167,7 @@ f = open('latex.tex', 'w')
 print(r'''\documentclass{article}
 \usepackage{graphicx}
 \usepackage{grffile}
+\usepackage{dcolumn}
 \begin{document}
 
 
