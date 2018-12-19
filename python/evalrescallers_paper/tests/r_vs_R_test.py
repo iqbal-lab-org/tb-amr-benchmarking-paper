@@ -17,13 +17,13 @@ class Test_r_vs_R(unittest.TestCase):
             'drug1': OrderedDict([('Dataset', 'dataset1'),
                        ('Tool', 'tool1'),
                        ('Drug', 'drug1'),
-                       ('foo', '1'),
-                       ('bar', '2')]),
+                       ('foo', 1),
+                       ('bar', 2)]),
              'drug2': OrderedDict([('Dataset', 'dataset1'),
                        ('Tool', 'tool1'),
                        ('Drug', 'drug2'),
-                       ('foo', '3'),
-                       ('bar', '4')])
+                       ('foo', 3),
+                       ('bar', 4)])
         }
         self.assertEqual(expect, got)
 
