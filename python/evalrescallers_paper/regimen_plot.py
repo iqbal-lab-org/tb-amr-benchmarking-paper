@@ -8,12 +8,12 @@ from evalrescallers import who_treatment
 from evalrescallers_paper import svg
 
 
-def load_regimen_counts_tsv(infile, dataset):
+def load_regimen_counts_tsv(infile, datasets):
     with open(infile) as f:
         all_data = {}
         reader = csv.DictReader(f,delimiter='\t')
         for d in reader:
-            if d['Dataset'] == dataset and d['Truth_regimen'] != "NA":
+            if d['Dataset'] in datasets and d['Truth_regimen'] != "NA":
                 if d['Tool'] not in all_data:
                     all_data[d['Tool']] = {}
                 if d['Called_regimen'] == "NA":
@@ -22,13 +22,12 @@ def load_regimen_counts_tsv(infile, dataset):
                 truth, called = int(d['Truth_regimen'])-1, int(d['Called_regimen'])-1
                 if truth not in all_data[d['Tool']]:
                     all_data[d['Tool']][truth] = {}
-                assert called not in all_data[d['Tool']][truth]
-                all_data[d['Tool']][truth][called] = int(d['Count'])
+                all_data[d['Tool']][truth][called] = all_data[d['Tool']][truth].get(called, 0) + int(d['Count'])
 
     return all_data
 
 
-def plot_one_tool(data, outfile, ignore=None):
+def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
     assert outfile.endswith('.svg')
     to_ignore = {}
     if ignore is not None:
@@ -134,7 +133,6 @@ def plot_one_tool(data, outfile, ignore=None):
     right_node_x = plot_width - node_to_edge_space - node_width
     y_start = 30
     node_y_gap = 18
-    y_scale = 0.8
     svg_node_lines = []
     truth_nodes_y_tops = {}
     called_nodes_y_tops = {}
