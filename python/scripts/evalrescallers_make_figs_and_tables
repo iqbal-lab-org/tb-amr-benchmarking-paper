@@ -93,7 +93,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_validate'],
     plot_tools,
     ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin',
-        'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
+        'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin'],
     f'{figure_barplot_validate_dataset_prefix}.svg',
     how_to_scale='not at all',
 )
@@ -115,7 +115,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
-    ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
+    ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin'],
     f'{figure_barplot_test_dataset_myk_compare_fig_b_prefix}.svg',
     how_to_scale='not at all',
     susc_gap=[220,680],
@@ -143,7 +143,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
-    ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Quinolones', 'Streptomycin'],
+    ['Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin'],
     f'{figure_barplot_test_dataset_tool_compare_fig_b_prefix}.svg',
     how_to_scale='not at all',
     susc_gap=[230,660],

@@ -404,7 +404,7 @@ class SummaryDataHandler:
             calls_quino = set()
             calls_quino_breakdown = set()
             for tool in all_tools:
-                if 'ARIBA' in tool or 'ariba' in tool or 'ykrobe' in tool:
+                if 'ARIBA' in tool or 'ariba' in tool or ('ykrobe' in tool and 'alker' not in tool):
                     calls_quino_breakdown.add(tool)
                 else:
                     calls_quino.add(tool)
