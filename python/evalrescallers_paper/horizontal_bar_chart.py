@@ -211,7 +211,7 @@ def make_legend(tools, outfile, header=None):
 
     for tool in tools:
         svg_lines.append(svg.svg_rectangle(square_left, y, square_right, y + square_len, common_data.tool_colours[tool], 'black'))
-        svg_lines.append(svg.svg_text(square_right + 5, y + 0.5  * square_len, tool, font_size, position='start', vertical_align='middle'))
+        svg_lines.append(svg.svg_text(square_right + 5, y + 0.5  * square_len, common_data.tool_names[tool], font_size, position='start', vertical_align='middle'))
         y += square_len + y_space
 
     f = open(outfile, 'w')

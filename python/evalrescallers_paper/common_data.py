@@ -49,7 +49,9 @@ tool_names = {
     'TB-Profiler': 'TB-Profiler',
     '10k_predict': 'NEJM-2018',
     'Mykrobe.Walker-2015': 'Mykrobe-2015',
+    'Mykrobe.CP1': 'Mykrobe-CP1',
     'Mykrobe.CP2': 'Mykrobe-CP2',
-    'Mykrobe.201812': 'Mykrobe-2018',
+    'Mykrobe.CP3': 'Mykrobe-CP3',
+    'Mykrobe.201812': 'Mykrobe-2019',
 }
 
