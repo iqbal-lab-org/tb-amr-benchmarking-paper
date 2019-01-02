@@ -99,7 +99,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 )
 evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_validate_dataset_prefix}.legend.svg', header='Tool/variant panel')
 
-plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201812']
+plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.CP3']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
