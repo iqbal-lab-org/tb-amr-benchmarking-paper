@@ -96,6 +96,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
         'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin'],
     f'{figure_barplot_validate_dataset_prefix}.svg',
     how_to_scale='not at all',
+    extra_width=50,
 )
 evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_validate_dataset_prefix}.legend.svg', header='Tool/variant panel')
 
@@ -109,7 +110,8 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     susc_gap=[800,3800],
     susc_xticks=[0,250,500,750,4000],
     res_xticks=[0,250],
-    plot_gap_size=20
+    plot_gap_size=20,
+    extra_width=50,
 )
 
 evalrescallers_paper.horizontal_bar_chart.make_plot(
@@ -121,7 +123,8 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     susc_gap=[220,680],
     susc_xticks=[0,50,100,150,200,700],
     res_xticks=[0,50],
-    plot_gap_size=4
+    plot_gap_size=4,
+    extra_width=50,
 )
 
 evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_myk_compare_prefix}.legend.svg', header='Tool/variant panel')
@@ -137,7 +140,8 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     susc_gap=[300,3850],
     susc_xticks=[0,100,200,3900,4000,4100,4200,4300],
     res_xticks=[0,100,200,300],
-    plot_gap_size=15
+    plot_gap_size=15,
+    extra_width=50,
 )
 
 evalrescallers_paper.horizontal_bar_chart.make_plot(
@@ -149,7 +153,8 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
     susc_gap=[230,660],
     susc_xticks=[0,50,100,150,200,700],
     res_xticks=[0,50],
-    plot_gap_size=6
+    plot_gap_size=6,
+    extra_width=50,
 )
 
 evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_tool_compare_prefix}.legend.svg', header='Tool')

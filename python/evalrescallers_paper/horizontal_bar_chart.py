@@ -3,7 +3,7 @@ import copy
 from evalrescallers_paper import common_data, maps, svg
 
 
-def make_plot(stats_dict, tools, drugs, outfile, first_line=False, ten_k=False, how_to_scale='not at all', susc_gap=None, susc_xticks=None, res_xticks=None, plot_gap_size=30):
+def make_plot(stats_dict, tools, drugs, outfile, first_line=False, ten_k=False, how_to_scale='not at all', susc_gap=None, susc_xticks=None, res_xticks=None, plot_gap_size=30, extra_width=0):
     if susc_gap is not None:
         susc_gap_width = susc_gap[1] - susc_gap[0]
         stats_dict = copy.deepcopy(stats_dict)
@@ -186,7 +186,7 @@ def make_plot(stats_dict, tools, drugs, outfile, first_line=False, ten_k=False, 
     with open(outfile, 'w') as f:
         print(r'''<?xml version="1.0" standalone="no"?>
         <!DOCTYPE svg PUBLIC " -//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-        <svg width="''' + str(total_width) + '" height="' + str(y) + '">', file=f)
+        <svg width="''' + str(total_width + extra_width) + '" height="' + str(y) + '">', file=f)
         print(*grid_lines, sep='\n', file=f)
         print(*svg_lines, sep='\n', file=f)
         print('</svg>', file=f)
