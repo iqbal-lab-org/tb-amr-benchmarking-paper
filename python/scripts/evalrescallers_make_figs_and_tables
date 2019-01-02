@@ -79,7 +79,7 @@ summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHand
     json_data, 'tb', r_means_resistant=True)
 summary_data_handler.run(r_is_res_prefix)
 
-evalrescallers_paper.r_vs_R.table_of_diffs_between_stats_files(r_is_res_accuracy_stats_tsv, r_is_susc_accuracy_stats_tsv, '10k_validate', 'Mykrobe.201811', table_r_vs_R_tex)
+evalrescallers_paper.r_vs_R.table_of_diffs_between_stats_files(r_is_res_accuracy_stats_tsv, r_is_susc_accuracy_stats_tsv, '10k_validate', 'Mykrobe.201812', table_r_vs_R_tex)
 
 countries_dict = evalrescallers_paper.samples_table.make_samples_tsv(json_data, samples_suppl_tsv)
 evalrescallers_paper.maps.make_maps(map_files_prefix, countries_dict, debug=options.debug)
@@ -99,7 +99,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 )
 evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_validate_dataset_prefix}.legend.svg', header='Tool/variant panel')
 
-plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201811']
+plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.201812']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
@@ -127,7 +127,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_myk_compare_prefix}.legend.svg', header='Tool/variant panel')
 
 
-plot_tools = ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201811', 'TB-Profiler']
+plot_tools = ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201812', 'TB-Profiler']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
@@ -156,16 +156,16 @@ evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barp
 
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.summary.tsv', {'10k_test', '10k_validate'})
-evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], f'{figure_regimen_plot_prefix}.svg', ignore=[(0, 0)], y_scale=0.15)
+evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201812'], f'{figure_regimen_plot_prefix}.svg', ignore=[(0, 0)], y_scale=0.15)
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.summary.tsv', {'10k_validate'})
-evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], f'{figure_regimen_suppl_validate_prefix}.svg', ignore=[(0, 0)], y_scale=0.2)
+evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201812'], f'{figure_regimen_suppl_validate_prefix}.svg', ignore=[(0, 0)], y_scale=0.2)
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.summary.tsv', {'10k_test'})
-evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201811'], f'{figure_regimen_suppl_test_prefix}.svg', ignore=[(0, 0)], y_scale=0.8)
+evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201812'], f'{figure_regimen_suppl_test_prefix}.svg', ignore=[(0, 0)], y_scale=0.8)
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
-evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201811', first_line_sorted, '10k_test', table_mykrobe_accuracy_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201812', first_line_sorted, '10k_test', table_mykrobe_accuracy_tex)
 
 
 

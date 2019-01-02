@@ -30,7 +30,7 @@ tool_colours = {
     '10k_predict': '#66a61e',
     'Mykrobe.Walker-2015': '#e6ab02',
     'Mykrobe.CP2': '#a6761d',
-    'Mykrobe.201811': '#666666',
+    'Mykrobe.201812': '#666666',
 }
 
 
@@ -50,6 +50,6 @@ tool_names = {
     '10k_predict': 'NEJM-2018',
     'Mykrobe.Walker-2015': 'Mykrobe-2015',
     'Mykrobe.CP2': 'Mykrobe-CP2',
-    'Mykrobe.201811': 'Mykrobe-2018',
+    'Mykrobe.201812': 'Mykrobe-2018',
 }
 
