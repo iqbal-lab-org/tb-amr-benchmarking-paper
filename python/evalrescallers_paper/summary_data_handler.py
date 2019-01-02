@@ -34,6 +34,48 @@ class SummaryDataHandler:
 
 
     @classmethod
+    def fix_quinolones(cls, json_data, calls_quino, calls_quino_breakdown):
+        # Fixes quinolone calls in json_data in-place. The pipeline makes
+        # json data, where tries to infer quinolone calls from calls for
+        # Ciprofloxacin, Moxifloxacin, Ofloxacin. But for the paper,
+        # we're keeping the breakdown of calls and not guessing an
+        # inferred quinolone call. This applies to Mykrobe and ARIBA.
+        #
+        # All the other tools simply call quinolone, not broken down into
+        # separate drugs. This function adds that same quinolone call to
+        # each of Ciprofloxacin, Moxifloxacin, Ofloxacin. eg and R call
+        # for quinolone implies R for all of Ciprofloxacin, Moxifloxacin, Ofloxacin.
+        quinolones = {'Ciprofloxacin', 'Moxifloxacin', 'Ofloxacin'}
+
+        for sample in json_data:
+            for tool in json_data[sample]:
+                if 'resistance_calls' not in json_data[sample][tool]:
+                    continue
+
+                call_dict = json_data[sample][tool]['resistance_calls']
+
+                if tool in calls_quino:
+
+                    for quino in quinolones:
+                        if quino in call_dict:
+                            logging.warning(f'Quinolone {quino} call found for sample/tool {sample}/{tool}')
+
+                    call_dict = {d: call_dict[d] for d in call_dict if d not in quinolones}
+
+                    if 'Quinolones' in call_dict:
+                        for quino in quinolones:
+                            assert quino not in call_dict
+                            call_dict[quino] = call_dict['Quinolones']
+                elif tool in calls_quino_breakdown:
+                    if 'Quinolones' in call_dict:
+                        del call_dict['Quinolones']
+                else:
+                    raise Exception(f'Tool {tool} no recognised. Cannot continue')
+
+                json_data[sample][tool]['resistance_calls'] = call_dict
+
+
+    @classmethod
     def summary_json_to_metrics_and_var_call_counts(cls, json_data, truth_pheno, drugs, species, lower_case_r_means_resistant=True, ten_k_predict=None):
         if ten_k_predict is None:
             ten_k_predict = {}
@@ -354,6 +396,19 @@ class SummaryDataHandler:
 
 
     def run(self, outprefix):
+        if self.species == 'tb':
+            all_tools = set()
+            for sample in self.summary_json_data:
+                all_tools.update(self.summary_json_data[sample].keys())
+
+            calls_quino = set()
+            calls_quino_breakdown = set()
+            for tool in all_tools:
+                if 'ARIBA' in tool or 'ariba' in tool or 'ykrobe' in tool:
+                    calls_quino_breakdown.add(tool)
+                else:
+                    calls_quino.add(tool)
+            SummaryDataHandler.fix_quinolones(self.summary_json_data, calls_quino, calls_quino_breakdown)
         self.tools_counts, self.variant_counts, self.conf_counts, self.regimen_counts = SummaryDataHandler.summary_json_to_metrics_and_var_call_counts(self.summary_json_data, self.truth_pheno, self.drugs, self.species, ten_k_predict=self.ten_k_predict, lower_case_r_means_resistant=self.r_means_resistant)
         # For TB we have the mykrobe paper data set, plus the 10k set.
         # This means we need to do the calculations of summing the

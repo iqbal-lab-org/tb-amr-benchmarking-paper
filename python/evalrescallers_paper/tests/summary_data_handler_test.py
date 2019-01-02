@@ -12,6 +12,51 @@ data_dir = os.path.join(modules_dir, 'tests', 'data', 'summary_data_handler')
 
 
 class TestSummaryDataHandler(unittest.TestCase):
+    def test_fix_quinolones(self):
+        '''test fix_quinolones'''
+        summary_data = {
+            "sample1": {
+                "tool1": {
+                    "Success": False,
+                    "resistance_calls": {}
+                },
+                "tool2": {
+                    "Success": True,
+                    "resistance_calls": {
+                        "Isoniazid": [["R", "gene1", "X42Y", {"conf": 42, "ref_depth": 0, "alt_depth": 9, "expected_depth": 11}]],
+                        "Rifampicin": [["S", None, None, None]],
+                        "Ciprofloxacin": [["R", "gene2", "A1B", {"conf": 43, "ref_depth": 1, "alt_depth": 10, "expected_depth": 11}]],
+                        "Quinolones": [["R", "gene2", "A1B", {"conf": 43, "ref_depth": 1, "alt_depth": 10, "expected_depth": 11}]],
+                    }
+                },
+            },
+            "sample2": {
+                "tool1": {
+                    "Success": True,
+                    "resistance_calls": {
+                        "Quinolones": [["R", "gene2", "A1B", {"conf": 38, "ref_depth": 5, "alt_depth": 17, "expected_depth": 15}]],
+                        "Ciprofloxacin": [["R", "gene2", "A1B", {"conf": 43, "ref_depth": 1, "alt_depth": 10, "expected_depth": 11}]],
+                        "Isoniazid": [["S", None, None, None]],
+                    }
+                },
+                "tool2": {
+                    "Success": True,
+                    "resistance_calls": {
+                        "Ethambutol": [["S", None, None, None]],
+                    }
+                }
+            }
+        }
+
+        expect = copy.deepcopy(summary_data)
+        del expect['sample1']['tool2']['resistance_calls']['Quinolones']
+        expect['sample2']['tool1']['resistance_calls']['Ciprofloxacin'] = expect['sample2']['tool1']['resistance_calls']['Quinolones']
+        expect['sample2']['tool1']['resistance_calls']['Moxifloxacin'] = expect['sample2']['tool1']['resistance_calls']['Quinolones']
+        expect['sample2']['tool1']['resistance_calls']['Ofloxacin'] = expect['sample2']['tool1']['resistance_calls']['Quinolones']
+        summary_data_handler.SummaryDataHandler.fix_quinolones(summary_data, {"tool1"}, {"tool2"})
+        self.assertEqual(expect, summary_data)
+
+
     def test_summary_json_to_metrics_and_var_call_counts(self):
         '''test summary_json_to_metrics_and_var_call_counts'''
         drugs = {
