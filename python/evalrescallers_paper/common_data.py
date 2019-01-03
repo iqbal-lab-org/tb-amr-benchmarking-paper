@@ -31,7 +31,7 @@ tool_colours = {
     'Mykrobe.Walker-2015': '#e6ab02',
     'Mykrobe.CP2': '#a6761d',
     'Mykrobe.CP3': '#a66666',
-    'Mykrobe.201812': '#666666',
+    'Mykrobe.201901': '#666666',
 }
 
 
@@ -53,6 +53,6 @@ tool_names = {
     'Mykrobe.CP1': 'Mykrobe-CP1',
     'Mykrobe.CP2': 'Mykrobe-CP2',
     'Mykrobe.CP3': 'Mykrobe-CP3',
-    'Mykrobe.201812': 'Mykrobe-2019',
+    'Mykrobe.201901': 'Mykrobe-2019',
 }
 
