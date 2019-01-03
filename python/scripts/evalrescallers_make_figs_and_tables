@@ -210,11 +210,11 @@ print(r'''\documentclass{article}
 \newpage
 \begin{figure}[h]
   \begin{picture}(400,300)
-    \put(20,200){\includegraphics[width=11cm]{''' + figure_barplot_test_dataset_myk_compare_fig_a_pdf  + r'''}}
-    \put(20,0){\includegraphics[width=11cm]{''' + figure_barplot_test_dataset_myk_compare_fig_b_pdf  + r'''}}
+    \put(20,200){\includegraphics[width=12cm]{''' + figure_barplot_test_dataset_myk_compare_fig_a_pdf  + r'''}}
+    \put(20,0){\includegraphics[width=12cm]{''' + figure_barplot_test_dataset_myk_compare_fig_b_pdf  + r'''}}
     \put(350,140){\includegraphics[width=5cm]{''' + figure_barplot_test_dataset_myk_compare_legend_pdf  + r'''}}
     \put(0,320){\bf (a)}
-    \put(0,170){\bf (b)}
+    \put(0,150){\bf (b)}
   \end{picture}
   \caption{Caption for validate dataset bar plots}
   \label{figure: barplot test dataset mykrobe panels}
@@ -223,11 +223,11 @@ print(r'''\documentclass{article}
 \newpage
 \begin{figure}[h]
   \begin{picture}(400,500)
-    \put(20,360){\includegraphics[width=11cm]{''' + figure_barplot_test_dataset_tool_compare_fig_a_pdf  + r'''}}
-    \put(20,0){\includegraphics[width=11cm]{''' + figure_barplot_test_dataset_tool_compare_fig_b_pdf  + r'''}}
+    \put(20,360){\includegraphics[width=12cm]{''' + figure_barplot_test_dataset_tool_compare_fig_a_pdf  + r'''}}
+    \put(20,0){\includegraphics[width=12cm]{''' + figure_barplot_test_dataset_tool_compare_fig_b_pdf  + r'''}}
     \put(350,290){\includegraphics[width=5cm]{''' + figure_barplot_test_dataset_tool_compare_legend_pdf  + r'''}}
     \put(0,545){\bf (a)}
-    \put(0,335){\bf (b)}
+    \put(0,300){\bf (b)}
   \end{picture}
   \caption{Caption for validate dataset bar plots}
   \label{figure: barplot test dataset compare tools}
