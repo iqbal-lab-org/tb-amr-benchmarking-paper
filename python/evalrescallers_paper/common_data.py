@@ -1,6 +1,6 @@
 drug_abbreviations = {
     'Amikacin': 'Am',
-    'Capreomycin': 'Clm',
+    'Capreomycin': 'Cm',
     'Ciprofloxacin': 'Cfx',
     'Cycloserine': 'Cs',
     'Ethambutol': 'E',
