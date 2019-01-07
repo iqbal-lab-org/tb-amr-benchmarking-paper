@@ -96,7 +96,9 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         ('Trd', 'Terizidone'),
         ('Cfz', 'Clofazimide'),
         ('Lzd', 'Linezolid'),
-        ('hH-E', 'High dose Isoniazid/Ethambutol'),
+        ('hH', 'High dose Isoniazid'),
+        ('hZ', 'High dose Pyrazinamide'),
+        ('hE', 'High dose Ethambutol'),
         ('X', 'Amox-Clavulanate, Imipenem/Cilastatin, Meropenem, High dose Isoniazid (if possible)'),
     ])
 
@@ -110,9 +112,9 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         7: {'req': ('R', 'E', 'S', (1, 'Eto', 'Pto', 'PAS', 'Cs', 'Trd'))},
         8: {'req': ('H', 'R', 'E')},
         9: {'req': ('H', 'R', 'Z')},
-        10: {'req': ('Z', (1, 'Lfx', 'Mfx', 'Gfx'), (1, 'Km', 'Am', 'Cm'), (2, 'Eto', 'Pto', 'Cs', 'Trd', 'Cfz', 'Lzd')), 'opt': ('hH-E',)},
-        11: {'req': ((1, 'Gfx', 'Mfx'), 'Km', 'Pto', 'Cfz', 'hH-E', 'H', 'Z', 'E')},
-        12: {'req': ('R', 'Rfb', 'Rpt', 'H', 'E', 'Z', (1, 'Km', 'Am', 'Cm', 'S'), 'Eto', 'Pto', 'PAS', 'Cs', 'Trd', 'X')},
+        10: {'req': ('Z', (1, 'Lfx', 'Mfx', 'Gfx'), (1, 'Km', 'Am', 'Cm'), (2, 'Eto', 'Pto', 'Cs', 'Trd', 'Cfz', 'Lzd')), 'opt': ('hH', 'hE')},
+        11: {'req': ((1, 'Gfx', 'Mfx'), 'Km', 'Pto', 'Cfz', 'hH', 'hE', 'hZ', )},
+        12: {'req': ('Rfb', 'Rpt', 'E', 'Z', (1, 'Km', 'Am', 'Cm', 'S'), 'Eto', 'Pto', 'PAS', 'Cs', 'Trd', 'hH', 'X')},
     }
 
     drug_col_width = 26
