@@ -35,14 +35,18 @@ def tsv_to_plot(tsv_file, outprefix):
           geom_boxplot() +
           xlab("Tool") +
           ylab("Wall clock time (m)") +
-        ggsave(filename="''' + time_pdf + '''", width=6, height=3, scale=0.85)
+          theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+          scale_y_continuous(trans='log10')
+        ggsave(filename="''' + time_pdf + '''", width=6, height=5, scale=0.95)
 
 
         ggplot(d, aes(Tool, RAM..MB.)) +
           geom_boxplot() +
           xlab("Tool") +
           ylab("Peak RAM (MB)") +
-        ggsave(filename="''' + memory_pdf + '''", width=6, height=3, scale=0.85)
+          theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+          scale_y_continuous(trans='log10')
+        ggsave(filename="''' + memory_pdf + '''", width=6, height=5, scale=0.95)
 
         file.remove("Rplots.pdf")'''
 
