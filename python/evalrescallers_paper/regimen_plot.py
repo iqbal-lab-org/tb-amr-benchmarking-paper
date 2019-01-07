@@ -114,7 +114,7 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         9: {'req': ('H', 'R', 'Z')},
         10: {'req': ('Z', (1, 'Lfx', 'Mfx', 'Gfx'), (1, 'Km', 'Am', 'Cm'), (2, 'Eto', 'Pto', 'Cs', 'Trd', 'Cfz', 'Lzd')), 'opt': ('hH', 'hE')},
         11: {'req': ((1, 'Gfx', 'Mfx'), 'Km', 'Pto', 'Cfz', 'hH', 'hE', 'hZ', )},
-        12: {'req': ('Rfb', 'Rpt', 'E', 'Z', ((1, 'Lfx', 'Mfx', 'Gfx'), (1, 'Km', 'Am', 'Cm', 'S'), 'Eto', 'Pto', 'PAS', 'Cs', 'Trd', 'hH', 'X')},
+        12: {'req': ('Rfb', 'Rpt', 'E', 'Z', (1, 'Lfx', 'Mfx', 'Gfx'), (1, 'Km', 'Am', 'Cm', 'S'), 'Eto', 'Pto', 'PAS', 'Cs', 'Trd', 'hH', 'X')},
     }
 
     drug_col_width = 26
