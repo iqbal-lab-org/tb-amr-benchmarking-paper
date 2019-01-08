@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 import subprocess
@@ -61,4 +62,26 @@ def tsv_to_plot(tsv_file, outprefix):
         os.unlink('.RData')
     except:
         pass
+
+
+def csv_to_latex_table(csv_file, outfile):
+    '''Makes latex table file of median run times and memory,
+    from CSV file made by tsv_to_plot()'''
+    ignore = {'Mykrobe.CP1', 'Mykrobe.CP2', 'Mykrobe.CP3', 'Mykrobe.Walker-2015'}
+
+    with open(csv_file) as f_in, open(outfile, 'w') as f_out:
+        reader = csv.DictReader(f_in)
+        print(r'''\begin{tabular}{lrr}''', file=f_out)
+        print(r'''\hline''', file=f_out)
+        print(r'''Tool & RAM (MB) & Time (m) \\''', file=f_out)
+        print(r'''\hline''', file=f_out)
+
+        for d in reader:
+            if d['Group.1'] in ignore:
+                continue
+
+            print(d['Group.1'], int(round(float(d['RAM..MB.']), 0)), round(float(d['Wall_clock..s.']) / 60, 1), sep=' & ', end=r''' \\''' + '\n', file=f_out)
+
+        print(r'''\hline''', file=f_out)
+        print(r'''\end{tabular}''', file=f_out)
 

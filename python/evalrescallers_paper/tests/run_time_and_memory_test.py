@@ -32,4 +32,16 @@ class TestRunTimeAndMemory(unittest.TestCase):
         self.assertTrue(os.path.exists(f'{outprefix}.memory.pdf'))
         os.unlink(f'{outprefix}.memory.pdf')
         os.unlink(f'{outprefix}.R')
+        os.unlink(f'{outprefix}.medians.csv')
+
+
+    def test_csv_to_latex_table(self):
+        '''test csv_to_latex_table'''
+        csv_in = os.path.join(data_dir, 'csv_to_latex_table.csv')
+        outfile = 'tmp.csv_to_latex.tex'
+        if os.path.exists(outfile):
+            os.unlink(outfile)
+        run_time_and_memory.csv_to_latex_table(csv_in, outfile)
+        self.assertTrue(os.path.exists(outfile))
+        os.unlink(outfile)
 
