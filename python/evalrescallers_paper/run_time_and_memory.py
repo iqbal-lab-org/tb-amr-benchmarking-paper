@@ -27,6 +27,7 @@ def tsv_to_plot(tsv_file, outprefix):
     using TSV file made by json_to_tsv'''
     time_pdf = f'{outprefix}.time.pdf'
     memory_pdf = f'{outprefix}.memory.pdf'
+    medians_csv = f'{outprefix}.medians.csv'
 
     r_string = r'''        library(ggplot2)
         d = read.csv(file="''' + tsv_file + r'''", sep="\t", header=T)
@@ -48,7 +49,8 @@ def tsv_to_plot(tsv_file, outprefix):
           scale_y_continuous(trans='log10')
         ggsave(filename="''' + memory_pdf + '''", width=6, height=5, scale=0.95)
 
-        file.remove("Rplots.pdf")'''
+        file.remove("Rplots.pdf")
+        write.csv(aggregate(d[,3:4], list(d$Tool), median), file="''' + medians_csv + r'''")'''
 
     r_script = f'{outprefix}.R'
     with open(r_script, 'w') as f:
