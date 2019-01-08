@@ -59,6 +59,7 @@ table_mykrobe_accuracy_tex = f'table.1.tex'
 
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
+table_run_time_and_memory_tex = run_time_and_memory_tsv.replace('tsv', 'tex')
 
 
 try:
@@ -86,6 +87,7 @@ evalrescallers_paper.maps.make_maps(map_files_prefix, countries_dict, debug=opti
 
 evalrescallers_paper.run_time_and_memory.json_to_tsv(json_data, run_time_and_memory_tsv)
 evalrescallers_paper.run_time_and_memory.tsv_to_plot(run_time_and_memory_tsv, run_time_and_memory_plot_prefix)
+evalrescallers_paper.run_time_and_memory.csv_to_latex_table(f'{run_time_and_memory_plot_prefix}.medians.csv', table_run_time_and_memory_tex)
 
 
 plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.CP2']
