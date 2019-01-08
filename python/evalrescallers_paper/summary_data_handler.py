@@ -55,10 +55,9 @@ class SummaryDataHandler:
                 call_dict = json_data[sample][tool]['resistance_calls']
 
                 if tool in calls_quino:
-
-                    for quino in quinolones:
-                        if quino in call_dict:
-                            logging.warning(f'Quinolone {quino} call found for sample/tool {sample}/{tool}')
+                    #for quino in quinolones:
+                        #if quino in call_dict:
+                        #    logging.warning(f'Quinolone {quino} call found for sample/tool {sample}/{tool}')
 
                     call_dict = {d: call_dict[d] for d in call_dict if d not in quinolones}
 
