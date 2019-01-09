@@ -288,3 +288,4 @@ with open(os.path.join(figshare_dir, 'variant_counts.tsv'), 'w') as f_out:
 shutil.copyfile(run_time_and_memory_tsv, os.path.join(figshare_dir, 'run_time_memory.tsv'))
 shutil.copyfile(f'{run_time_and_memory_plot_prefix}.memory.pdf', os.path.join(figshare_dir, 'memory_boxplots.pdf'))
 shutil.copyfile(f'{run_time_and_memory_plot_prefix}.time.pdf', os.path.join(figshare_dir, 'run_time_boxplots.pdf'))
+shutil.copyfile(r_is_res_accuracy_stats_tsv, os.path.join(figshare_dir, 'accuracy_stats.tsv'))
