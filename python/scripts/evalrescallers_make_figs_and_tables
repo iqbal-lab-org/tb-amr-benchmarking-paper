@@ -289,3 +289,5 @@ shutil.copyfile(run_time_and_memory_tsv, os.path.join(figshare_dir, 'run_time_me
 shutil.copyfile(f'{run_time_and_memory_plot_prefix}.memory.pdf', os.path.join(figshare_dir, 'memory_boxplots.pdf'))
 shutil.copyfile(f'{run_time_and_memory_plot_prefix}.time.pdf', os.path.join(figshare_dir, 'run_time_boxplots.pdf'))
 shutil.copyfile(r_is_res_accuracy_stats_tsv, os.path.join(figshare_dir, 'accuracy_stats.tsv'))
+shutil.copyfile(f'{figure_regimen_suppl_validate_prefix}.pdf', os.path.join(figshare_dir, 'regimen_plot.validate.pdf'))
+shutil.copyfile(f'{figure_regimen_suppl_test_prefix}.pdf', os.path.join(figshare_dir, 'regimen_plot.test.pdf'))
