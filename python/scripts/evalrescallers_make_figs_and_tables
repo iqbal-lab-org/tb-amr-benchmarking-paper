@@ -30,7 +30,6 @@ r_is_res_accuracy_stats_tsv = f'{r_is_res_prefix}.accuracy_stats.tsv'
 r_is_susc_prefix = 'r_is_susceptible'
 r_is_susc_accuracy_stats_tsv = f'{r_is_susc_prefix}.accuracy_stats.tsv'
 samples_suppl_tsv = 'supplementary.table.samples.tsv'
-removed_variants_tsv = 'supplementary.table.removed_variants.tsv'
 map_files_prefix = 'figure.1.map'
 map_world_pdf = f'{map_files_prefix}.world.pdf'
 map_europe_pdf = f'{map_files_prefix}.europe.pdf'
@@ -265,6 +264,27 @@ print(r'''\documentclass{article}
 f.close()
 
 
+figshare_dir = os.path.join('Figshare')
+os.mkdir(figshare_dir)
 eval_dir = os.path.abspath(os.path.dirname(evalrescallers_paper.__file__))
 to_copy = os.path.join(eval_dir, 'data', 'removed_variants.tsv')
-shutil.copyfile(to_copy, removed_variants_tsv)
+shutil.copyfile(to_copy, os.path.join(figshare_dir, 'removed_variants.tsv'))
+
+shutil.copyfile(samples_suppl_tsv, os.path.join(figshare_dir, 'sample_data.tsv'))
+
+
+# Combine all the variant counts files into one, by adding in a tool column
+with open(os.path.join(figshare_dir, 'variant_counts.tsv'), 'w') as f_out:
+    for tool in ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'Mykrobe.CP1', 'Mykrobe.CP2', 'Mykrobe.CP3', 'Mykrobe.Walker-2015', 'TB-Profiler']:
+        print('Tool', 'Dataset', 'Drug', 'PPV', 'TP', 'FP', 'Variants', sep='\t', file=f_out)
+        with open(f'{r_is_res_prefix}.variant_counts.{tool}.tsv') as f_in:
+            for line in f_in:
+                if line.startswith('all') or line.startswith('Dataset'):
+                    continue
+                print(tool, line, sep='\t', end='', file=f_out)
+
+
+
+shutil.copyfile(run_time_and_memory_tsv, os.path.join(figshare_dir, 'run_time_memory.tsv'))
+shutil.copyfile(f'{run_time_and_memory_plot_prefix}.memory.pdf', os.path.join(figshare_dir, 'memory_boxplots.pdf'))
+shutil.copyfile(f'{run_time_and_memory_plot_prefix}.time.pdf', os.path.join(figshare_dir, 'run_time_boxplots.pdf'))
