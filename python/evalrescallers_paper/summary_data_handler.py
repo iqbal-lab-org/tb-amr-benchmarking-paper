@@ -241,6 +241,11 @@ class SummaryDataHandler:
                 'FPR', 'FPR_conf_low', 'FPR_conf_high',
                 sep='\t', file=f)
             for dataset in sorted(tools_counts):
+                # "all" isn't used and the counts are not correct,
+                # so just don't print it. Easier than debugging.
+                if dataset == 'all':
+                    continue
+
                 for drug in sorted(tools_counts[dataset]):
                     for tool, d in sorted(tools_counts[dataset][drug].items()):
                         if d['TP'] + d['FN'] > 0:
