@@ -54,8 +54,9 @@ figure_regimen_plot_pdf = f'figure.5.pdf'
 figure_regimen_suppl_validate_prefix = f'supplementary.figure.regimen.validate'
 figure_regimen_suppl_test_prefix = f'supplementary.figure.regimen.test'
 table_regimen_tex = f'table.5.tex'
-table_r_vs_R_tex = f'table.2.tex'
-table_mykrobe_accuracy_tex = f'table.1.tex'
+table_r_calls_tex = f'table.r_calls.tex'
+table_mykrobe_accuracy_release_panel_tex = f'table.mykrobe_accuracy_release_panel.tex'
+table_mykrobe_accuracy_CP3_tex = f'table.mykrobe_accuracy_CP3.tex'
 
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
@@ -80,7 +81,7 @@ summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHand
     json_data, 'tb', r_means_resistant=True)
 summary_data_handler.run(r_is_res_prefix)
 
-evalrescallers_paper.r_vs_R.table_of_diffs_between_stats_files(r_is_res_accuracy_stats_tsv, r_is_susc_accuracy_stats_tsv, '10k_validate', 'Mykrobe.201901', table_r_vs_R_tex)
+evalrescallers_paper.r_vs_R.table_of_diffs_between_stats_files(r_is_res_accuracy_stats_tsv, r_is_susc_accuracy_stats_tsv, '10k_validate', 'Mykrobe.201901', table_r_calls_tex)
 
 countries_dict = evalrescallers_paper.samples_table.make_samples_tsv(json_data, samples_suppl_tsv)
 evalrescallers_paper.maps.make_maps(map_files_prefix, countries_dict, debug=options.debug)
@@ -175,7 +176,8 @@ regimen_tools = {'10k_predict', 'ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'M
 evalrescallers_paper.latex.regimen_summary_table(f'{r_is_res_prefix}.regimen_counts.summary.tsv', table_regimen_tex, {'10k_test', '10k_validate'}, regimen_tools)
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
-evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', first_line_sorted, '10k_test', table_mykrobe_accuracy_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', first_line_sorted, '10k_test', table_mykrobe_accuracy_release_panel_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP3', first_line_sorted, '10k_test', table_mykrobe_accuracy_CP3_tex)
 
 
 
@@ -251,16 +253,24 @@ print(r'''\documentclass{article}
 \clearpage
 \begin{table}
 \small
-  \hspace{-10em}\input{''' + table_r_vs_R_tex + r'''}
+  \hspace{-10em}\input{''' + table_r_calls_tex + r'''}
   \caption{Caption for r vs R table}
   \label{label: table r vs R}
 \end{table}
-\begin{table}
 
+
+\begin{table}
 \small
-  \hspace{-10em}\input{''' + table_mykrobe_accuracy_tex + r'''}
-  \caption{Caption for mykrobe accuracy table}
-  \label{label: mykrobe accuracy}
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_CP3_tex + r'''}
+  \caption{Caption for mykrobe accuracy table CP3}
+  \label{label: mykrobe accuracy CP3}
+\end{table}
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_release_panel_tex + r'''}
+  \caption{Caption for mykrobe accuracy table release panel}
+  \label{label: mykrobe accuracy final panel}
 \end{table}
 
 \begin{table}
