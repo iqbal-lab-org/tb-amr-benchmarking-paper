@@ -42,19 +42,18 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
                     del data[k1]
 
     colours = [
-        '#a6cee3',
-        '#1f78b4',
-        '#b2df8a',
-        '#33a02c',
-        '#fb9a99',
-        '#fdbf6f',
-        '#ffff99',
-        '#ff7f00',
-        '#cab2d6',
-        '#6a3d9a',
-        '#e31a1c',
-        '#b15928',
-        '#999999',
+     '#f0e8e3',
+     '#e2d3c9',
+     '#f5cfb6',
+     '#FDD49E',
+     '#FDBB84',
+     '#FDBB84',
+     '#FC8D59',
+     '#E34A33',
+     '#E34A33',
+     '#CE1256',
+     '#980043',
+     '#400013'
     ]
 
     truth_nodes = {}

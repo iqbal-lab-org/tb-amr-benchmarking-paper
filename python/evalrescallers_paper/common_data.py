@@ -23,23 +23,22 @@ first_line_drugs = {'Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin'}
 
 
 tool_colours = {
-    'ARIBA': '#1b9e77',
-    'KvarQ': '#d95f02',
-    'MTBseq': '#7570b3',
-    'TB-Profiler': '#e7298a',
-    '10k_predict': '#66a61e',
-    'Mykrobe.Walker-2015': '#e6ab02',
-    'Mykrobe.CP2': '#a6761d',
-    'Mykrobe.CP3': '#a66666',
-    'Mykrobe.201901': '#666666',
+    'ARIBA': '#ebdaef',
+    'KvarQ': '#b17cc1',
+    'MTBseq': '#934da8',
+    'TB-Profiler': '#6f2984',
+    '10k_predict': '#d8eaf3',
+    'Mykrobe.Walker-2015': '#6BAED6',
+    'Mykrobe.CP2': '#2171B5',
+    'Mykrobe.CP3': '#105e8c',
+    'Mykrobe.201901': '#257cc6',
 }
 
-
 other_colours = {
-    'FP': 'red',
-    'FN': 'red',
-    'UNK_R': 'lightgray',
-    'UNK_S': 'lightgray',
+    'FP': '#c62135',
+    'FN': '#c62135',
+    'UNK_R': '#c1bfbf',
+    'UNK_S': '#c1bfbf',
 }
 
 
