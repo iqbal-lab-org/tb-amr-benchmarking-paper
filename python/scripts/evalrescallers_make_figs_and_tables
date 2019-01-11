@@ -137,7 +137,7 @@ evalrescallers_paper.horizontal_bar_chart.make_plot(
 evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barplot_test_dataset_myk_compare_prefix}.legend.svg', header='Tool/variant panel')
 
 
-plot_tools = ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'TB-Profiler']
+plot_tools = ['Mykrobe.201901', 'ARIBA', 'KvarQ', 'MTBseq', 'TB-Profiler']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
     summary_data_handler.tools_counts['10k_test'],
     plot_tools,
