@@ -116,14 +116,30 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         12: {'req': ('Rfb', 'Rpt', 'E', 'Z', (1, 'Lfx', 'Mfx', 'Gfx'), (1, 'Km', 'Am', 'Cm', 'S'), 'Eto', 'Pto', 'PAS', 'Cs', 'Trd', 'hH', 'X')},
     }
 
+    regimen_to_pheno = {
+        1: {'H': 'S', 'R': 'S', 'Z': 'S', 'E': 'S'},
+        2: {'H': 'R', 'R': 'S', 'Z': 'S', 'E': 'S'},
+        3: {'H': 'R', 'R': 'S', 'Z': 'S', 'E': 'S', 'Mfx': 'R'},
+        4: {'H': 'R', 'R': 'S', 'Z': 'R', 'E': 'S'},
+        5: {'H': 'R', 'R': 'S', 'Z': 'S', 'E': 'R'},
+        6: {'H': 'R', 'R': 'S', 'Z': 'R', 'E': 'R'},
+        7: {'H': 'R', 'R': 'S', 'Z': 'R', 'E': 'R', 'Km': 'R', 'Am': 'R', 'Cm': 'R', 'S': 'S'},
+        8: {'H': 'S', 'R': 'S', 'Z': 'R', 'E': 'S'},
+        9: {'H': 'S', 'R': 'S', 'Z': 'S', 'E': 'R'},
+        10: {'H': '(R)', 'R': 'R'},
+        11: {'H': '(R)', 'R': 'R', 'Km': 'S', 'Mfx': 'S'},
+        12: {'H': 'R', 'R': 'R', 'Mfx': 'R'},
+    }
+
     drug_col_width = 26
     svg_lines = []
     x = 10
+    headings_y = 20
     drug_to_x_centre = {}
 
     for drug in drugs:
         drug_to_x_centre[drug] = x + 0.5 * drug_col_width
-        svg_lines.append(svg.svg_text(x + 0.5 * drug_col_width, 8, drug, 12, vertical_align='middle'))
+        svg_lines.append(svg.svg_text(x + 0.5 * drug_col_width, headings_y, drug, 12, vertical_align='middle'))
         x += drug_col_width
 
     x += 80
@@ -132,15 +148,18 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
     left_node_x = right_half_x_left + node_to_edge_space
     node_width = 20
     right_node_x = plot_width - node_to_edge_space - node_width
-    y_start = 30
-    node_y_gap = 18
+    y_start = 40
+    node_y_gap = 30
     svg_node_lines = []
     truth_nodes_y_tops = {}
+    truth_nodes_y_bottoms = {}
     called_nodes_y_tops = {}
     truth_node_to_y_centre = {}
 
     # Nodes on the left
     y = y_start
+    svg_lines.append(svg.svg_text(left_node_x - 110, headings_y, 'Regimen', 11, position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(left_node_x - 5, headings_y, 'Samples', 11, position='end', font_family='arial', vertical_align='middle'))
 
     for node in regimen_to_drug:
         if node-1 not in truth_nodes:
@@ -158,8 +177,9 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         truth_node_to_y_centre[node] = 0.5 * (y + node_y_bottom)
         svg_node_lines.append(svg.svg_rectangle(left_node_x, y, left_node_x + node_width, node_y_bottom,
             colours[int(node)], colours[int(node)], border_width=1))
-        svg_lines.append(svg.svg_text(left_node_x - 110, 0.5 * (y + node_y_bottom),
-            who_treatment.regimens[node+1].definition, 11, position='start', font_family='arial', vertical_align='middle'))
+        #svg_lines.append(svg.svg_text(left_node_x - 110, 0.5 * (y + node_y_bottom),
+        #    who_treatment.regimens[node+1].definition, 11, position='start', font_family='arial', vertical_align='middle'))
+        svg_lines.append(svg.svg_text(left_node_x - 110, 0.5 * (y + node_y_bottom), str(node+1), 11, position='middle', font_family='arial', vertical_align='middle'))
         svg_lines.append(svg.svg_text(left_node_x - 5, 0.5 * (y + node_y_bottom),
             str(total_samples), 11, position='end', font_family='arial', vertical_align='middle'))
 
@@ -169,6 +189,7 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
                 f'(+{total_ignored})', 11, position='end', font_family='arial', vertical_align='middle'))
 
         y = node_y_bottom + node_y_gap
+        truth_nodes_y_bottoms[node] = node_y_bottom
 
     y = y_start
 
@@ -206,12 +227,17 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         svg_lines.append(svg.svg_ribbon(left_node_x + node_width, y11, y12, right_node_x, y21, y22,
             colours[int(truth_node)], colours[int(truth_node)], border_width=0.5, opacity=0.8))
 
-    # Regime circles
+    # Regimen circles and R/S
     svg_regimen_lines = []
     circle_radius = 0.2 * drug_col_width
+    y_circle_R_S_offset = 7
+    pheno_letters_lines = []
 
     for node, regime in regimen_to_drug.items():
         y_centre = truth_node_to_y_centre[node-1]
+        y_circle_centre = y_centre + y_circle_R_S_offset
+        y_R_or_S = y_centre - y_circle_R_S_offset
+
         for req_or_opt in regime:
             if req_or_opt not in regime:
                 continue
@@ -228,35 +254,56 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
                     to_append = []
                     number_of_lines = drugs_tuple[0]
                     if number_of_lines == 1:
-                        lines_y = [y_centre]
+                        lines_y = [y_circle_centre]
                         line_width = 3
                     else:
                         assert number_of_lines == 2
-                        lines_y = [y_centre - circle_radius / 2, y_centre + circle_radius / 2]
+                        lines_y = [y_circle_centre - circle_radius / 2, y_circle_centre + circle_radius / 2]
                         line_width = 2
+
                     for drug in drugs_tuple[1:]:
-                        to_append.append(svg.svg_circle(drug_to_x_centre[drug], y_centre, 0.2 * drug_col_width, colours[node-1], line_colour, stroke_width=2))
+                        to_append.append(svg.svg_circle(drug_to_x_centre[drug], y_circle_centre, 0.2 * drug_col_width, colours[node-1], line_colour, stroke_width=2))
                         x_min = min(x_min, drug_to_x_centre[drug])
                         x_max = max(x_max, drug_to_x_centre[drug])
+
                     for line_y in lines_y:
                         svg_regimen_lines.append(svg.svg_line(x_min, line_y, x_max, line_y, line_colour, line_width))
                     svg_regimen_lines.append(to_append)
                 else:
-                    svg_regimen_lines.append(svg.svg_circle(drug_to_x_centre[drugs_tuple], y_centre, 0.2 * drug_col_width, colours[node-1], line_colour, stroke_width=2))
+                    svg_regimen_lines.append(svg.svg_circle(drug_to_x_centre[drugs_tuple], y_circle_centre, 0.2 * drug_col_width, colours[node-1], line_colour, stroke_width=2))
 
+        for drug, pheno in regimen_to_pheno[node].items():
+            pheno_letters_lines.append(svg.svg_text(drug_to_x_centre[drug], y_R_or_S, pheno, 10, vertical_align='middle'))
 
-    # Make vertical line for each drug
-    y_top = y_start
-    y_bottom = y_centre
+    # Make vertical lines to separate drugs
+    y_top = min(truth_nodes_y_tops.values())
+    y_top = 5
+    y_bottom = max(truth_nodes_y_bottoms.values())
+    y_bottom = y - 5
     for drug in drugs:
-        svg_lines.append(svg.svg_line(drug_to_x_centre[drug], y_top, drug_to_x_centre[drug], y_bottom, 'lightgrey', 1))
+        x_pos = drug_to_x_centre[drug] - 0.5 * drug_col_width
+        svg_lines.append(svg.svg_line(x_pos, y_top, x_pos, y_bottom, 'lightgrey', 1))
+        if drug == 'X':
+            x_pos = drug_to_x_centre[drug] + 0.5 * drug_col_width
+            svg_lines.append(svg.svg_line(x_pos, y_top, x_pos, y_bottom, 'lightgrey', 1))
+
+    # horizontal lines to separate regimens
+    x_left = min(drug_to_x_centre.values()) - 0.5 * drug_col_width
+    x_right = left_node_x
+    y_top_line = truth_nodes_y_tops[0] - 10
+    svg_lines.append(svg.svg_line(x_left, y_top, x_right, y_top, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(x_left, y_top_line, x_right, y_top_line, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(x_left, y_bottom, x_right, y_bottom, 'lightgrey', 1))
+    for i in range(0, len(truth_nodes_y_bottoms) - 1, 1):
+        y_pos = 0.5 * (truth_nodes_y_bottoms[i] + truth_nodes_y_tops[i+1])
+        svg_lines.append(svg.svg_line(x_left, y_pos, x_right, y_pos, 'lightgrey', 1))
 
     f = open(outfile, 'w')
     print(r'''<?xml version="1.0" standalone="no"?>
     <!DOCTYPE svg PUBLIC " -//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
     <svg width="''' + str(plot_width) + '" height="' + str(y) + '">', file=f)
     # plot nodes last so that borders are on top of ribbons and therefore still visible
-    print(*svg_lines, svg_node_lines, svg_regimen_lines, sep='\n', file=f)
+    print(*svg_lines, svg_node_lines, svg_regimen_lines, pheno_letters_lines, sep='\n', file=f)
     print('</svg>', file=f)
     f.close()
     svg.svg2pdf(outfile, outfile.replace('.svg', '.pdf'))

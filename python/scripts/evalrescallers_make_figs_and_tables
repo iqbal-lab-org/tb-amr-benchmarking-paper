@@ -30,7 +30,6 @@ r_is_res_accuracy_stats_tsv = f'{r_is_res_prefix}.accuracy_stats.tsv'
 r_is_susc_prefix = 'r_is_susceptible'
 r_is_susc_accuracy_stats_tsv = f'{r_is_susc_prefix}.accuracy_stats.tsv'
 samples_suppl_tsv = 'supplementary.table.samples.tsv'
-removed_variants_tsv = 'supplementary.table.removed_variants.tsv'
 map_files_prefix = 'figure.1.map'
 map_world_pdf = f'{map_files_prefix}.world.pdf'
 map_europe_pdf = f'{map_files_prefix}.europe.pdf'
@@ -54,8 +53,14 @@ figure_regimen_plot_prefix = f'figure.5'
 figure_regimen_plot_pdf = f'figure.5.pdf'
 figure_regimen_suppl_validate_prefix = f'supplementary.figure.regimen.validate'
 figure_regimen_suppl_test_prefix = f'supplementary.figure.regimen.test'
-table_r_vs_R_tex = f'table.2.tex'
-table_mykrobe_accuracy_tex = f'table.1.tex'
+table_regimen_tex = f'table.5.tex'
+table_r_calls_tex = f'table.r_calls.tex'
+table_mykrobe_accuracy_CP1_tex = f'table.mykrobe_accuracy_CP1.tex'
+table_mykrobe_accuracy_CP2_tex = f'table.mykrobe_accuracy_CP2.tex'
+table_mykrobe_accuracy_CP3_tex = f'table.mykrobe_accuracy_CP3.tex'
+table_mykrobe_accuracy_release_panel_train_tex = f'table.mykrobe_accuracy_release_panel_train.tex'
+table_mykrobe_accuracy_release_panel_validate_tex = f'table.mykrobe_accuracy_release_panel_validate.tex'
+table_mykrobe_accuracy_release_panel_test_tex = f'table.mykrobe_accuracy_release_panel_test.tex'
 
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
@@ -80,7 +85,7 @@ summary_data_handler = evalrescallers_paper.summary_data_handler.SummaryDataHand
     json_data, 'tb', r_means_resistant=True)
 summary_data_handler.run(r_is_res_prefix)
 
-evalrescallers_paper.r_vs_R.table_of_diffs_between_stats_files(r_is_res_accuracy_stats_tsv, r_is_susc_accuracy_stats_tsv, '10k_validate', 'Mykrobe.201901', table_r_vs_R_tex)
+evalrescallers_paper.r_vs_R.table_of_diffs_between_stats_files(r_is_res_accuracy_stats_tsv, r_is_susc_accuracy_stats_tsv, '10k_validate', 'Mykrobe.201901', table_r_calls_tex)
 
 countries_dict = evalrescallers_paper.samples_table.make_samples_tsv(json_data, samples_suppl_tsv)
 evalrescallers_paper.maps.make_maps(map_files_prefix, countries_dict, debug=options.debug)
@@ -171,8 +176,20 @@ evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.summary.tsv', {'10k_test'})
 evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], f'{figure_regimen_suppl_test_prefix}.svg', ignore=[(0, 0)], y_scale=0.8)
 
+regimen_tools = {'10k_predict', 'ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'Mykrobe.Walker-2015', 'TB-Profiler'}
+evalrescallers_paper.latex.regimen_summary_table(f'{r_is_res_prefix}.regimen_counts.summary.tsv', table_regimen_tex, {'10k_test', '10k_validate'}, regimen_tools)
+
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
-evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', first_line_sorted, '10k_test', table_mykrobe_accuracy_tex)
+train_drugs = ['Ethambutol', 'Isoniazid', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
+validate_drugs = ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
+test_drugs = ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
+
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP1', train_drugs, 'mykrobe', table_mykrobe_accuracy_CP1_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP2', validate_drugs, '10k_validate', table_mykrobe_accuracy_CP2_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP3', test_drugs, '10k_test', table_mykrobe_accuracy_CP3_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', train_drugs, 'mykrobe', table_mykrobe_accuracy_release_panel_train_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', validate_drugs, '10k_validate', table_mykrobe_accuracy_release_panel_validate_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', test_drugs, '10k_test', table_mykrobe_accuracy_release_panel_test_tex)
 
 
 
@@ -248,23 +265,89 @@ print(r'''\documentclass{article}
 \clearpage
 \begin{table}
 \small
-  \hspace{-10em}\input{''' + table_r_vs_R_tex + r'''}
+  \hspace{-10em}\input{''' + table_r_calls_tex + r'''}
   \caption{Caption for r vs R table}
   \label{label: table r vs R}
 \end{table}
-\begin{table}
 
+\begin{table}
 \small
-  \hspace{-10em}\input{''' + table_mykrobe_accuracy_tex + r'''}
-  \caption{Caption for mykrobe accuracy table}
-  \label{label: mykrobe accuracy}
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_CP1_tex + r'''}
+  \caption{Caption for mykrobe accuracy table CP1}
+  \label{label: mykrobe accuracy CP1}
 \end{table}
 
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_CP2_tex + r'''}
+  \caption{Caption for mykrobe accuracy table CP2}
+  \label{label: mykrobe accuracy CP2}
+\end{table}
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_CP3_tex + r'''}
+  \caption{Caption for mykrobe accuracy table CP3}
+  \label{label: mykrobe accuracy CP3}
+\end{table}
+
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_release_panel_train_tex + r'''}
+  \caption{Caption for mykrobe accuracy table release panel train dataset}
+  \label{label: mykrobe accuracy final panel}
+\end{table}
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_release_panel_validate_tex + r'''}
+  \caption{Caption for mykrobe accuracy table release panel validate dataset}
+  \label{label: mykrobe accuracy final panel}
+\end{table}
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_release_panel_test_tex + r'''}
+  \caption{Caption for mykrobe accuracy table release panel test dataset}
+  \label{label: mykrobe accuracy final panel}
+\end{table}
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_regimen_tex + r'''}
+  \caption{Caption for regimen table}
+  \label{label: regimen summary}
+\end{table}
 \end{document}''', file=f)
 
 f.close()
 
 
+figshare_dir = os.path.join('Figshare')
+os.mkdir(figshare_dir)
 eval_dir = os.path.abspath(os.path.dirname(evalrescallers_paper.__file__))
 to_copy = os.path.join(eval_dir, 'data', 'removed_variants.tsv')
-shutil.copyfile(to_copy, removed_variants_tsv)
+shutil.copyfile(to_copy, os.path.join(figshare_dir, 'removed_variants.tsv'))
+
+shutil.copyfile(samples_suppl_tsv, os.path.join(figshare_dir, 'sample_data.tsv'))
+
+
+# Combine all the variant counts files into one, by adding in a tool column
+with open(os.path.join(figshare_dir, 'variant_counts.tsv'), 'w') as f_out:
+    for tool in ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'Mykrobe.CP1', 'Mykrobe.CP2', 'Mykrobe.CP3', 'Mykrobe.Walker-2015', 'TB-Profiler']:
+        print('Tool', 'Dataset', 'Drug', 'PPV', 'TP', 'FP', 'Variants', sep='\t', file=f_out)
+        with open(f'{r_is_res_prefix}.variant_counts.{tool}.tsv') as f_in:
+            for line in f_in:
+                if line.startswith('all') or line.startswith('Dataset'):
+                    continue
+                print(tool, line, sep='\t', end='', file=f_out)
+
+
+
+shutil.copyfile(run_time_and_memory_tsv, os.path.join(figshare_dir, 'run_time_memory.tsv'))
+shutil.copyfile(f'{run_time_and_memory_plot_prefix}.memory.pdf', os.path.join(figshare_dir, 'memory_boxplots.pdf'))
+shutil.copyfile(f'{run_time_and_memory_plot_prefix}.time.pdf', os.path.join(figshare_dir, 'run_time_boxplots.pdf'))
+shutil.copyfile(r_is_res_accuracy_stats_tsv, os.path.join(figshare_dir, 'accuracy_stats.tsv'))
+shutil.copyfile(f'{figure_regimen_suppl_validate_prefix}.pdf', os.path.join(figshare_dir, 'regimen_plot.validate.pdf'))
+shutil.copyfile(f'{figure_regimen_suppl_test_prefix}.pdf', os.path.join(figshare_dir, 'regimen_plot.test.pdf'))
