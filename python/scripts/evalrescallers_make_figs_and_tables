@@ -55,8 +55,12 @@ figure_regimen_suppl_validate_prefix = f'supplementary.figure.regimen.validate'
 figure_regimen_suppl_test_prefix = f'supplementary.figure.regimen.test'
 table_regimen_tex = f'table.5.tex'
 table_r_calls_tex = f'table.r_calls.tex'
-table_mykrobe_accuracy_release_panel_tex = f'table.mykrobe_accuracy_release_panel.tex'
+table_mykrobe_accuracy_CP1_tex = f'table.mykrobe_accuracy_CP1.tex'
+table_mykrobe_accuracy_CP2_tex = f'table.mykrobe_accuracy_CP2.tex'
 table_mykrobe_accuracy_CP3_tex = f'table.mykrobe_accuracy_CP3.tex'
+table_mykrobe_accuracy_release_panel_train_tex = f'table.mykrobe_accuracy_release_panel_train.tex'
+table_mykrobe_accuracy_release_panel_validate_tex = f'table.mykrobe_accuracy_release_panel_validate.tex'
+table_mykrobe_accuracy_release_panel_test_tex = f'table.mykrobe_accuracy_release_panel_test.tex'
 
 run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
@@ -176,8 +180,16 @@ regimen_tools = {'10k_predict', 'ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'M
 evalrescallers_paper.latex.regimen_summary_table(f'{r_is_res_prefix}.regimen_counts.summary.tsv', table_regimen_tex, {'10k_test', '10k_validate'}, regimen_tools)
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
-evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', first_line_sorted, '10k_test', table_mykrobe_accuracy_release_panel_tex)
-evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP3', first_line_sorted, '10k_test', table_mykrobe_accuracy_CP3_tex)
+train_drugs = ['Ethambutol', 'Isoniazid', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
+validate_drugs = ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
+test_drugs = ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
+
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP1', train_drugs, 'mykrobe', table_mykrobe_accuracy_CP1_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP2', validate_drugs, '10k_validate', table_mykrobe_accuracy_CP2_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP3', test_drugs, '10k_test', table_mykrobe_accuracy_CP3_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', train_drugs, 'mykrobe', table_mykrobe_accuracy_release_panel_train_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', validate_drugs, '10k_validate', table_mykrobe_accuracy_release_panel_validate_tex)
+evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.201901', test_drugs, '10k_test', table_mykrobe_accuracy_release_panel_test_tex)
 
 
 
@@ -258,6 +270,19 @@ print(r'''\documentclass{article}
   \label{label: table r vs R}
 \end{table}
 
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_CP1_tex + r'''}
+  \caption{Caption for mykrobe accuracy table CP1}
+  \label{label: mykrobe accuracy CP1}
+\end{table}
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_CP2_tex + r'''}
+  \caption{Caption for mykrobe accuracy table CP2}
+  \label{label: mykrobe accuracy CP2}
+\end{table}
 
 \begin{table}
 \small
@@ -266,10 +291,25 @@ print(r'''\documentclass{article}
   \label{label: mykrobe accuracy CP3}
 \end{table}
 
+
 \begin{table}
 \small
-  \hspace{-10em}\input{''' + table_mykrobe_accuracy_release_panel_tex + r'''}
-  \caption{Caption for mykrobe accuracy table release panel}
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_release_panel_train_tex + r'''}
+  \caption{Caption for mykrobe accuracy table release panel train dataset}
+  \label{label: mykrobe accuracy final panel}
+\end{table}
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_release_panel_validate_tex + r'''}
+  \caption{Caption for mykrobe accuracy table release panel validate dataset}
+  \label{label: mykrobe accuracy final panel}
+\end{table}
+
+\begin{table}
+\small
+  \hspace{-10em}\input{''' + table_mykrobe_accuracy_release_panel_test_tex + r'''}
+  \caption{Caption for mykrobe accuracy table release panel test dataset}
   \label{label: mykrobe accuracy final panel}
 \end{table}
 
