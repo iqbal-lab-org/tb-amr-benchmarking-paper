@@ -61,7 +61,7 @@ def regimen_summary_table(regimen_summary_file, outfile, datasets, tools):
                 continue
 
             assert d['Tool'] in counts
-            if d['Truth_regimen'] == d['Called_regimen']:
+            if d['Truth_regimen'] == d['Called_regimen'] or (d['Truth_regimen'] == '10' and d['Called_regimen'] in {'10', '11', '12'}):
                 key = 'right'
             else:
                 key = 'wrong'
