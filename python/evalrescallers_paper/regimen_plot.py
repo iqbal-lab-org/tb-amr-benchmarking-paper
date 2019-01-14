@@ -41,6 +41,12 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
                 if len(data[k1]) == 1:
                     del data[k1]
 
+    for k in data:
+        try:
+            del data[k][99]
+        except:
+            pass
+
     colours = [
      '#f0e8e3',
      '#e2d3c9',
