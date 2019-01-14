@@ -53,10 +53,10 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
      '#f5cfb6',
      '#FDD49E',
      '#FDBB84',
-     '#FDBB84',
+     '#FCA964',
      '#FC8D59',
      '#E34A33',
-     '#E34A33',
+     '#d81529',
      '#CE1256',
      '#980043',
      '#400013'
@@ -235,7 +235,7 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
 
     # Regimen circles and R/S
     svg_regimen_lines = []
-    circle_radius = 0.2 * drug_col_width
+    circle_radius = 0.1 * drug_col_width
     y_circle_R_S_offset = 7
     pheno_letters_lines = []
 
@@ -261,14 +261,14 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
                     number_of_lines = drugs_tuple[0]
                     if number_of_lines == 1:
                         lines_y = [y_circle_centre]
-                        line_width = 3
+                        line_width = 1.5
                     else:
                         assert number_of_lines == 2
                         lines_y = [y_circle_centre - circle_radius / 2, y_circle_centre + circle_radius / 2]
-                        line_width = 2
+                        line_width = 1
 
                     for drug in drugs_tuple[1:]:
-                        to_append.append(svg.svg_circle(drug_to_x_centre[drug], y_circle_centre, 0.2 * drug_col_width, colours[node-1], line_colour, stroke_width=2))
+                        to_append.append(svg.svg_circle(drug_to_x_centre[drug], y_circle_centre, 0.2 * drug_col_width, colours[node-1], line_colour, stroke_width=1))
                         x_min = min(x_min, drug_to_x_centre[drug])
                         x_max = max(x_max, drug_to_x_centre[drug])
 
@@ -276,7 +276,7 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
                         svg_regimen_lines.append(svg.svg_line(x_min, line_y, x_max, line_y, line_colour, line_width))
                     svg_regimen_lines.append(to_append)
                 else:
-                    svg_regimen_lines.append(svg.svg_circle(drug_to_x_centre[drugs_tuple], y_circle_centre, 0.2 * drug_col_width, colours[node-1], line_colour, stroke_width=2))
+                    svg_regimen_lines.append(svg.svg_circle(drug_to_x_centre[drugs_tuple], y_circle_centre, 0.2 * drug_col_width, colours[node-1], line_colour, stroke_width=1))
 
         for drug, pheno in regimen_to_pheno[node].items():
             pheno_letters_lines.append(svg.svg_text(drug_to_x_centre[drug], y_R_or_S, pheno, 10, vertical_align='middle'))
