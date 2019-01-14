@@ -70,11 +70,12 @@ def regimen_summary_table(regimen_summary_file, outfile, datasets, tools):
 
 
     with open(outfile, 'w') as f:
-        print(r'''\begin{tabular}{lrr}''', file=f)
-        print(r'''Tool & Correct regimen & Incorrect regimen \\''', file=f)
+        print(r'''\begin{tabular}{lrrr}''', file=f)
+        print(r'''Tool & Correct regimen & Incorrect regimen & Percent correct \\''', file=f)
         print(r'''\hline''', file=f)
         for tool in sorted(list(counts)):
-            print(common_data.tool_names[tool], counts[tool]['right'], counts[tool]['wrong'], end=r''' \\''' + '\n', sep=' & ', file=f)
+            percent = round(100 * counts[tool]['right'] / (counts[tool]['right'] + counts[tool]['wrong']), 1)
+            print(common_data.tool_names[tool], counts[tool]['right'], counts[tool]['wrong'], percent, end=r''' \\''' + '\n', sep=' & ', file=f)
 
         print(r'''\hline''', file=f)
         print(r'''\end{tabular}''', file=f)
