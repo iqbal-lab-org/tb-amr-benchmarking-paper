@@ -67,6 +67,9 @@ run_time_and_memory_tsv = 'supplementary.table.run_time_and_memory.tsv'
 run_time_and_memory_plot_prefix = 'supplementary.figure.resources'
 table_run_time_and_memory_tex = run_time_and_memory_tsv.replace('tsv', 'tex')
 
+train_drugs = ['Ethambutol', 'Isoniazid', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
+validate_drugs = ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
+test_drugs = ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
 
 try:
     os.mkdir(options.outdir)
@@ -95,6 +98,10 @@ evalrescallers_paper.run_time_and_memory.json_to_tsv(json_data, run_time_and_mem
 evalrescallers_paper.run_time_and_memory.tsv_to_plot(run_time_and_memory_tsv, run_time_and_memory_plot_prefix)
 evalrescallers_paper.run_time_and_memory.csv_to_latex_table(f'{run_time_and_memory_plot_prefix}.medians.csv', table_run_time_and_memory_tex)
 
+tools = {'ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'TB-Profiler'}
+evalrescallers_paper.latex.mean_sens_and_spec_on_one_dataset(r_is_res_accuracy_stats_tsv, tools, train_drugs, 'mykrobe', 'benchmark.sens_spec.train.tex')
+evalrescallers_paper.latex.mean_sens_and_spec_on_one_dataset(r_is_res_accuracy_stats_tsv, tools, validate_drugs, '10k_validate', 'benchmark.sens_spec.validate.tex')
+evalrescallers_paper.latex.mean_sens_and_spec_on_one_dataset(r_is_res_accuracy_stats_tsv, tools, test_drugs, '10k_test', 'benchmark.sens_spec.test.tex')
 
 plot_tools = ['10k_predict', 'Mykrobe.Walker-2015', 'Mykrobe.CP2']
 evalrescallers_paper.horizontal_bar_chart.make_plot(
@@ -185,9 +192,6 @@ regimen_tools = {'10k_predict', 'ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'M
 evalrescallers_paper.latex.regimen_summary_table(f'{r_is_res_prefix}.regimen_counts.summary.tsv', table_regimen_tex, {'10k_test', '10k_validate'}, regimen_tools)
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
-train_drugs = ['Ethambutol', 'Isoniazid', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
-validate_drugs = ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
-test_drugs = ['Ethambutol', 'Isoniazid', 'Pyrazinamide', 'Rifampicin', 'Amikacin', 'Capreomycin', 'Ciprofloxacin', 'Kanamycin', 'Moxifloxacin', 'Ofloxacin', 'Streptomycin']
 
 evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP1', train_drugs, 'mykrobe', table_mykrobe_accuracy_CP1_tex)
 evalrescallers_paper.latex.tool_accuracy_table_on_one_dataset(r_is_res_accuracy_stats_tsv, 'Mykrobe.CP2', validate_drugs, '10k_validate', table_mykrobe_accuracy_CP2_tex)
