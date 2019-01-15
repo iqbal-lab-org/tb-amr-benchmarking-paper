@@ -50,6 +50,37 @@ def tool_accuracy_table_on_one_dataset(stats_tsv_file, tool, drugs, dataset, out
 
 
 
+def mean_sens_and_spec_on_one_dataset(stats_tsv_file, tools, drugs, dataset, outfile):
+    stats = {t: {x: 0 for x in ['TP', 'FP', 'TN', 'FN']} for t in tools}
+
+    with open(stats_tsv_file) as f:
+        reader = csv.DictReader(f, delimiter='\t')
+        for d in reader:
+            if d['Dataset'] != dataset or d['Drug'] not in drugs or d['Tool'] not in tools:
+                continue
+
+            for x in ['TP', 'FP', 'TN', 'FN']:
+                stats[d['Tool']][x] += int(d[x])
+
+
+    with open(outfile, 'w') as f:
+        print(r'''\begin{tabular}{lcccccc}''', file=f)
+        header_fields = ['Tool'] +  [r'''\multicolumn{1}{c}{''' + x + '}' for x in ['Sensitivity', 'Specificity', 'VME', 'ME', 'PPV', 'NPV']]
+        print(*header_fields, sep=' & ', end=r''' \\''' + ' \n', file=f)
+
+        for tool, d in sorted(stats.items()):
+            sensitivity = round(100 * d['TP'] / (d['TP'] + d['FN']), 2)
+            specificity = round(100 * d['TN'] / (d['TN'] + d['FP']), 2)
+            vme = round(100 * d['FN'] / (d['FN'] + d['TP']), 2)
+            me = round(100 * d['FP'] / (d['FP'] + d['TN']), 2)
+            ppv = round(100 * d['TP'] / (d['TP'] + d['FP']), 2)
+            npv = round(100 * d['TN'] / ( d['TN'] + d['FN']), 2)
+            print(tool, f'{sensitivity:.2f}', f'{specificity:.2f}', f'{vme:.2f}', f'{me:.2f}', f'{ppv:.2f}', f'{npv:.2f}', sep=' & ', end=r''' \\''' + ' \n', file=f)
+
+        print(r'''\end{tabular}''', file=f)
+
+
+
 def regimen_summary_table(regimen_summary_file, outfile, datasets, tools):
     counts = {tool: {'right': 0, 'wrong': 0} for tool in tools}
 
