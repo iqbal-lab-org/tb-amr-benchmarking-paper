@@ -361,11 +361,11 @@ shutil.copyfile(samples_suppl_tsv, os.path.join(figshare_dir, 'sample_data.tsv')
 # Combine all the variant counts files into one, by adding in a tool column
 variant_counts_figshare_tsv = os.path.join(figshare_dir, 'variant_counts.tsv')
 with open(f'{variant_counts_figshare_tsv}.tmp', 'w') as f_out:
+    print('Tool', 'Dataset', 'Drug', 'PPV', 'TP', 'FP', 'Variants', sep='\t', file=f_out)
     for tool in ['ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'Mykrobe.CP1', 'Mykrobe.CP2', 'Mykrobe.CP3', 'Mykrobe.Walker-2015', 'TB-Profiler']:
-        print('Tool', 'Dataset', 'Drug', 'PPV', 'TP', 'FP', 'Variants', sep='\t', file=f_out)
         with open(f'{r_is_res_prefix}.variant_counts.{tool}.tsv') as f_in:
             for line in f_in:
-                if line.startswith('all') or line.startswith('Dataset'):
+                if line.startswith('Tool') or line.startswith('all') or line.startswith('Dataset'):
                     continue
                 print(tool, line, sep='\t', end='', file=f_out)
 
