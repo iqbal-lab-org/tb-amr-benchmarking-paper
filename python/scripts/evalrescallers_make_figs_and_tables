@@ -380,4 +380,5 @@ shutil.copyfile(f'{run_time_and_memory_plot_prefix}.time.pdf', os.path.join(figs
 shutil.copyfile(f'{figure_regimen_suppl_validate_prefix}.pdf', os.path.join(figshare_dir, 'regimen_plot.validate.pdf'))
 shutil.copyfile(f'{figure_regimen_suppl_test_prefix}.pdf', os.path.join(figshare_dir, 'regimen_plot.test.pdf'))
 
+fix_dataset_and_tool_columns(f'{r_is_res_prefix}.regimen_counts.summary.tsv', os.path.join(figshare_dir, 'who_regimen_counts.tsv'))
 fix_dataset_and_tool_columns(r_is_res_accuracy_stats_tsv, os.path.join(figshare_dir, 'accuracy_stats.tsv'))
