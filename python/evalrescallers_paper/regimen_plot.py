@@ -92,15 +92,13 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         ('Am', 'Amikacin'),
         ('Km', 'Kanamycin'),
         ('Cm', 'Capreomycin'),
-        ('PAS', 'Para-aminosalicylate/Para-aminosalicylate-sodium'),
         ('Eto', 'Ethionamide'),
-        ('Pto', 'Prothionamide'),
         ('Cs', 'Cycloserine'),
         ('Trd', 'Terizidone'),
         ('Cfz', 'Clofazimide'),
         ('Lzd', 'Linezolid'),
         ('Bdq', 'Bedaquiline'),
-        ('X', 'Rifabutin, Rifapentine, High dose Isoniazid (if possible), and two or more of: Clofazimide, Linezolid, Thioacetazone, Amox-Clavulanate, Imipenem/Cilastatin, Meropenem'),
+        ('X', 'Para-aminosalicylate/Para-aminosalicylate-sodium, Prothionamide, Rifabutin, Rifapentine, High dose Isoniazid (if possible), and two or more of: Clofazimide, Linezolid, Thioacetazone, Amox-Clavulanate, Imipenem/Cilastatin, Meropenem'),
     ])
 
     regimen_to_drug = {
@@ -109,12 +107,12 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         3: {'req': ('R', 'Z', 'E')},
         4: {'req': ('R', 'E', (1, 'Lfx', 'Mfx', 'Gfx'))},
         5: {'req': ('R', 'Z', (1, 'Lfx', 'Mfx', 'Gfx'))},
-        6: {'req': ('R', 'E', (1, 'Lfx', 'Mfx', 'Gfx'), (1, 'Km', 'Am', 'Cm'), (1, 'Eto', 'Pto', 'PAS', 'Cs', 'Trd'))},
-        7: {'req': ('R', 'E', 'S', (1, 'Eto', 'Pto', 'PAS', 'Cs', 'Trd'))},
+        6: {'req': ('R', 'Eto', (1, 'Lfx', 'Mfx', 'Gfx'), (1, 'Km', 'Am', 'Cm'))},
+        7: {'req': ('R', 'Eto', (1, 'Lfx', 'Mfx', 'Gfx'), 'S')},
         8: {'req': ('H', 'R', 'E')},
         9: {'req': ('H', 'R', 'Z')},
         10: {'req': ('Bdq', 'Lzd', (1, 'Lfx', 'Mfx'), (1, 'Cs', 'Trd', 'Cfz'))},
-        11: {'req': ('E', 'Z', (1, 'Am', 'S'), (1, 'Lfx', 'Mfx', 'Gfx'), 'Eto', 'Pto', 'PAS', 'Cs', 'Trd', 'X')},
+        11: {'req': ('E', 'Z', (1, 'Am', 'S'), (1, 'Lfx', 'Mfx', 'Gfx'), 'Eto', 'Cs', 'Trd', 'X'), 'opt': ('Cfz', 'Lzd')},
     }
 
     regimen_to_pheno = {
