@@ -81,8 +81,12 @@ def mean_sens_and_spec_on_one_dataset(stats_tsv_file, tools, drugs, dataset, out
 
 
 
-def regimen_summary_table(regimen_summary_file, outfile, datasets, tools):
-    counts = {tool: {'right': 0, 'wrong': 0} for tool in tools}
+def regimen_summary_tables(regimen_summary_file, outfile, datasets, tools):
+    counts = {tool: {
+        'right': 0,
+        'wrong': 0,
+        'breakdown': {str(x): {'right': 0, 'wrong': 0} for x in range(1, 12, 1)}
+        } for tool in tools}
 
     with open(regimen_summary_file) as f:
         reader = csv.DictReader(f, delimiter='\t')
@@ -92,12 +96,14 @@ def regimen_summary_table(regimen_summary_file, outfile, datasets, tools):
                 continue
 
             assert d['Tool'] in counts
-            if d['Truth_regimen'] == d['Called_regimen'] or (d['Truth_regimen'] == '10' and d['Called_regimen'] in {'10', '11', '12'}):
+            if d['Truth_regimen'] == d['Called_regimen'] or (d['Truth_regimen'] == '10' and d['Called_regimen'] in {'10', '11'}):
                 key = 'right'
             else:
                 key = 'wrong'
 
             counts[d['Tool']][key] += int(d['Count'])
+
+            counts[d['Tool']]['breakdown'][d['Truth_regimen']][key] += int(d['Count'])
 
 
     with open(outfile, 'w') as f:
@@ -107,6 +113,26 @@ def regimen_summary_table(regimen_summary_file, outfile, datasets, tools):
         for tool in sorted(list(counts)):
             percent = round(100 * counts[tool]['right'] / (counts[tool]['right'] + counts[tool]['wrong']), 1)
             print(common_data.tool_names[tool], counts[tool]['right'], counts[tool]['wrong'], percent, end=r''' \\''' + '\n', sep=' & ', file=f)
+
+        print(r'''\hline''', file=f)
+        print(r'''\end{tabular}''', file=f)
+        print('\n\n', file=f)
+
+        print(r'''\begin{tabular}{lrrrrrrrrrrr}''', file=f)
+        print(r'''Tool & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\''', file=f)
+        print(r'''\hline''', file=f)
+        for tool in sorted(list(counts)):
+            percent = round(100 * counts[tool]['right'] / (counts[tool]['right'] + counts[tool]['wrong']), 1)
+            percents = []
+            for i in range(1, 12, 1):
+                r = str(i)
+                right = counts[tool]['breakdown'][r]['right']
+                total = right + counts[tool]['breakdown'][r]['wrong']
+                if total == 0:
+                    percents.append(0)
+                else:
+                    percents.append(round(100 * right / total, 1))
+            print(common_data.tool_names[tool], *percents, end=r''' \\''' + '\n', sep=' & ', file=f)
 
         print(r'''\hline''', file=f)
         print(r'''\end{tabular}''', file=f)
