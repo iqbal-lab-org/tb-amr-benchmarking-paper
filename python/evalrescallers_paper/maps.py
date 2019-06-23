@@ -155,9 +155,9 @@ def make_legend(outprefix, debug=False):
         <circle cx="11" cy="30" r="10" stroke="black" stroke-width="0.5" fill="''' + mykrobe_colour + r'''" />
         <text x="23" y="35">Training</text>
         <circle cx="11" cy="55" r="10" stroke="black" stroke-width="0.5" fill="''' + validate_colour + r'''" />
-        <text x="23" y="60">Validation</text>
+        <text x="23" y="60">Global</text>
         <circle cx="11" cy="80" r="10" stroke="black" stroke-width="0.5" fill="''' + test_colour + r'''" />
-        <text x="23" y="85">Test</text>
+        <text x="23" y="85">Prospective</text>
         </svg>'''
 
     with open(svg_file, 'w') as f:
