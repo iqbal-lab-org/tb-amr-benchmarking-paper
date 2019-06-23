@@ -205,7 +205,7 @@ regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is
 evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], f'{figure_regimen_suppl_test_prefix}.svg', ignore=[(0, 0)], y_scale=0.8)
 
 regimen_tools = {'10k_predict', 'ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'Mykrobe.Walker-2015', 'TB-Profiler'}
-evalrescallers_paper.latex.regimen_summary_table(f'{r_is_res_prefix}.regimen_counts.summary.tsv', table_regimen_tex, {'10k_test', '10k_validate'}, regimen_tools)
+evalrescallers_paper.latex.regimen_summary_tables(f'{r_is_res_prefix}.regimen_counts.summary.tsv', table_regimen_tex, {'10k_test', '10k_validate'}, regimen_tools)
 
 first_line_sorted = sorted(list(evalrescallers_paper.common_data.first_line_drugs))
 
