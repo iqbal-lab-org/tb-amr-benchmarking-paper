@@ -112,7 +112,7 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         8: {'req': ('H', 'R', 'E')},
         9: {'req': ('H', 'R', 'Z')},
         10: {'req': ('Bdq', 'Lzd', (1, 'Lfx', 'Mfx'), (1, 'Cs', 'Trd', 'Cfz'))},
-        11: {'req': ('E', 'Z', (1, 'Am', 'S'), (1, 'Lfx', 'Mfx', 'Gfx'), 'Eto', 'Cs', 'Trd', 'X'), 'opt': ('Cfz', 'Lzd')},
+        11: {'req': ('E', 'Z', (1, 'Am', 'S'), (1, 'Lfx', 'Mfx', 'Gfx'), 'Eto', 'Cs', 'Trd', 'X')},
     }
 
     regimen_to_pheno = {
