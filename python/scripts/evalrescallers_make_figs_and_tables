@@ -11,7 +11,7 @@ import evalrescallers_paper
 
 def fix_dataset_and_tool_columns(infile, outfile):
     replace = {
-        'Dataset': {'10k_test': 'test', '10k_validate': 'validate', 'mykrobe': 'train', 'Dataset': 'Dataset'},
+        'Dataset': {'10k_test': 'prospective', '10k_validate': 'global', 'mykrobe': 'training', 'Dataset': 'Dataset'},
         'Tool': {'10k_predict': 'NEJM-2018'},
     }
 
