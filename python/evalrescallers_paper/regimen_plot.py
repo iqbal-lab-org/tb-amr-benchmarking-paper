@@ -27,7 +27,7 @@ def load_regimen_counts_tsv(infile, datasets):
     return all_data
 
 
-def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
+def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
     assert outfile.endswith('.svg')
     to_ignore = {}
     if ignore is not None:
@@ -78,7 +78,9 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
             called_nodes[called][truth] = data[truth][called]
             edges.append((truth, called, data[truth][called]))
 
+    edges.sort()
     plot_width = 1050
+    margin = 5
 
     drugs = OrderedDict([
         ('H', 'Isoniazid'),
@@ -103,7 +105,7 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
 
     regimen_to_drug = {
         1: {'req': ('H', 'R', 'Z', 'E')},
-        2: {'req': ('R', 'Z', 'E'), 'opt': ((1, 'Lfx', 'Mfx', 'Gfx'),)},
+        2: {'req': ('R', 'Z', 'E', (1, 'Lfx', 'Mfx', 'Gfx'))},
         3: {'req': ('R', 'Z', 'E')},
         4: {'req': ('R', 'E', (1, 'Lfx', 'Mfx', 'Gfx'))},
         5: {'req': ('R', 'Z', (1, 'Lfx', 'Mfx', 'Gfx'))},
@@ -129,6 +131,20 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         11: {'H': 'R', 'R': 'R', 'Mfx': 'R'},
     }
 
+    regimen_to_description = {
+        1: "DS-TB",
+        2: "Mono-H DR-TB",
+        3: "Mono-H DR-TB",
+        4: "H-Z DR-TB",
+        5: "H-E DR-TB",
+        6: "H-Z-E DR-TB",
+        7: "H-Z-E DR-TB",
+        8: "Mono-Z DR-TB",
+        9: "Mono-E DR-TB",
+        10: "RR/MDR-TB",
+        11: "XDR-TB",
+    }
+
     drug_col_width = 26
     svg_lines = []
     x = 10
@@ -145,19 +161,24 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
     node_to_edge_space = 50
     left_node_x = right_half_x_left + node_to_edge_space
     node_width = 20
-    right_node_x = plot_width - node_to_edge_space - node_width
+    right_node_x = plot_width - node_to_edge_space - node_width - 75
     y_start = 40
     node_y_gap = 30
     svg_node_lines = []
     truth_nodes_y_tops = {}
     truth_nodes_y_bottoms = {}
     called_nodes_y_tops = {}
+    called_nodes_y_bottoms = {}
     truth_node_to_y_centre = {}
 
     # Nodes on the left
     y = y_start
-    svg_lines.append(svg.svg_text(left_node_x - 110, headings_y, 'Regimen', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(left_node_x - 103, headings_y-7, 'Phenotype', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(left_node_x - 103, headings_y+4, 'regimen', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
     svg_lines.append(svg.svg_text(left_node_x - 5, headings_y, 'Samples', 11, font_weight='bold', position='end', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(right_node_x + 65, headings_y, 'Samples', 11, font_weight='bold', position='end', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(right_node_x + 100, headings_y-7, tool_name, 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(right_node_x + 100, headings_y+4, 'regimen', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
 
     for node in regimen_to_drug:
         if node-1 not in truth_nodes:
@@ -177,7 +198,8 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
             colours[int(node)], colours[int(node)], border_width=1))
         #svg_lines.append(svg.svg_text(left_node_x - 110, 0.5 * (y + node_y_bottom),
         #    who_treatment.regimens[node+1].definition, 11, position='start', font_family='arial', vertical_align='middle'))
-        svg_lines.append(svg.svg_text(left_node_x - 110, 0.5 * (y + node_y_bottom), str(node+1), 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+        svg_lines.append(svg.svg_text(left_node_x - 103, 0.5 * (y + node_y_bottom) - 6, str(node+1), 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+        svg_lines.append(svg.svg_text(left_node_x - 103, 0.5 * (y + node_y_bottom) + 6, regimen_to_description[node+1], 10, position='middle', font_family='arial', vertical_align='middle'))
         svg_lines.append(svg.svg_text(left_node_x - 5, 0.5 * (y + node_y_bottom),
             str(total_samples), 11, position='end', font_family='arial', vertical_align='middle'))
 
@@ -196,10 +218,13 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         called_nodes_y_tops[node] = y
         total_samples = sum(node_counts.values())
         node_y_bottom = y + y_scale * total_samples
+        called_nodes_y_bottoms[node] = node_y_bottom
         svg_node_lines.append(svg.svg_rectangle(right_node_x, y, right_node_x + node_width, node_y_bottom,
             colours[int(node)], colours[int(node)], border_width=1))
         svg_lines.append(svg.svg_text(right_node_x + node_width + 3, 0.5 * (y + node_y_bottom),
             str(total_samples), 11, position='start', font_family='arial', vertical_align='middle'))
+        svg_lines.append(svg.svg_text(right_node_x + 100, 0.5 * (y + node_y_bottom),
+            str(node+1), 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
         if node in to_ignore:
             total_ignored = sum(to_ignore[node].values())
             svg_lines.append(svg.svg_text(right_node_x + node_width + 3, 0.5 * (y + node_y_bottom) + 12,
@@ -274,10 +299,10 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
             pheno_letters_lines.append(svg.svg_text(drug_to_x_centre[drug], y_R_or_S, pheno, 10, vertical_align='middle'))
 
     # Make vertical lines to separate drugs
-    y_top = min(truth_nodes_y_tops.values())
-    y_top = 5
-    y_bottom = max(truth_nodes_y_bottoms.values())
-    y_bottom = y - 5
+    #y_top = min(truth_nodes_y_tops.values())
+    y_top = margin
+    #y_bottom = max(truth_nodes_y_bottoms.values())
+    y_bottom = y - margin
     for drug in drugs:
         x_pos = drug_to_x_centre[drug] - 0.5 * drug_col_width
         svg_lines.append(svg.svg_line(x_pos, y_top, x_pos, y_bottom, 'lightgrey', 1))
@@ -289,12 +314,16 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
     x_left = min(drug_to_x_centre.values()) - 0.5 * drug_col_width
     x_right = left_node_x
     y_top_line = truth_nodes_y_tops[0] - 10
-    svg_lines.append(svg.svg_line(x_left, y_top, x_right, y_top, 'lightgrey', 1))
-    svg_lines.append(svg.svg_line(x_left, y_top_line, x_right, y_top_line, 'lightgrey', 1))
-    svg_lines.append(svg.svg_line(x_left, y_bottom, x_right, y_bottom, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(x_left, y_top, plot_width - margin, y_top, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(x_left, y_top_line, plot_width - margin, y_top_line, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(plot_width - margin, y_top, plot_width - margin, y_bottom, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(x_left, y_bottom, plot_width - margin, y_bottom, 'lightgrey', 1))
     for i in range(0, len(truth_nodes_y_bottoms) - 1, 1):
         y_pos = 0.5 * (truth_nodes_y_bottoms[i] + truth_nodes_y_tops[i+1])
         svg_lines.append(svg.svg_line(x_left, y_pos, x_right, y_pos, 'lightgrey', 1))
+        y_pos = 0.5 * (called_nodes_y_bottoms[i] + called_nodes_y_tops[i+1])
+        svg_lines.append(svg.svg_line(right_node_x + node_width, y_pos, plot_width - margin, y_pos, 'lightgrey', 1))
+
 
     f = open(outfile, 'w')
     print(r'''<?xml version="1.0" standalone="no"?>

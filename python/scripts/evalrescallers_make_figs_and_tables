@@ -192,17 +192,17 @@ evalrescallers_paper.horizontal_bar_chart.make_legend(plot_tools, f'{figure_barp
 
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.summary.tsv', {'10k_test', '10k_validate'})
-evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], f'{figure_regimen_plot_prefix}.svg', ignore=[(0, 0)], y_scale=0.15)
+evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], f'{figure_regimen_plot_prefix}.svg', 'Mykrobe', ignore=[(0, 0)], y_scale=0.15)
 
 for tool in ['ARIBA', 'KvarQ', 'MTBseq', 'TB-Profiler']:
-    evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data[tool], f'{regimen_suppl_plot_prefix}.{tool}.svg', ignore=[(0, 0)], y_scale=0.15)
+    evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data[tool], f'{regimen_suppl_plot_prefix}.{tool}.svg', tool, ignore=[(0, 0)], y_scale=0.15)
 
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.summary.tsv', {'10k_validate'})
-evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], f'{figure_regimen_suppl_validate_prefix}.svg', ignore=[(0, 0)], y_scale=0.2)
+evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], f'{figure_regimen_suppl_validate_prefix}.svg', 'Mykrobe', ignore=[(0, 0)], y_scale=0.2)
 
 regimen_data = evalrescallers_paper.regimen_plot.load_regimen_counts_tsv(f'{r_is_res_prefix}.regimen_counts.summary.tsv', {'10k_test'})
-evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], f'{figure_regimen_suppl_test_prefix}.svg', ignore=[(0, 0)], y_scale=0.8)
+evalrescallers_paper.regimen_plot.plot_one_tool(regimen_data['Mykrobe.201901'], f'{figure_regimen_suppl_test_prefix}.svg', 'Mykrobe', ignore=[(0, 0)], y_scale=0.8)
 
 regimen_tools = {'10k_predict', 'ARIBA', 'KvarQ', 'MTBseq', 'Mykrobe.201901', 'Mykrobe.Walker-2015', 'TB-Profiler'}
 evalrescallers_paper.latex.regimen_summary_tables(f'{r_is_res_prefix}.regimen_counts.summary.tsv', table_regimen_tex, {'10k_test', '10k_validate'}, regimen_tools)
