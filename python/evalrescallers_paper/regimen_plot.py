@@ -78,6 +78,7 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
             called_nodes[called][truth] = data[truth][called]
             edges.append((truth, called, data[truth][called]))
 
+    edges.sort()
     plot_width = 1050
     margin = 5
 
