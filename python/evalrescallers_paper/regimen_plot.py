@@ -79,6 +79,7 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
             edges.append((truth, called, data[truth][called]))
 
     plot_width = 1050
+    margin = 5
 
     drugs = OrderedDict([
         ('H', 'Isoniazid'),
@@ -166,6 +167,7 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
     truth_nodes_y_tops = {}
     truth_nodes_y_bottoms = {}
     called_nodes_y_tops = {}
+    called_nodes_y_bottoms = {}
     truth_node_to_y_centre = {}
 
     # Nodes on the left
@@ -215,6 +217,7 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
         called_nodes_y_tops[node] = y
         total_samples = sum(node_counts.values())
         node_y_bottom = y + y_scale * total_samples
+        called_nodes_y_bottoms[node] = node_y_bottom
         svg_node_lines.append(svg.svg_rectangle(right_node_x, y, right_node_x + node_width, node_y_bottom,
             colours[int(node)], colours[int(node)], border_width=1))
         svg_lines.append(svg.svg_text(right_node_x + node_width + 3, 0.5 * (y + node_y_bottom),
@@ -295,10 +298,10 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
             pheno_letters_lines.append(svg.svg_text(drug_to_x_centre[drug], y_R_or_S, pheno, 10, vertical_align='middle'))
 
     # Make vertical lines to separate drugs
-    y_top = min(truth_nodes_y_tops.values())
-    y_top = 5
-    y_bottom = max(truth_nodes_y_bottoms.values())
-    y_bottom = y - 5
+    #y_top = min(truth_nodes_y_tops.values())
+    y_top = margin
+    #y_bottom = max(truth_nodes_y_bottoms.values())
+    y_bottom = y - margin
     for drug in drugs:
         x_pos = drug_to_x_centre[drug] - 0.5 * drug_col_width
         svg_lines.append(svg.svg_line(x_pos, y_top, x_pos, y_bottom, 'lightgrey', 1))
@@ -310,12 +313,16 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
     x_left = min(drug_to_x_centre.values()) - 0.5 * drug_col_width
     x_right = left_node_x
     y_top_line = truth_nodes_y_tops[0] - 10
-    svg_lines.append(svg.svg_line(x_left, y_top, x_right, y_top, 'lightgrey', 1))
-    svg_lines.append(svg.svg_line(x_left, y_top_line, x_right, y_top_line, 'lightgrey', 1))
-    svg_lines.append(svg.svg_line(x_left, y_bottom, x_right, y_bottom, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(x_left, y_top, plot_width - margin, y_top, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(x_left, y_top_line, plot_width - margin, y_top_line, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(plot_width - margin, y_top, plot_width - margin, y_bottom, 'lightgrey', 1))
+    svg_lines.append(svg.svg_line(x_left, y_bottom, plot_width - margin, y_bottom, 'lightgrey', 1))
     for i in range(0, len(truth_nodes_y_bottoms) - 1, 1):
         y_pos = 0.5 * (truth_nodes_y_bottoms[i] + truth_nodes_y_tops[i+1])
         svg_lines.append(svg.svg_line(x_left, y_pos, x_right, y_pos, 'lightgrey', 1))
+        y_pos = 0.5 * (called_nodes_y_bottoms[i] + called_nodes_y_tops[i+1])
+        svg_lines.append(svg.svg_line(right_node_x + node_width, y_pos, plot_width - margin, y_pos, 'lightgrey', 1))
+
 
     f = open(outfile, 'w')
     print(r'''<?xml version="1.0" standalone="no"?>
