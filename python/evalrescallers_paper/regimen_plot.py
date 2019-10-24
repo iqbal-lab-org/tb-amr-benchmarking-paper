@@ -103,7 +103,7 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
 
     regimen_to_drug = {
         1: {'req': ('H', 'R', 'Z', 'E')},
-        2: {'req': ('R', 'Z', 'E'), 'opt': ((1, 'Lfx', 'Mfx', 'Gfx'),)},
+        2: {'req': ('R', 'Z', 'E', (1, 'Lfx', 'Mfx', 'Gfx'))},
         3: {'req': ('R', 'Z', 'E')},
         4: {'req': ('R', 'E', (1, 'Lfx', 'Mfx', 'Gfx'))},
         5: {'req': ('R', 'Z', (1, 'Lfx', 'Mfx', 'Gfx'))},
