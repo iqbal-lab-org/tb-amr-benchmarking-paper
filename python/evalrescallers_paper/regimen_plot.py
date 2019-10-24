@@ -27,7 +27,7 @@ def load_regimen_counts_tsv(infile, datasets):
     return all_data
 
 
-def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
+def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
     assert outfile.endswith('.svg')
     to_ignore = {}
     if ignore is not None:
@@ -159,7 +159,7 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
     node_to_edge_space = 50
     left_node_x = right_half_x_left + node_to_edge_space
     node_width = 20
-    right_node_x = plot_width - node_to_edge_space - node_width
+    right_node_x = plot_width - node_to_edge_space - node_width - 75
     y_start = 40
     node_y_gap = 30
     svg_node_lines = []
@@ -170,9 +170,12 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
 
     # Nodes on the left
     y = y_start
-    svg_lines.append(svg.svg_text(left_node_x - 103, headings_y-7, 'Regimen', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
-    svg_lines.append(svg.svg_text(left_node_x - 103, headings_y+4, '(phenotype)', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(left_node_x - 103, headings_y-7, 'Phenotype', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(left_node_x - 103, headings_y+4, 'regimen', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
     svg_lines.append(svg.svg_text(left_node_x - 5, headings_y, 'Samples', 11, font_weight='bold', position='end', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(right_node_x + 65, headings_y, 'Samples', 11, font_weight='bold', position='end', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(right_node_x + 100, headings_y-7, tool_name, 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(right_node_x + 100, headings_y+4, 'regimen', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
 
     for node in regimen_to_drug:
         if node-1 not in truth_nodes:
@@ -216,6 +219,8 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
             colours[int(node)], colours[int(node)], border_width=1))
         svg_lines.append(svg.svg_text(right_node_x + node_width + 3, 0.5 * (y + node_y_bottom),
             str(total_samples), 11, position='start', font_family='arial', vertical_align='middle'))
+        svg_lines.append(svg.svg_text(right_node_x + 100, 0.5 * (y + node_y_bottom),
+            str(node+1), 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
         if node in to_ignore:
             total_ignored = sum(to_ignore[node].values())
             svg_lines.append(svg.svg_text(right_node_x + node_width + 3, 0.5 * (y + node_y_bottom) + 12,
