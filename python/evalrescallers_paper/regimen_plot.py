@@ -129,6 +129,20 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
         11: {'H': 'R', 'R': 'R', 'Mfx': 'R'},
     }
 
+    regimen_to_description = {
+        1: "DS-TB",
+        2: "Mono-H DR-TB",
+        3: "Mono-H DR-TB",
+        4: "H-Z DR-TB",
+        5: "H-E DR-TB",
+        6: "H-Z-E DR-TB",
+        7: "H-Z-E DR-TB",
+        8: "Mono-Z DR-TB",
+        9: "Mono-E DR-TB",
+        10: "RR/MDR-TB",
+        11: "XDR-TB",
+    }
+
     drug_col_width = 26
     svg_lines = []
     x = 10
@@ -156,7 +170,8 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
 
     # Nodes on the left
     y = y_start
-    svg_lines.append(svg.svg_text(left_node_x - 110, headings_y, 'Regimen', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(left_node_x - 103, headings_y-7, 'Regimen', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+    svg_lines.append(svg.svg_text(left_node_x - 103, headings_y+4, '(phenotype)', 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
     svg_lines.append(svg.svg_text(left_node_x - 5, headings_y, 'Samples', 11, font_weight='bold', position='end', font_family='arial', vertical_align='middle'))
 
     for node in regimen_to_drug:
@@ -177,7 +192,8 @@ def plot_one_tool(data, outfile, ignore=None, y_scale=0.8):
             colours[int(node)], colours[int(node)], border_width=1))
         #svg_lines.append(svg.svg_text(left_node_x - 110, 0.5 * (y + node_y_bottom),
         #    who_treatment.regimens[node+1].definition, 11, position='start', font_family='arial', vertical_align='middle'))
-        svg_lines.append(svg.svg_text(left_node_x - 110, 0.5 * (y + node_y_bottom), str(node+1), 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+        svg_lines.append(svg.svg_text(left_node_x - 103, 0.5 * (y + node_y_bottom) - 6, str(node+1), 11, font_weight='bold', position='middle', font_family='arial', vertical_align='middle'))
+        svg_lines.append(svg.svg_text(left_node_x - 103, 0.5 * (y + node_y_bottom) + 6, regimen_to_description[node+1], 10, position='middle', font_family='arial', vertical_align='middle'))
         svg_lines.append(svg.svg_text(left_node_x - 5, 0.5 * (y + node_y_bottom),
             str(total_samples), 11, position='end', font_family='arial', vertical_align='middle'))
 
