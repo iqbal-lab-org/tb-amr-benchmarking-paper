@@ -1,7 +1,7 @@
 # tb-amr-benchmarking-paper
 
 Code to generate publication figures and tables from output of
-[tb-amr-benchmarking][https://github.com/iqbal-lab-org/tb-amr-benchmarking]evalrescallers_make_figs_and_tables.
+[tb-amr-benchmarking](https://github.com/iqbal-lab-org/tb-amr-benchmarking).
 
 ## Installation
 
@@ -14,7 +14,7 @@ from the root of this repository:
 ## Usage
 
 A JSON file made by the
-[tb-amr-benchmarking pipeline][https://github.com/iqbal-lab-org/tb-amr-benchmarking]
+[tb-amr-benchmarking pipeline](https://github.com/iqbal-lab-org/tb-amr-benchmarking)
 is required. Assuming it is called `summary.json`, generate the results and
 figures by running:
 
