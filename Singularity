@@ -2,8 +2,11 @@ BootStrap: debootstrap
 OSVersion: bionic
 MirrorURL: http://us.archive.ubuntu.com/ubuntu/
 
+%environment
+    PATH=/evalrescallers_paper/scripts:$PATH
+
 %setup
-    rsync -a python $SINGULARITY_ROOTFS/evalrescallers_paper
+    rsync -a python scripts $SINGULARITY_ROOTFS/evalrescallers_paper
 
 
 %post
