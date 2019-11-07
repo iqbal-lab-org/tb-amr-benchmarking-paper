@@ -15,11 +15,8 @@ dataset1	tool1	3	4	2
 dataset1	tool1	3	5	6
 dataset1	tool1	3	10	6
 dataset1	tool1	4	10	4
-dataset1	tool1	4	12	3
 dataset1	tool1	5	5	9
-dataset1	tool1	5	12	2
 dataset1	tool1	6	10	2
-dataset1	tool1	6	12	4
 dataset1	tool1	8	1	1
 dataset1	tool1	8	4	1
 dataset1	tool1	8	8	61
@@ -27,9 +24,6 @@ dataset1	tool1	8	10	2
 dataset1	tool1	10	10	95
 dataset1	tool1	11	5	2
 dataset1	tool1	11	11	17
-dataset1	tool1	11	12	3
-dataset1	tool1	12	10	2
-dataset1	tool1	12	12	16
 dataset1	tool2	NA	NA	226
 dataset1	tool2	NA	10	4
 dataset1	tool2	1	NA	2
@@ -64,9 +58,6 @@ dataset1	tool2	10	11	2
 dataset1	tool2	11	2	1
 dataset1	tool2	11	8	2
 dataset1	tool2	11	11	17
-dataset1	tool2	12	1	4
-dataset1	tool2	12	10	2
-dataset1	tool2	12	11	10
 dataset2	tool1	NA	NA	227
 dataset2	tool1	NA	10	5
 dataset2	tool1	1	1	3661
@@ -98,5 +89,3 @@ dataset2	tool1	10	NA	1
 dataset2	tool1	10	10	93
 dataset2	tool1	11	2	3
 dataset2	tool1	11	11	16
-dataset2	tool1	12	10	3
-dataset2	tool1	12	11	7

@@ -49,7 +49,7 @@ class TestLatex(unittest.TestCase):
         texfile = f'{outprefix}.tex'
         datasets = {'10k_test', '10k_validate'}
         tools = {'ARIBA', 'KvarQ'}
-        latex.regimen_summary_table(infile, table_file, datasets, tools)
+        latex.regimen_summary_tables(infile, table_file, datasets, tools)
 
         with open(texfile, 'w') as f:
             print(r'''\documentclass{article}''', file=f)
