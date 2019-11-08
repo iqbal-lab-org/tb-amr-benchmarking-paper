@@ -113,8 +113,9 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
         7: {'req': ('R', 'Eto', (1, 'Lfx', 'Mfx', 'Gfx'), 'S')},
         8: {'req': ('H', 'R', 'E')},
         9: {'req': ('H', 'R', 'Z')},
-        10: {'req': ('Bdq', 'Lzd', (1, 'Lfx', 'Mfx'), (1, 'Cs', 'Trd', 'Cfz'))},
-        11: {'req': ('E', 'Z', (1, 'Am', 'S'), (1, 'Lfx', 'Mfx', 'Gfx'), 'Eto', 'Cs', 'Trd', 'X')},
+        10: {'req': ('H', 'Bdq', 'Lzd', (1, 'Lfx', 'Mfx'), (1, 'Cs', 'Trd', 'Cfz'))},
+        11: {'req': ('Bdq', 'Lzd', (1, 'Lfx', 'Mfx'), (1, 'Cs', 'Trd', 'Cfz'))},
+        12: {'req': ('E', 'Z', (1, 'Am', 'S'), (1, 'Lfx', 'Mfx', 'Gfx'), 'Eto', 'Cs', 'Trd', 'X')},
     }
 
     regimen_to_pheno = {
@@ -127,8 +128,9 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
         7: {'H': 'R', 'R': 'S', 'Z': 'R', 'E': 'R', 'Km': 'R', 'Am': 'R', 'Cm': 'R', 'S': 'S'},
         8: {'H': 'S', 'R': 'S', 'Z': 'R', 'E': 'S'},
         9: {'H': 'S', 'R': 'S', 'Z': 'S', 'E': 'R'},
-        10: {'H': '(R)', 'R': 'R'},
-        11: {'H': 'R', 'R': 'R', 'Mfx': 'R'},
+        10: {'H': 'U/S', 'R': 'R'},
+        11: {'H': 'R', 'R': 'R'},
+        12: {'H': 'R', 'R': 'R', 'Mfx': 'R'},
     }
 
     regimen_to_description = {
@@ -141,8 +143,9 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
         7: "H-Z-E DR-TB",
         8: "Mono-Z DR-TB",
         9: "Mono-E DR-TB",
-        10: "RR/MDR-TB",
-        11: "XDR-TB",
+        10: "RR-TB",
+        11: "MDR-TB",
+        12: "XDR-TB",
     }
 
     drug_col_width = 26
