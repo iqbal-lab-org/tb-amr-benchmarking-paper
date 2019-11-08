@@ -196,7 +196,7 @@ class TestSummaryDataHandler(unittest.TestCase):
                 'tool2': {'Isoniazid': 'R', 'Rifampicin': 'S'},
                 'truth': {'Isoniazid': 'R', 'Rifampicin': 'R'},
               },
-              'regimens': {'tool1': 10, 'tool2': None, 'truth': 10}
+              'regimens': {'tool1': 11, 'tool2': None, 'truth': 11}
             }
           }
         }
