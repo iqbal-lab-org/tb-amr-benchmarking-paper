@@ -1,22 +1,22 @@
-Dataset	Tool	Truth_regimen	Called_regimen	Count
-10k_test	ARIBA	NA	NA	57
-10k_test	ARIBA	1	1	100
-10k_test	ARIBA	1	2	10
-10k_test	ARIBA	2	3	2
-10k_test	ARIBA	3	3	42
-10k_validate	ARIBA	1	1	50
-10k_validate	ARIBA	1	2	30
-10k_validate	ARIBA	2	3	1
-10k_test	KvarQ	1	1	110
-10k_test	KvarQ	1	2	20
-10k_test	KvarQ	2	3	3
-10k_test	KvarQ	3	3	12
-10k_validate	KvarQ	1	1	20
-10k_validate	KvarQ	1	2	30
-10k_validate	KvarQ	2	3	2
-10k_test	MTBseq	1	1	200
-10k_test	MTBseq	1	2	20
-10k_test	MTBseq	2	3	5
-10k_test	MTBseq	3	3	30
-10k_validate	MTBseq	1	1	10
-10k_validate	MTBseq	1	2	10
+Dataset	Tool	Truth_regimen	Truth_regimen_ambiguous	Called_regimen	Count
+10k_test	ARIBA	NA	NA	NA	57
+10k_test	ARIBA	1	.	1	100
+10k_test	ARIBA	1	.	2	10
+10k_test	ARIBA	2	.	3	2
+10k_test	ARIBA	3	.	3	42
+10k_validate	ARIBA	1	.	1	50
+10k_validate	ARIBA	1	.	2	30
+10k_validate	ARIBA	2	.	3	1
+10k_test	KvarQ	1	.	1	110
+10k_test	KvarQ	1	.	2	20
+10k_test	KvarQ	2	.	3	3
+10k_test	KvarQ	3	.	3	12
+10k_validate	KvarQ	1	.	1	20
+10k_validate	KvarQ	1	.	2	30
+10k_validate	KvarQ	2	.	3	2
+10k_test	MTBseq	1	.	1	200
+10k_test	MTBseq	1	.	2	20
+10k_test	MTBseq	2	.	3	5
+10k_test	MTBseq	3	.	3	30
+10k_validate	MTBseq	1	.	1	10
+10k_validate	MTBseq	1	.	2	10

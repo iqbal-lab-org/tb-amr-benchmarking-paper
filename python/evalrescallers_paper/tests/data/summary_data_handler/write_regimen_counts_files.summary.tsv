@@ -1,8 +1,8 @@
-Dataset	Tool	Truth_regimen	Called_regimen	Count
-10k	tool1	NA	NA	2
-10k	tool2	NA	NA	1
-10k	tool2	NA	10	1
-mykrobe	tool1	NA	NA	1
-mykrobe	tool1	10	10	1
-mykrobe	tool2	NA	NA	1
-mykrobe	tool2	10	NA	1
+Dataset	Tool	Truth_regimen	Truth_regimen_ambiguous	Called_regimen	Count
+10k	tool1	NA	NA	NA	2
+10k	tool2	NA	NA	NA	1
+10k	tool2	NA	NA	10	1
+mykrobe	tool1	NA	NA	NA	1
+mykrobe	tool1	10	.	10	1
+mykrobe	tool2	NA	NA	NA	1
+mykrobe	tool2	10	.	NA	1

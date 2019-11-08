@@ -128,7 +128,7 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
         7: {'H': 'R', 'R': 'S', 'Z': 'R', 'E': 'R', 'Km': 'R', 'Am': 'R', 'Cm': 'R', 'S': 'S'},
         8: {'H': 'S', 'R': 'S', 'Z': 'R', 'E': 'S'},
         9: {'H': 'S', 'R': 'S', 'Z': 'S', 'E': 'R'},
-        10: {'H': 'U/S', 'R': 'R'},
+        10: {'R': 'R'},
         11: {'H': 'R', 'R': 'R'},
         12: {'H': 'R', 'R': 'R', 'Mfx': 'R'},
     }

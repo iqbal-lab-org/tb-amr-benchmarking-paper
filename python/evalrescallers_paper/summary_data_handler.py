@@ -101,8 +101,30 @@ class SummaryDataHandler:
             sample_truth_pheno = {k: v if v in {"R", "S"} else None for k, v in truth_pheno[sample]['pheno'].items()}
             if species == 'tb':
                 sample_dst = who_treatment.DstProfile(sample_truth_pheno)
+                if sample_dst.regimen is None:
+                    truth_regimen = None
+                    truth_regimen_ambiguous = None
+                else:
+                    truth_regimen = sample_dst.regimen.number
+                    ambiguous_drugs = []
+                    if truth_regimen == 10:
+                        if sample_dst.phenos['Isoniazid'] is None:
+                            ambiguous_drugs.append('H')
+                        if sample_dst.phenos['Moxifloxacin'] is None:
+                            ambiguous_drugs.append('Mfx')
+                    elif truth_regimen == 11 and sample_dst.phenos['Moxifloxacin'] is None:
+                            ambiguous_drugs.append('Mfx')
+
+                    if len(ambiguous_drugs):
+                        truth_regimen_ambiguous = ",".join(ambiguous_drugs)
+                    else:
+                        truth_regimen_ambiguous = '.'
+
+                    #truth_regimen_ambiguous =  (truth_regimen == 10 and sample_dst.phenos['Isoniazid'] is None) or (truth_regimen == 11 and sample_dst.phenos['Moxifloxacin'] is None)
+
                 regimen_counts[dataset][sample] = {'phenos': {'truth': sample_truth_pheno},
-                    'regimens': {'truth': sample_dst.regimen.number if sample_dst.regimen is not None else None}}
+                    'regimens': {'truth': truth_regimen, 'truth_ambiguous': truth_regimen_ambiguous}}
+
 
             if dataset.startswith('10k') and sample in ten_k_predict and sample in json_data:
                 json_data[sample]['10k_predict'] = {
@@ -366,6 +388,9 @@ class SummaryDataHandler:
                 truth_regimen = regimen_counts[dataset][sample]['regimens']['truth']
                 if truth_regimen is None:
                     truth_regimen = 'NA'
+                    truth_regimen_ambiguous = 'NA'
+                else:
+                    truth_regimen_ambiguous = regimen_counts[dataset][sample]['regimens'].get('truth_ambiguous', '.')
                 truth_phenos = [str(regimen_counts[dataset][sample]['phenos']['truth'].get(d, '-')).replace('None', '-') for d in drugs]
                 for tool in sorted(regimen_counts[dataset][sample]['phenos']):
                     if tool == 'truth':
@@ -374,7 +399,7 @@ class SummaryDataHandler:
                     if tool not in filehandles:
                         f = open(f'{outprefix}.{tool}.tsv', 'w')
                         filehandles[tool] = f
-                        print('Dataset', 'Sample', f'Truth_pheno.{short_drug_name_string}', 'Truth_regimen', f'Tool_pheno.{short_drug_name_string}', 'Tool_regimen', sep='\t', file=filehandles[tool])
+                        print('Dataset', 'Sample', f'Truth_pheno.{short_drug_name_string}', 'Truth_regimen', 'Truth_regimen_ambiguous', f'Tool_pheno.{short_drug_name_string}', 'Tool_regimen', sep='\t', file=filehandles[tool])
 
                     if tool not in summary_counts[dataset]:
                         summary_counts[dataset][tool] = {}
@@ -383,19 +408,19 @@ class SummaryDataHandler:
                     tool_regimen = regimen_counts[dataset][sample]['regimens'][tool]
                     if tool_regimen is None:
                         tool_regimen = 'NA'
-                    print(dataset, sample, ''.join(truth_phenos), truth_regimen, ''.join(tool_phenos), tool_regimen, sep='\t', file=filehandles[tool])
+                    print(dataset, sample, ''.join(truth_phenos), truth_regimen, truth_regimen_ambiguous, ''.join(tool_phenos), tool_regimen, sep='\t', file=filehandles[tool])
 
-                    key = (truth_regimen, tool_regimen)
+                    key = (truth_regimen, truth_regimen_ambiguous, tool_regimen)
                     summary_counts[dataset][tool][key] = summary_counts[dataset][tool].get(key, 0) + 1
 
         for f in filehandles.values():
             f.close()
 
         with open(f'{outprefix}.summary.tsv', 'w') as f:
-            print('Dataset', 'Tool', 'Truth_regimen', 'Called_regimen', 'Count', sep='\t', file=f)
+            print('Dataset', 'Tool', 'Truth_regimen', 'Truth_regimen_ambiguous', 'Called_regimen', 'Count', sep='\t', file=f)
             for dataset in sorted(summary_counts):
                 for tool in sorted(summary_counts[dataset]):
-                    for key in sorted(summary_counts[dataset][tool], key=lambda x: (-1 if x[0] == 'NA' else x[0], -1 if x[1] is 'NA' else x[1])):
+                    for key in sorted(summary_counts[dataset][tool], key=lambda x: (-1 if x[0] == 'NA' else x[0], -1 if x[2] == 'NA' else x[2])):
                         print(dataset, tool, *key, summary_counts[dataset][tool][key], sep='\t', file=f)
 
 

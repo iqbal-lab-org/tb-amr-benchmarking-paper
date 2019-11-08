@@ -96,7 +96,16 @@ def regimen_summary_tables(regimen_summary_file, outfile, datasets, tools):
                 continue
 
             assert d['Tool'] in counts
-            if d['Truth_regimen'] == d['Called_regimen'] or (d['Truth_regimen'] == '10' and d['Called_regimen'] in {'10', '11', '12'}):
+            ambig = set() if d['Truth_regimen_ambiguous'] in {".", "NA"} else set(d['Truth_regimen_ambiguous'].split(","))
+            truth = d['Truth_regimen']
+            called = d['Called_regimen']
+
+            if (
+                truth == called or
+                (truth == '10' and called == '11' and 'H' in ambig) or
+                (truth == '10' and called == '12' and 'H' in ambig and 'Mfx' in ambig) or
+                (truth == '11' and called == '12' and 'Mfx' in ambig)
+               ):
                 key = 'right'
             else:
                 key = 'wrong'

@@ -169,7 +169,7 @@ class TestSummaryDataHandler(unittest.TestCase):
                 'tool2': {'Pyrazinamide': 'S', 'Rifampicin': 'R'},
                 'truth': {'Pyrazinamide': 'R', 'Rifampicin': 'S'},
               },
-              'regimens': {'tool1': None, 'tool2': 10, 'truth': None}
+              'regimens': {'tool1': None, 'tool2': 10, 'truth': None, 'truth_ambiguous': None}
             },
             'sample4': {
               'phenos': {
@@ -177,7 +177,7 @@ class TestSummaryDataHandler(unittest.TestCase):
                 'tool2': {'Pyrazinamide': 'R', 'Rifampicin': None},
                 'truth': {'Pyrazinamide': 'R', 'Rifampicin': 'S'},
               },
-             'regimens': {'tool1': None, 'tool2': None, 'truth': None}
+              'regimens': {'tool1': None, 'tool2': None, 'truth': None, 'truth_ambiguous': None}
             }
           },
           'mykrobe': {
@@ -188,7 +188,7 @@ class TestSummaryDataHandler(unittest.TestCase):
                 'truth': {'Isoniazid': 'R', 'Rifampicin': 'S'},
               },
               'regimens': {
-                'tool1': None, 'tool2': None, 'truth': None}
+                  'tool1': None, 'tool2': None, 'truth': None, 'truth_ambiguous': None}
             },
             'sample2': {
               'phenos': {
@@ -196,7 +196,7 @@ class TestSummaryDataHandler(unittest.TestCase):
                 'tool2': {'Isoniazid': 'R', 'Rifampicin': 'S'},
                 'truth': {'Isoniazid': 'R', 'Rifampicin': 'R'},
               },
-              'regimens': {'tool1': 11, 'tool2': None, 'truth': 11}
+              'regimens': {'tool1': 11, 'tool2': None, 'truth': 11, 'truth_ambiguous': 'Mfx'}
             }
           }
         }
@@ -476,8 +476,6 @@ class TestSummaryDataHandler(unittest.TestCase):
             expected_file = os.path.join(data_dir, f'write_regimen_counts_files.{x}.tsv')
             self.assertTrue(filecmp.cmp(expected_file, got_file, shallow=False))
             os.unlink(got_file)
-        #expected_file = os.path.join(data_dir, 'write_regimen_counts_files.tsv')
-        #self.assertTrue(filecmp.cmp(expected_file, tmp_file, shallow=False))
 
 
     def test_run_tb(self):
