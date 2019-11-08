@@ -85,7 +85,7 @@ def regimen_summary_tables(regimen_summary_file, outfile, datasets, tools):
     counts = {tool: {
         'right': 0,
         'wrong': 0,
-        'breakdown': {str(x): {'right': 0, 'wrong': 0} for x in range(1, 12, 1)}
+        'breakdown': {str(x): {'right': 0, 'wrong': 0} for x in range(1, 13, 1)}
         } for tool in tools}
 
     with open(regimen_summary_file) as f:
@@ -96,7 +96,7 @@ def regimen_summary_tables(regimen_summary_file, outfile, datasets, tools):
                 continue
 
             assert d['Tool'] in counts
-            if d['Truth_regimen'] == d['Called_regimen'] or (d['Truth_regimen'] == '10' and d['Called_regimen'] in {'10', '11'}):
+            if d['Truth_regimen'] == d['Called_regimen'] or (d['Truth_regimen'] == '10' and d['Called_regimen'] in {'10', '11', '12'}):
                 key = 'right'
             else:
                 key = 'wrong'
@@ -118,13 +118,13 @@ def regimen_summary_tables(regimen_summary_file, outfile, datasets, tools):
         print(r'''\end{tabular}''', file=f)
         print('\n\n', file=f)
 
-        print(r'''\begin{tabular}{lrrrrrrrrrrr}''', file=f)
-        print(r'''Tool & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\''', file=f)
+        print(r'''\begin{tabular}{lrrrrrrrrrrrr}''', file=f)
+        print(r'''Tool & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12\\''', file=f)
         print(r'''\hline''', file=f)
         for tool in sorted(list(counts)):
             percent = round(100 * counts[tool]['right'] / (counts[tool]['right'] + counts[tool]['wrong']), 1)
             percents = []
-            for i in range(1, 12, 1):
+            for i in range(1, 13, 1):
                 r = str(i)
                 right = counts[tool]['breakdown'][r]['right']
                 total = right + counts[tool]['breakdown'][r]['wrong']
