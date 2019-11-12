@@ -6,9 +6,12 @@ x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && $3==2 {s+=$NF} END{print s}' r_is_
 echo "Check WHO figure 451 mono-isoniazid samples: $x"
 
 
-
 x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && $3==2 && $5==1 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
 echo "Mykrobe recommending a pan-susceptible TB regimen for mono-isoniazid resistant isolates: $x"
+
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 2 <= $3 && $3 <= 9 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Total where truth regimen is 2-9: $x"
 
 
 x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 2 <= $3 && $3 <= 9 && $5==1 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
@@ -22,6 +25,21 @@ echo "Truth regimen 2-9, called regimen 10: $x"
 
 x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 2 <= $3 && $3 <= 9 && 10 <= $5 && $5 <= 11 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
 echo "Truth regimen 2-9, called regimen 10 or 11: $x"
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 2 <= $3 && $3 <= 9 && $5==11 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Truth regimen 2-9, called regimen 11: $x"
+
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 2 <= $3 && $3 <= 9 && $5==12 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Truth regimen 2-9, called regimen 12: $x"
+
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 10 <= $3 && $3 <= 12 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Total where truth regimen is 10-12: $x"
+
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && $3==11 && 1 <= $5 && $5 <= 9 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Truth regimen 11, called 1-9: $x"
 
 
 echo "Truth regimen counts:"
