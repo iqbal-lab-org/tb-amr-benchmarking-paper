@@ -25,4 +25,6 @@ main text of the paper, which were calculated by running this:
 
     cd OUT
     singularity exec benchmark.img gather_ad_hoc_numbers.sh
+    singularity exec benchmark.img estimate_xdr_accuracy.py
+
 
