@@ -18,7 +18,6 @@ x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 2 <= $3 && $3 <= 9 && $5==1 {s+=$N
 echo "Truth regimen 2-9, called regimen 1: $x"
 
 
-
 x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 2 <= $3 && $3 <= 9 && $5==10 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
 echo "Truth regimen 2-9, called regimen 10: $x"
 
@@ -33,6 +32,28 @@ echo "Truth regimen 2-9, called regimen 11: $x"
 x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 2 <= $3 && $3 <= 9 && $5==12 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
 echo "Truth regimen 2-9, called regimen 12: $x"
 
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 3 <= $3 && $3 <= 9 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Total where truth regimen is 3-9: $x"
+
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 3 <= $3 && $3 <= 9 && $5==1 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Truth regimen 3-9, called regimen 1: $x"
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 3 <= $3 && $3 <= 9 && $5==2 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Truth regimen 3-9, called regimen 2: $x"
+
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 3 <= $3 && $3 <= 9 && $5==10 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Truth regimen 3-9, called regimen 10: $x"
+
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 3 <= $3 && $3 <= 9 && $5==11 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Truth regimen 3-9, called regimen 11: $x"
+
+
+x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 3 <= $3 && $3 <= 9 && $5==12 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
+echo "Truth regimen 3-9, called regimen 12: $x"
 
 x=$(awk '$1~/^10k/ && $2=="Mykrobe.201901" && 10 <= $3 && $3 <= 12 {s+=$NF} END{print s}' r_is_resistant.regimen_counts.summary.tsv)
 echo "Total where truth regimen is 10-12: $x"
