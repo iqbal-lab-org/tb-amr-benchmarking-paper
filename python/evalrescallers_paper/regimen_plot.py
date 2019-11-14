@@ -145,7 +145,7 @@ def plot_one_tool(data, outfile, tool_name, ignore=None, y_scale=0.8):
         9: "Mono-E DR-TB",
         10: "RR-TB",
         11: "MDR-TB",
-        12: "XDR-TB",
+        12: "(pre-)XDR-TB",
     }
 
     drug_col_width = 26
