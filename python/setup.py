@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='evalrescallers_paper',
-    version='0.0.1',
+    version='0.0.2',
     description='Evaluation of TB AMR callers -- make figues and tables',
     packages = find_packages(),
     package_data={'evalrescallers_paper': ['data/*']},
