@@ -19,7 +19,7 @@ MirrorURL: http://us.archive.ubuntu.com/ubuntu/
     cd /
     git clone https://github.com/iqbal-lab-org/tb-amr-benchmarking
     cd tb-amr-benchmarking/python
-    git checkout 93bd3927f9be2720064874c072d6d74fcea36d4e
+    git checkout 276f4f7f30639dacc62b3e8e395b2d2ce8675089
     python3 setup.py install
 
     cd /evalrescallers_paper/python
